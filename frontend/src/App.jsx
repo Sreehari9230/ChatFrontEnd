@@ -11,35 +11,42 @@ import ProfilePage from "./pages/ProfilePage";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "./store/useAuthStore";
 
-import { Loader } from 'lucide-react'
+import { Loader } from "lucide-react";
 
-import { Toaster } from 'react-hot-toast'
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+  // useEffect(() => {
+  //   checkAuth();
+  // }, [checkAuth]);
 
-  console.log({ authUser });
+  // console.log({ authUser });
 
-  if(isCheckingAuth && !authUser) return (
-    <div className="flex min-h-screen w-full items-center justify-center">
-      <Loader className="size-10 animate-spin" />
-    </div>
-  )
+  // if(isCheckingAuth && !authUser) return (
+  //   <div className="flex min-h-screen w-full items-center justify-center">
+  //     <Loader className="size-10 animate-spin" />
+  //   </div>
+  // )
 
   return (
     <div>
       <Navbar />
 
       <Routes>
-        <Route path="/" element={authUser ? <HomePage /> : <Navigate to='/login' />} />
-        <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/home" />} />
-        <Route path="/login" element={!authUser ? <LoginPage />  : <Navigate to="/home" />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to='/login' />} />
+        {/* <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/home" />} /> */}
+        <Route path="/signup" element={<SignUpPage />} />
+
+        {/* <Route path="/" element={authUser ? <HomePage /> : <Navigate to='/login' />} /> */}
+        <Route path="/" element={<HomePage />} />
+
+        {/* <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
+
+        {/* <Route path="/settings" element={<SettingsPage />} /> */}
+
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
 
       <Toaster />
