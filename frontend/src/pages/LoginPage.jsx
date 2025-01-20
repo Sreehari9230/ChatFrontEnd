@@ -1,37 +1,61 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Eye, EyeOff, Loader2, Mail, MessageSquare, Lock } from "lucide-react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
-
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
-  const { login, isLogginIn } = useAuthStore();
+  const { login, isLogginIn, fetchHome } = useAuthStore();
 
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for valid email format
-    if (!formData.email.trim())return toast.error("Email is required")
-    if (!emailRegex.test(formData.email))return toast.error("Please enter a valid email address");
-    if (!formData.password.trim())return toast.error("Password is required")
-    if (formData.password.length < 6)return toast.error("Password must be at least 6 characters");
+    if (!formData.email.trim()) return toast.error("Email is required");
+    if (!emailRegex.test(formData.email))
+      return toast.error("Please enter a valid email address");
+    if (!formData.password.trim()) return toast.error("Password is required");
+    if (formData.password.length < 1)
+      return toast.error("Password must be at least 6 characters");
     console.log("Form submitted successfully:", formData);
-    return true
+    return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = validateForm()
-    if(success == true)login(formData)
+    const success = validateForm();
+    if (success) {
+      console.log("insideSuccessCondition");
+      // Trigger login action with form data
+      const response = await login(formData); // Make sure login returns the tokens
+      console.log(response,'bhjvghv')
+      console.log("accessTokenInHandleSubmit:", response.access_token);
+      console.log("refreshTokenInHandleSubmit:", response.refresh_token);
+      // Store tokens upon successful login
+
+      if (response.access_token && response.refresh_token) {
+
+        localStorage.setItem("access_token", response.access_token);
+        localStorage.setItem("refresh_token", response.refresh_token);
+        
+        //  // Optionally, call fetchHome here
+        await fetchHome(response.access_token);
+
+        // Optionally, redirect or show user a success message
+        navigate("/"); // Redirect after successful login
+      } else {
+        // Handle failure case or error if tokens aren't returned
+        console.error("Token missing after login");
+      }
+    }
   };
 
-  
-  return(
+  return (
     <div className="min-h-screen flex flex-col justify-center items-center p-6 sm:p-12">
       {/* Logo and Heading */}
       <div className="text-center mb-8">
@@ -49,7 +73,6 @@ const LoginPage = () => {
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6">
-
         {/* Email */}
         <div className="form-control">
           <label className="label">
@@ -130,7 +153,7 @@ const LoginPage = () => {
         </p>
       </div>
     </div>
-  )
+  );
 };
 
 export default LoginPage;
