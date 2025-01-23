@@ -22,7 +22,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
           <Link
               to={"/settings"}
               className="btn btn-sm gap-2 transition-colors">
@@ -30,7 +30,7 @@ const Navbar = () => {
               <span className="hidden sm:inline">Settings</span>
             </Link>
 
-            {authUser && (
+            {/* {authUser && (
               <>
                 <Link to={"/profile"} className={`btn btn-sm gap-2`}>
                   <User className="size-5" />
@@ -42,9 +42,9 @@ const Navbar = () => {
                   <span className="hidden sm:inline">Logout</span>
                 </button>
               </>
-            )}
+            )} */}
 
-          </div> */}
+          </div>
         </div>
       </div>
     </header>
