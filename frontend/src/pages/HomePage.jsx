@@ -1,9 +1,9 @@
 import React from 'react'
-
+// import ChatInterface from '../components/chatinterface'
 const HomePage = () => {
   return (
     <div>
-      Home
+      {/* <ChatInterface /> */}
     </div>
   )
 }
