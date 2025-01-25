@@ -4,26 +4,40 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { ChevronDown, ChevronRight, Users } from "lucide-react";
 
 const Sidebar = () => {
-  const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
-    useChatStore();
+  // const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
+  //   useChatStore();
+
+  const {
+    isDeparmentLoading,
+    setDepartmentSelected,
+    departmentSelected,
+    isTeamSelected,
+    setTeamSelected,
+    teamSelcted,
+  } = useChatStore();
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
 
   const handleDropdown = (department) => {
     setActiveDropdown(activeDropdown === department ? null : department);
+    setDepartmentSelected(department);
+    console.log(department);
   };
 
   const handleTeamSelection = (team) => {
     setSelectedTeam(team);
+    setTeamSelected(team);
+    console.log(team);
   };
 
   // const onlineUsers = [];
 
-  useEffect(() => {
-    getUsers();
-  }, [getUsers]);
+  // useEffect(() => {
+  //   getUsers();
+  // }, [getUsers]);
 
-  // if (isUsersLoading) return <SidebarSkeleton />;
+  // if (true) return <SidebarSkeleton />;
+  // if (true) return <SidebarSkeleton />;
 
   return (
     // <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
@@ -324,138 +338,138 @@ const Sidebar = () => {
     // </aside>
 
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
-    <div className="border-b border-base-300 w-full p-5">
-      <div className="flex items-center gap-2">
-        <Users className="size-6" />
-        <span className="font-medium hidden lg:block">Department</span>
+      <div className="border-b border-base-300 w-full p-5">
+        <div className="flex items-center gap-2">
+          <Users className="size-6" />
+          <span className="font-medium hidden lg:block">Department</span>
+        </div>
       </div>
-    </div>
 
-    <div className="overflow-y-auto w-full py-3">
-      {/* HR Department with Teams */}
-      <div>
-        <button
-          onClick={() => handleDropdown("HR")}
-          className="
+      <div className="overflow-y-auto w-full py-3">
+        {/* HR Department with Teams */}
+        <div>
+          <button
+            onClick={() => handleDropdown("HR")}
+            className="
             w-full p-3 flex items-center gap-3
             hover:bg-base-300 transition-colors
           "
-        >
-          <span className="font-medium truncate">HR Department</span>
-          <span className="ml-auto hidden lg:inline">
-            {activeDropdown === "HR" ? (
-              <ChevronDown className="size-4" />
-            ) : (
-              <ChevronRight className="size-4" />
-            )}
-          </span>
-        </button>
+          >
+            <span className="font-medium truncate">HR Department</span>
+            <span className="ml-auto hidden lg:inline">
+              {activeDropdown === "HR" ? (
+                <ChevronDown className="size-4" />
+              ) : (
+                <ChevronRight className="size-4" />
+              )}
+            </span>
+          </button>
 
-        {activeDropdown === "HR" && (
-          <div className="pl-6">
-            <button
-              onClick={() => handleTeamSelection("Recruitment Team")}
-              className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
-                selectedTeam === "Recruitment Team" ? "bg-base-300" : ""
-              }`}
-            >
-              <span className="text-sm truncate">Recruitment Team</span>
-            </button>
-            <button
-              onClick={() => handleTeamSelection("Onboarding Team")}
-              className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
-                selectedTeam === "Onboarding Team" ? "bg-base-300" : ""
-              }`}
-            >
-              <span className="text-sm truncate">Onboarding Team</span>
-            </button>
-          </div>
-        )}
-      </div>
+          {activeDropdown === "HR" && (
+            <div className="pl-6">
+              <button
+                onClick={() => handleTeamSelection("Recruitment Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Recruitment Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Recruitment Team</span>
+              </button>
+              <button
+                onClick={() => handleTeamSelection("Onboarding Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Onboarding Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Onboarding Team</span>
+              </button>
+            </div>
+          )}
+        </div>
 
-      {/* Marketing Department with Teams */}
-      <div>
-        <button
-          onClick={() => handleDropdown("Marketing")}
-          className="
+        {/* Marketing Department with Teams */}
+        {/* <div>
+          <button
+            onClick={() => handleDropdown("Marketing")}
+            className="
             w-full p-3 flex items-center gap-3
             hover:bg-base-300 transition-colors
           "
-        >
-          <span className="font-medium truncate">Marketing Department</span>
-          <span className="ml-auto hidden lg:inline">
-            {activeDropdown === "Marketing" ? (
-              <ChevronDown className="size-4" />
-            ) : (
-              <ChevronRight className="size-4" />
-            )}
-          </span>
-        </button>
+          >
+            <span className="font-medium truncate">Marketing Department</span>
+            <span className="ml-auto hidden lg:inline">
+              {activeDropdown === "Marketing" ? (
+                <ChevronDown className="size-4" />
+              ) : (
+                <ChevronRight className="size-4" />
+              )}
+            </span>
+          </button>
 
-        {activeDropdown === "Marketing" && (
-          <div className="pl-6">
-            <button
-              onClick={() => handleTeamSelection("Advertising Team")}
-              className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
-                selectedTeam === "Advertising Team" ? "bg-base-300" : ""
-              }`}
-            >
-              <span className="text-sm truncate">Advertising Team</span>
-            </button>
-            <button
-              onClick={() => handleTeamSelection("Branding Team")}
-              className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
-                selectedTeam === "Branding Team" ? "bg-base-300" : ""
-              }`}
-            >
-              <span className="text-sm truncate">Branding Team</span>
-            </button>
-          </div>
-        )}
-      </div>
+          {activeDropdown === "Marketing" && (
+            <div className="pl-6">
+              <button
+                onClick={() => handleTeamSelection("Advertising Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Advertising Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Advertising Team</span>
+              </button>
+              <button
+                onClick={() => handleTeamSelection("Branding Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Branding Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Branding Team</span>
+              </button>
+            </div>
+          )}
+        </div> */}
 
-      {/* Sales Department with Teams */}
-      <div>
-        <button
-          onClick={() => handleDropdown("Sales")}
-          className="
+        {/* Sales Department with Teams */}
+        {/* <div>
+          <button
+            onClick={() => handleDropdown("Sales")}
+            className="
             w-full p-3 flex items-center gap-3
             hover:bg-base-300 transition-colors
           "
-        >
-          <span className="font-medium truncate">Sales Department</span>
-          <span className="ml-auto hidden lg:inline">
-            {activeDropdown === "Sales" ? (
-              <ChevronDown className="size-4" />
-            ) : (
-              <ChevronRight className="size-4" />
-            )}
-          </span>
-        </button>
+          >
+            <span className="font-medium truncate">Sales Department</span>
+            <span className="ml-auto hidden lg:inline">
+              {activeDropdown === "Sales" ? (
+                <ChevronDown className="size-4" />
+              ) : (
+                <ChevronRight className="size-4" />
+              )}
+            </span>
+          </button>
 
-        {activeDropdown === "Sales" && (
-          <div className="pl-6">
-            <button
-              onClick={() => handleTeamSelection("Retail Team")}
-              className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
-                selectedTeam === "Retail Team" ? "bg-base-300" : ""
-              }`}
-            >
-              <span className="text-sm truncate">Retail Team</span>
-            </button>
-            <button
-              onClick={() => handleTeamSelection("Corporate Team")}
-              className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
-                selectedTeam === "Corporate Team" ? "bg-base-300" : ""
-              }`}
-            >
-              <span className="text-sm truncate">Corporate Team</span>
-            </button>
-          </div>
-        )}
+          {activeDropdown === "Sales" && (
+            <div className="pl-6">
+              <button
+                onClick={() => handleTeamSelection("Retail Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Retail Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Retail Team</span>
+              </button>
+              <button
+                onClick={() => handleTeamSelection("Corporate Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Corporate Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Corporate Team</span>
+              </button>
+            </div>
+          )}
+        </div> */}
       </div>
-    </div>
-  </aside>
+    </aside>
   );
 };
 

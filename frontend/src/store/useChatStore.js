@@ -12,6 +12,26 @@ export const useChatStore = create((set, get) => ({
 
 
 
+
+    isDeparmentLoading: false,
+    deaprtmentSelected: '',
+    isTeamSelected: false,
+    teamSelcted: '',
+
+
+    setDepartmentSelected: (deaprtment) => {
+        set({ deaprtmentSelected: deaprtment})
+    },
+
+    setTeamSelected: (team) => {
+        set({ teamSelcted: team})
+        set({isTeamSelected: true})
+    },
+
+
+
+
+
     getUsers: async () => {
         set({ isUsersLoading: true })
         try {
@@ -37,10 +57,10 @@ export const useChatStore = create((set, get) => ({
     },
 
     sendMessage: async (messageData) => {
-        const {selectedUser, messages } = get()
+        const { selectedUser, messages } = get()
         try {
-            const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`,messageData)
-            set({messages:[...messages,res.data]})
+            const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData)
+            set({ messages: [...messages, res.data] })
         } catch (error) {
             toast.error(error.response.data.message)
         }
