@@ -5,6 +5,7 @@ import { useChatStore } from "../store/useChatStore";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
 import { formatMessageTime } from "../lib/utils";
+import OnboardingForm from "./forms/OnboardingForm";
 
 const ChatContainer = () => {
   const { messages, getMessages, isMessagesLoading, selectedUser } =
@@ -27,6 +28,8 @@ const ChatContainer = () => {
   return (
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
+      {/* <RecruitmentForm /> */}
+      <OnboardingForm />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => {
