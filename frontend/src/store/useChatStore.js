@@ -18,6 +18,9 @@ export const useChatStore = create((set, get) => ({
     isTeamSelected: false,
     teamSelcted: '',
 
+    isHistoryModalOpen: false,
+    chatHistory:[],
+
 
     setDepartmentSelected: (deaprtment) => {
         set({ deaprtmentSelected: deaprtment})
@@ -27,6 +30,20 @@ export const useChatStore = create((set, get) => ({
         set({ teamSelcted: team})
         set({isTeamSelected: true})
     },
+
+    setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

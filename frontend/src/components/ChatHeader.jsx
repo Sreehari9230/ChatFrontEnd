@@ -1,10 +1,14 @@
 import { HistoryIcon } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
+import ChatHistoryModal from "./ChatHistoryModal";
 
 const ChatHeader = () => {
-  const { selectedUser, setSelectedUser } = useChatStore();
+  const { selectedUser, setSelectedUser, isHistoryModalOpen, setHistoryModal, chatHistory } = useChatStore();
   // const { onlineUsers } = useAuthStore();
+
+  const handleModalOpen = () => setHistoryModal(true);
+  const handleModalClose = () => setHistoryModal(false);
 
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -26,11 +30,22 @@ const ChatHeader = () => {
           </div>
         </div>
 
-        {/* Close button */}
-        <button >
+        {/* Right Section: History Icon */}
+        <button
+          onClick={handleModalOpen}
+          className="p-2 hover:bg-gray-100 rounded-full transition"
+        >
           <HistoryIcon />
         </button>
       </div>
+
+      {/* Modal */}
+      {isHistoryModalOpen && (
+        <ChatHistoryModal
+          onClose={handleModalClose}
+          chatHistory={chatHistory}
+        />
+      )}
     </div>
   );
 };
