@@ -86,7 +86,6 @@ const ChatContainer = () => {
     //   <MessageInput />
     // </div>
 
-
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
 
@@ -138,7 +137,7 @@ const ChatContainer = () => {
       </div>
 
       {/* Only show MessageInput when no form is displayed */}
-<MessageInput />
+      <MessageInput />
     </div>
   );
 };

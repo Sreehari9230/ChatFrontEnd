@@ -5,15 +5,25 @@ import ChatHistoryModal from "./ChatHistoryModal";
 
 const ChatHeader = () => {
   const {
-    selectedUser,
-    setSelectedUser,
+    // selectedUser,
+    // setSelectedUser,
     isHistoryModalOpen,
     setHistoryModal,
     chatHistory,
+    teamSelcted,
+    getChatHistory
   } = useChatStore();
 
   const handleModalOpen = () => setHistoryModal(true);
   const handleModalClose = () => setHistoryModal(false);
+  const handleGetChat = (abc) => {
+    console.log('in chatheadr function', abc == 'Onboarding Team', abc,'Onboarding Team')
+    if(abc == 'Onboarding Team'){
+      
+      console.log(abc,'this is the the team onbpardong')
+      getChatHistory(1)
+    }
+  };
 
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -25,7 +35,10 @@ const ChatHeader = () => {
         </div>
         {/* Right Section: History Icon */}
         <button
-          onClick={handleModalOpen}
+          onClick={() => {
+            handleModalOpen();
+            handleGetChat(teamSelcted);
+          }}
           className="p-2 hover:bg-gray-100 rounded-full transition"
         >
           <HistoryIcon />

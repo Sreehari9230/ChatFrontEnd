@@ -7,7 +7,7 @@ const MessageInput = () => {
   const [text, setText] = useState("");
   // const [imagePreview, setImagePreview] = useState(null);
   // const fileInputRef = useRef(null);
-  const { sendMessage } = useChatStore();
+  const { sendMessage, teamSelcted, getNewChat } = useChatStore();
 
   // const handleImageChange = (e) => {
   //   const file = e.target.files[0];
@@ -28,10 +28,7 @@ const MessageInput = () => {
   //   if (fileInputRef.current) fileInputRef.current.value = "";
   // };
 
-  const handleNewChat = () => {
-    // Logic for a new chat, e.g., open a modal or reset state
-    console.log("New Chat initiated");
-  };
+
 
   // const handleSendMessage = async (e) => {
   //   e.preventDefault();
@@ -62,6 +59,18 @@ const MessageInput = () => {
     }
   };
 
+  const handleNewChat = (teamSelcted) => {
+    // // Logic for a new chat, e.g., open a modal or reset state
+    // console.log("New Chat initiated");
+    // console.log(teamSelcted)
+    // if(teamSelcted == 'Onboarding Team'){
+      
+    //   console.log(teamSelcted,'this is the the team onbpardong')
+    //   getNewChat(1)
+    // }
+    console.log('button clicked', teamSelcted)
+  };
+
   return (
     <div className="p-4 w-full">
       {/* {imagePreview && (
@@ -86,13 +95,20 @@ const MessageInput = () => {
 
       <form onSubmit={handleSendMessage} className="flex items-center gap-2">
         {/* Plus button for new chat */}
-        <button
+        {/* <button
           type="button"
           className="btn  btn-circle bg-base-300 hover:bg-base-400"
           onClick={handleNewChat} // Implement the new chat logic in this handler
         >
-          <Plus size={20} className="text-zinc-700" />
-        </button>
+          <Plus size={20} className="text-700" />
+        </button> */}
+
+        <button onClick={handleNewChat(teamSelcted)}
+            type="button"
+            className="hidden sm:flex btn btn-circle text-zinc-400"
+          >
+            <Plus size={20} />
+          </button>
 
         <div className="flex-1 flex gap-2">
           <input
