@@ -33,16 +33,15 @@ const LoginPage = () => {
       console.log("insideSuccessCondition");
       // Trigger login action with form data
       const response = await login(formData); // Make sure login returns the tokens
-      console.log(response,'bhjvghv')
+      console.log(response, "bhjvghv");
       console.log("accessTokenInHandleSubmit:", response.access_token);
       console.log("refreshTokenInHandleSubmit:", response.refresh_token);
       // Store tokens upon successful login
 
       if (response.access_token && response.refresh_token) {
-
         localStorage.setItem("access_token", response.access_token);
         localStorage.setItem("refresh_token", response.refresh_token);
-        
+
         //  // Optionally, call fetchHome here
         await fetchHome(response.access_token);
 
@@ -67,7 +66,6 @@ const LoginPage = () => {
             <MessageSquare className="size-6 text-primary" />
           </div>
           <h1 className="text-2xl font-bold mt-2">Create Account</h1>
-          {/* <p className="text-base-content/60">Get started with your free account</p> */}
         </div>
       </div>
 
