@@ -138,7 +138,7 @@ const ChatContainer = () => {
       </div>
 
       {/* Only show MessageInput when no form is displayed */}
-      {!teamSelcted && <MessageInput />}
+<MessageInput />
     </div>
   );
 };
