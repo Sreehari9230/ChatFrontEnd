@@ -11,6 +11,7 @@ const Sidebar = () => {
     isTeamSelected,
     setTeamSelected,
     teamSelcted,
+    getChatHistory,
   } = useChatStore();
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -19,12 +20,22 @@ const Sidebar = () => {
     setActiveDropdown(activeDropdown === department ? null : department);
     setDepartmentSelected(department);
     console.log(department);
+    console.log(departmentSelected);
   };
 
   const handleTeamSelection = (team) => {
+    console.log("inside handleTeamSelection");
     setSelectedTeam(team);
     setTeamSelected(team);
     console.log(team);
+    console.log(teamSelcted);
+    if (team == "Onboarding Team") {
+      console.log("Chat History Of", team);
+      getChatHistory(1);
+    } else if(team == "Recruit Team") {
+      console.log("Chat History Of", team);
+      getChatHistory(2);
+    }
   };
 
   // if (true) return <SidebarSkeleton />;

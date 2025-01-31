@@ -16,12 +16,12 @@ const ChatHeader = () => {
 
   const handleModalOpen = () => setHistoryModal(true);
   const handleModalClose = () => setHistoryModal(false);
-  const handleGetChat = (team) => {
-    if (team == "Onboarding Team") {
-      console.log("Chat History Of", team);
-      getChatHistory(1);
-    }
-  };
+  // const handleGetChat = (team) => {
+  //   if (team == "Onboarding Team") {
+  //     console.log("Chat History Of", team);
+  //     getChatHistory(1);
+  //   }
+  // };
 
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -35,7 +35,7 @@ const ChatHeader = () => {
         <button
           onClick={() => {
             handleModalOpen();
-            handleGetChat(teamSelcted);
+            // handleGetChat(teamSelcted);
           }}
           className="p-2 hover:bg-gray-100 rounded-full transition"
         >

@@ -29,8 +29,8 @@ export const useChatStore = create((set, get) => ({
     isHistoryModalOpen: false,
 
 
-    setDepartmentSelected: (deaprtment) => {
-        set({ deaprtmentSelected: deaprtment })
+    setDepartmentSelected: (department) => {
+        set({ deaprtmentSelected: department })
     },
 
     setTeamSelected: (team) => {
