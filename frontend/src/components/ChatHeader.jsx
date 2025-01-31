@@ -11,17 +11,15 @@ const ChatHeader = () => {
     setHistoryModal,
     chatHistory,
     teamSelcted,
-    getChatHistory
+    getChatHistory,
   } = useChatStore();
 
   const handleModalOpen = () => setHistoryModal(true);
   const handleModalClose = () => setHistoryModal(false);
-  const handleGetChat = (abc) => {
-    console.log('in chatheadr function', abc == 'Onboarding Team', abc,'Onboarding Team')
-    if(abc == 'Onboarding Team'){
-      
-      console.log(abc,'this is the the team onbpardong')
-      getChatHistory(1)
+  const handleGetChat = (team) => {
+    if (team == "Onboarding Team") {
+      console.log("Chat History Of", team);
+      getChatHistory(1);
     }
   };
 

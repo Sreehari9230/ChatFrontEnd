@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useChatStore } from "../store/useChatStore";
-import { Image, Paperclip, Plus, Send, Share } from "lucide-react";
+import { Image, Paperclip, Plus, Send, Share, Wifi, WifiOff } from "lucide-react";
 import toast from "react-hot-toast";
 
 const MessageInput = () => {
@@ -18,84 +18,21 @@ const MessageInput = () => {
     const [isThinking, setIsThinking] = useState(false);
     const socketRef = useRef(null);
 
-  // useEffect(() => {
-  //   const ws = new WebSocket(
-  //     "wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/2/"
-  //   );
-
-  //   ws.onopen = () => {
-  //     console.log("WebSocket Connected");
-  //     setIsConnected(true);
-  //   };
-
-  //   ws.onmessage = (event) => {
-  //     console.log("Received message:", event.data);
-  //     const data = JSON.parse(event.data);
-  //     let responseContent = "";
-
-  //     if (data.action === "form_response") {
-  //       if (data.response && data.response.message_id) {
-  //         responseContent = data.response.message_id;
-  //       } else if (data.response && typeof data.response === "object") {
-  //         responseContent = JSON.stringify(data.response, null, 2);
-  //       } else {
-  //         responseContent = JSON.stringify(data, null, 2);
-  //       }
-
-  //       setChatHistory((prev) => prev.filter((msg) => msg.type !== "thinking"));
-  //       setChatHistory((prev) => [
-  //         ...prev,
-  //         { type: "received", content: responseContent },
-  //       ]);
-  //       setIsThinking(false);
-  //     }
-  //   };
-
-  //   ws.onclose = () => {
-  //     console.log("WebSocket Disconnected");
-  //     setIsConnected(false);
-  //   };
-
-  //   setSocket(ws);
-
-  //   return () => {
-  //     if (ws.readyState === WebSocket.OPEN) {
-  //       ws.close();
-  //     }
-  //   };
-  // }, []);
-  // const sendMessage = useCallback(() => {
-  //   if (socket && isConnected && message.trim()) {
-  //     const payload = {
-  //       action: "chat_manually",
-  //       message: message,
-  //     };
-  //     socket.send(JSON.stringify(payload));
-  //     setChatHistory((prev) => [...prev, { type: "sent", content: message }]);
-  //     setMessage("");
-  //     setIsThinking(true);
-  //     setChatHistory((prev) => [
-  //       ...prev,
-  //       { type: "thinking", content: "Thinking..." },
-  //     ]);
-  //   }
-  // }, [socket, isConnected, message]);
-
   useEffect(() => {
     const ws = new WebSocket(
       "wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/2/"
     );
-  
+
     ws.onopen = () => {
       console.log("WebSocket Connected");
       setIsConnected(true);
     };
-  
+
     ws.onmessage = (event) => {
       console.log("Received message:", event.data);
       const data = JSON.parse(event.data);
       let responseContent = "";
-  
+
       if (data.action === "form_response") {
         if (data.response && data.response.message_id) {
           responseContent = data.response.message_id;
@@ -104,7 +41,7 @@ const MessageInput = () => {
         } else {
           responseContent = JSON.stringify(data, null, 2);
         }
-  
+
         setChatHistory((prev) => prev.filter((msg) => msg.type !== "thinking"));
         setChatHistory((prev) => [
           ...prev,
@@ -113,29 +50,27 @@ const MessageInput = () => {
         setIsThinking(false);
       }
     };
-  
+
     ws.onclose = () => {
       console.log("WebSocket Disconnected");
       setIsConnected(false);
     };
-  
-    socketRef.current = ws; // Save WebSocket instance in ref
-  
+
+    setSocket(ws);
+
     return () => {
-      if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-        console.log("Closing WebSocket...");
-        socketRef.current.close();
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.close();
       }
     };
-  }, []); // Dependency array remains empty to ensure the WebSocket is created once
-  
+  }, []);
   const sendMessage = useCallback(() => {
-    if (socketRef.current && isConnected && message.trim()) {
+    if (socket && isConnected && message.trim()) {
       const payload = {
         action: "chat_manually",
         message: message,
       };
-      socketRef.current.send(JSON.stringify(payload));
+      socket.send(JSON.stringify(payload));
       setChatHistory((prev) => [...prev, { type: "sent", content: message }]);
       setMessage("");
       setIsThinking(true);
@@ -144,7 +79,68 @@ const MessageInput = () => {
         { type: "thinking", content: "Thinking..." },
       ]);
     }
-  }, [isConnected, message]); // Remove socketRef.current from dependencies to prevent unnecessary re-renders
+  }, [socket, isConnected, message]);
+
+// useEffect(() => {
+//     const ws = new WebSocket(
+//       "wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/2/"
+//     );
+
+//     ws.onopen = () => {
+//       console.log("WebSocket Connected");
+//       setIsConnected(true);
+//     };
+
+//     ws.onmessage = (event) => {
+//       console.log("Received message:", event.data);
+//       const data = JSON.parse(event.data);
+//       let responseContent = "";
+
+//       if (data.action === "form_response") {
+//         if (data.response && data.response.message_id) {
+//           responseContent = data.response.message_id;
+//         } else if (data.response && typeof data.response === "object") {
+//           responseContent = JSON.stringify(data.response, null, 2);
+//         } else {
+//           responseContent = JSON.stringify(data, null, 2);
+//         }
+
+//         setChatHistory((prev) => prev.filter((msg) => msg.type !== "thinking"));
+//         setChatHistory((prev) => [
+//           ...prev,
+//           { type: "received", content: responseContent },
+//         ]);
+//         setIsThinking(false);
+//       }
+//     };
+
+//     ws.onclose = () => {
+//       console.log("WebSocket Disconnected");
+//       setIsConnected(false);
+//     };
+
+//     setSocket(ws);
+
+//     return () => {
+//       ws.close();
+//     };
+//   }, []);
+//   const sendMessage = useCallback(() => {
+//     if (socket && isConnected && message.trim()) {
+//       const payload = {
+//         action: "chat_manually",
+//         message: message,
+//       };
+//       socket.send(JSON.stringify(payload));
+//       setChatHistory((prev) => [...prev, { type: "sent", content: message }]);
+//       setMessage("");
+//       setIsThinking(true);
+//       setChatHistory((prev) => [
+//         ...prev,
+//         { type: "thinking", content: "Thinking..." },
+//       ]);
+//     }
+//   }, [socket, isConnected, message]);
 
   // const handleImageChange = (e) => {
   //   const file = e.target.files[0];
@@ -195,6 +191,7 @@ const MessageInput = () => {
   // };
 
   const handleNewChat = (teamSelcted) => {
+
     // // Logic for a new chat, e.g., open a modal or reset state
     // console.log("New Chat initiated");
     // console.log(teamSelcted)
@@ -241,7 +238,7 @@ const MessageInput = () => {
         </button> */}
 
         <button
-          onClick={handleNewChat(teamSelcted)}
+          onClick={() => handleNewChat(teamSelcted)}
           type="button"
           className="hidden sm:flex btn btn-circle text-zinc-400"
         >
@@ -282,6 +279,16 @@ const MessageInput = () => {
             <Paperclip size={20} />
           </button>
         </div>
+
+              {/* Add WiFi status indicator */}
+      <div className="flex items-center">
+        {isConnected ? (
+          <Wifi size={16} className="text-success" />
+        ) : (
+          <WifiOff size={16} className="text-error" />
+        )}
+      </div>
+
 
         <button
           type="submit"
