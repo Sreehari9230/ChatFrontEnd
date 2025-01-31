@@ -7,6 +7,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { formatMessageTime } from "../lib/utils";
 import OnboardingForm from "./forms/OnboardingForm";
 import RecruitmentForm from "./forms/RecruitmentForm";
+import WelcomeChat from "./WelcomeChat";
 
 const ChatContainer = () => {
   const {
@@ -16,7 +17,7 @@ const ChatContainer = () => {
     selectedUser,
     teamSelcted,
   } = useChatStore();
-  console.log(teamSelcted, "hehe");
+  // console.log(teamSelcted, "hehe");
   const { authUser } = useAuthStore();
   
 
@@ -44,6 +45,7 @@ const ChatContainer = () => {
       )} */}
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {/* <WelcomeChat /> */}
         {messages.map((message) => {
           <div
             key={messages._id}

@@ -21,13 +21,12 @@ export const useChatStore = create((set, get) => ({
 
 
     isChatHistoryLoading: false,
-    chats: [],
+    // chats: [],
 
     isChatLoading: false,
-    chat: null,
+    chatHistory: [],
 
     isHistoryModalOpen: false,
-    chatHistory: [],
 
 
     setDepartmentSelected: (deaprtment) => {
@@ -42,42 +41,63 @@ export const useChatStore = create((set, get) => ({
     setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
 
     getChatHistory: async (teamSelected) => {
-        console.log('inside getchat his')
-        set({ isChatHistoryLoading: true })
+        set({ isChatHistoryLoading: true });
+    
         try {
-            // // console.log('hahahhahaha', accessToken)
-            // console.log('inside try of getchathostory')
-            // const res = await axiosInstance.get(`/organization/agent/${teamSelected}/chat-sessions/`, {
-            //     headers: {
-            //         Authorization: `Bearer ${accessToken}`
-            //     },
-            // })
-            // // console.log(chats)
-            // set({ chats: res })
             console.log('Fetching chat history...');
-
-            // Retrieve the accessToken from localStorage
-            const accessToken = localStorage.getItem('access_token'); // Adjust 'accessToken' to your actual storage key
-
+            const accessToken = localStorage.getItem('access_token');
             if (!accessToken) {
                 throw new Error('Access token is missing. Please log in again.');
             }
-
+    
             const res = await axiosInstance.get(`/organization/agent/${teamSelected}/chat-sessions/`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-
-            // Update the state with the fetched chat history
-            set({ chats: res.data }); // Assuming `res.data` contains the chat sessions
-            console.log(chats)
+            console.log('port is open?')
+    
+            // ✅ Update state correctly and log inside set
+            set((state) => {
+                console.log('Updated chat history:', res.data);
+                return { chatHistory: res.data };
+            });
+    
+            // ❌ This won't work because set is async
+            // console.log(chatHistory);  // Remove this
+    
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
+            console.error("Error fetching chat history:", error);
         } finally {
-            set({ isChatHistoryLoading: false })
+            set({ isChatHistoryLoading: false });
         }
-    },
+    }
+    ,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     getNewChat: async (teamSelected) => {
         set({ isChatLoading: true })
