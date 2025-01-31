@@ -44,8 +44,9 @@ const ChatContainer = () => {
       ) : (
         <OnboardingForm />
       )} */}
-      {chatHistory.length === 0 ? (<WelcomeChat />) :(
-      
+        {chatHistory.length === 0 ? (
+    <WelcomeChat />
+  ) : ( <>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {/* <WelcomeChat /> */}
         {messages.map((message) => {
@@ -89,7 +90,8 @@ const ChatContainer = () => {
       </div>
 
       <MessageInput />
-    ) }
+      </>
+    )}
     </div>
 
   //   <div className="flex-1 flex flex-col overflow-auto">
