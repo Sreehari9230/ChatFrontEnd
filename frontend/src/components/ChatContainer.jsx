@@ -16,7 +16,9 @@ const ChatContainer = () => {
     isMessagesLoading,
     selectedUser,
     teamSelcted,
-    chatHistory
+    chatHistory,
+    newChatClicked,
+    formButtonClicked
   } = useChatStore();
   // console.log(teamSelcted, "hehe");
   const { authUser } = useAuthStore();
@@ -39,14 +41,14 @@ const ChatContainer = () => {
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
 
-      {/* {teamSelcted === "Recruitment Team" ? (
+      {teamSelcted === "Recruitment Team" && formButtonClicked ? (
         <RecruitmentForm />
       ) : (
         <OnboardingForm />
-      )} */}
-        {/* {chatHistory.length === 0 ? (
+      )}
+        {chatHistory.length === 0 || newChatClicked ? (
     <WelcomeChat />
-  ) : ( <> */}
+  ) : ( <>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {/* <WelcomeChat /> */}
         {messages.map((message) => {
@@ -89,9 +91,13 @@ const ChatContainer = () => {
         })}
       </div>
 
-      <MessageInput />
-      {/* </>
-    )} */}
+      {/* <MessageInput /> */}
+            {/* Show MessageInput only if neither form nor WelcomeChat is active */}
+            {!formButtonClicked && chatHistory.length > 1 && !newChatClicked && (
+        <MessageInput />
+      )}
+      </>
+    )}
     </div>
 
   //   <div className="flex-1 flex flex-col overflow-auto">

@@ -193,13 +193,13 @@ const MessageInput = () => {
   const handleNewChat = (teamSelcted) => {
 
     // // Logic for a new chat, e.g., open a modal or reset state
-    // console.log("New Chat initiated");
+    console.log("New Chat initiated");
     // console.log(teamSelcted)
-    // if(teamSelcted == 'Onboarding Team'){
+    if(teamSelcted == 'Onboarding Team'){
 
-    //   console.log(teamSelcted,'this is the the team onbpardong')
-    //   getNewChat(1)
-    // }
+      console.log(teamSelcted,'this is the the team onbpardong')
+      getNewChat(1)
+    }
     console.log("button clicked", teamSelcted);
   };
 
