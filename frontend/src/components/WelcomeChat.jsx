@@ -2,13 +2,16 @@ import React from "react";
 import { useChatStore } from "../store/useChatStore";
 
 const WelcomeChat = () => {
-  const { teamSelcted } = useChatStore();
-  const handleNewOnboarding = () => {
-    console.log("Starting new onboarding");
+  const { teamSelcted, formButtonClicked, setFormButton } = useChatStore();
+
+
+  const handleNewForm = () => {
+    console.log("Starting new FROM");
+
     // Add your onboarding logic here
   };
 
-  const handlePreviousOnboardings = () => {
+  const chatManuallyButton = () => {
     console.log("Viewing previous onboardings");
     // Add your status check logic here
   };
@@ -31,10 +34,10 @@ const WelcomeChat = () => {
       </div>
 
       <div className="flex flex-col md:flex-row justify-center gap-2 mt-3">
-        <button onClick={handleNewOnboarding} className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48">
+        <button onClick={handleNewForm} className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48">
           Start new onboarding
         </button>
-        <button onClick={handlePreviousOnboardings} className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48">
+        <button onClick={chatManuallyButton} className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48">
           {/* Status of previous onboardings */}
           Chat Manually
         </button>

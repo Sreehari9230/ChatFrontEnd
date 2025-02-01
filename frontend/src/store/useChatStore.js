@@ -18,15 +18,26 @@ export const useChatStore = create((set, get) => ({
     deaprtmentSelected: '',
     isTeamSelected: false,
     teamSelcted: '',
-
+    
 
     isChatHistoryLoading: false,
     // chats: [],
-
-    isChatLoading: false,
+    // isChatLoading: false,
     chatHistory: [],
-
     isHistoryModalOpen: false,
+
+    newChatClicked:false,
+    newChatId: null,
+
+
+    formButtonClicked: false,
+
+    setFormButton: () => {
+        set({ formButtonClicked : true})
+        set({newChatClicked: false})
+    },
+
+
 
 
     setDepartmentSelected: (department) => {
@@ -75,34 +86,10 @@ export const useChatStore = create((set, get) => ({
     }
     ,
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     getNewChat: async (teamSelected) => {
-        set({ isChatLoading: true })
+        set({ newChatClicked: true })
         try {
-            console.log('NewChat fetching');
+            console.log('NewChat fetching for id hahahah');
             // Retrieve the accessToken from localStorage
             const accessToken = localStorage.getItem('access_token'); // Adjust 'accessToken' to your actual storage key
             if (!accessToken) {
@@ -114,7 +101,7 @@ export const useChatStore = create((set, get) => ({
                 },
             });
             // Update the state with the fetched chat history
-            set({ chat: res.data }); // Assuming `res.data` contains the chat sessions
+            set({ newChatId: res.data }); // Assuming `res.data` contains the chat sessions
             console.log(chat)
         } catch (error) {
             toast.error(error)
