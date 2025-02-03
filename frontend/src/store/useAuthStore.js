@@ -15,6 +15,25 @@ export const useAuthStore = create((set) => ({
     userRole: null,
     userId: null,
 
+    userAuth: false,
+
+    checkAuth: () => {
+        try {
+          const token = localStorage.getItem("token");
+    
+          if (token) {
+            set({ userAuth: true });
+          } else {
+            set({ userAuth: false });
+          }
+        } catch (error) {
+          toast.error("Error checking authentication");
+          set({ userAuth: false });
+        } finally {
+          set({ isCheckingAuth: false });
+        }
+      },
+
     // function to check auth when reloading the page the page will be checking if the user is authenticated
     // checkAuth: async () => {
     //     try {
