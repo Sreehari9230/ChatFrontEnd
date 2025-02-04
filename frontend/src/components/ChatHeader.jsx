@@ -16,10 +16,13 @@ const ChatHeader = () => {
 
   const handleModalOpen = () => setHistoryModal(true);
   const handleModalClose = () => setHistoryModal(false);
-  // const handleGetChat = (team) => {
+  // const handleGetChatHistory = (team) => {
   //   if (team == "Onboarding Team") {
-  //     console.log("Chat History Of", team);
+  //     console.log(`Chat History Loading For ${team}`)
   //     getChatHistory(1);
+  //   } else if( team == 'Recruitment Team'){
+  //     console.log(`Chat History Loading For ${team}`)
+  //     getChatHistory(2)
   //   }
   // };
 

@@ -30,11 +30,11 @@ const Sidebar = () => {
     console.log(team);
     console.log(teamSelcted);
     if (team == "Onboarding Team") {
-      console.log("Chat History Of", team);
-      getChatHistory(1);
-    } else if(team == "Recruit Team") {
-      console.log("Chat History Of", team);
-      getChatHistory(2);
+      console.log(`Chat History Loading For ${team}`);
+      // getChatHistory(1);
+    } else if (team == "Recruitment Team") {
+      console.log(`Chat History Loading For ${team}`);
+      // getChatHistory(2);
     }
   };
 

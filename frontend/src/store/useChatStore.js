@@ -11,34 +11,59 @@ export const useChatStore = create((set, get) => ({
     isUsersLoading: false,
     isMessagesLoading: false,
 
-
-
-
     isDeparmentLoading: false,
     deaprtmentSelected: '',
     isTeamSelected: false,
     teamSelcted: '',
-    
 
     isChatHistoryLoading: false,
     // chats: [],
     // isChatLoading: false,
     chatHistory: [],
+
+    hasChatHistory: false,
+
+
     isHistoryModalOpen: false,
 
-    newChatClicked:false,
+
+
+    newChatClicked: false,
     newChatId: null,
+
+
+    chatId: null,
 
 
     formButtonClicked: false,
 
-    setFormButton: () => {
-        set({ formButtonClicked : true})
-        set({newChatClicked: false})
+    chatManuallyButtonClicked: false,
+
+    newChatButtonClicked: false,
+
+    setFormButtonClicked: () => {
+        console.log('insode setformbuttonclicked')
+        set({ formButtonClicked: true })
+        set({ hasChatHistory: false })
+        set({ newChatClicked: false })
+    },
+
+    setChatManuallyButtonClicked: () => {
+        set({ chatManuallyButtonClicked: true })
+        set({ formButtonClicked: false })
+        set({ hasChatHistory: true })
+        // set({ newChatClicked: false })
+    },
+
+    setNewChatButtonClicked: () => {
+        set({ newChatButtonClicked: true })
     },
 
 
-
+    // setFormButton: () => {
+    //     set({ formButtonClicked: true })
+    //     set({ newChatClicked: false })
+    // },
 
     setDepartmentSelected: (department) => {
         set({ deaprtmentSelected: department })
@@ -53,74 +78,68 @@ export const useChatStore = create((set, get) => ({
 
     getChatHistory: async (teamSelected) => {
         set({ isChatHistoryLoading: true });
-    
         try {
             console.log('Fetching chat history...');
             const accessToken = localStorage.getItem('access_token');
             if (!accessToken) {
                 throw new Error('Access token is missing. Please log in again.');
             }
-    
+
             const res = await axiosInstance.get(`/organization/agent/${teamSelected}/chat-sessions/`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
             console.log('port is open?')
-    
-            // ✅ Update state correctly and log inside set
+
             set((state) => {
                 console.log('Updated chat history:', res.data);
                 return { chatHistory: res.data };
             });
-    
-            // ❌ This won't work because set is async
-            // console.log(chatHistory);  // Remove this
-    
         } catch (error) {
             toast.error(error.message);
             console.error("Error fetching chat history:", error);
         } finally {
             set({ isChatHistoryLoading: false });
         }
-    }
-    ,
+    },
 
-    getNewChat: async (teamSelected) => {
-        set({ newChatClicked: true })
-        try {
-            console.log('NewChat fetching for id hahahah');
-            // Retrieve the accessToken from localStorage
-            const accessToken = localStorage.getItem('access_token'); // Adjust 'accessToken' to your actual storage key
-            if (!accessToken) {
-                throw new Error('Access token is missing. Please log in again.');
-            }
-            const res = await axiosInstance.post(`organization/agents/${teamSelected}/create-chat-message/`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-            // Update the state with the fetched chat history
-            set({ newChatId: res.data }); // Assuming `res.data` contains the chat sessions
-            console.log(chat)
-        } catch (error) {
-            toast.error(error)
-        } finally {
-            set({ isChatLoading: false })
+    setHasChatHistory: () => {
+        if (chatHistory.length == 0) {
+            set({ hasChatHistory: false })
+        } else {
+            set({ hasChatHistory: true })
         }
     },
 
+    getNewChat: async (teamSelected) => {
+        // set({ newChatClicked: true });
+        try {
+            console.log(`New Chat Is Fetching For ${teamSelected}`);
 
+            const accessToken = localStorage.getItem('access_token');
+            if (!accessToken) {
+                throw new Error('Access token is missing. Please log in again.');
+            }
 
+            const res = await axiosInstance.post(
+                `organization/agents/${teamSelected}/create-chat-message/`, {}, // Ensure the request body is an empty object if needed
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
 
-
-
-
-
-
-
-
-
+            set({ chatId: res.data.chat_message_id });
+            console.log(`New Chat ID: ${res.data.chat_message_id}`);
+        } catch (error) {
+            toast.error(error.message || "An error occurred while fetching the chat.");
+        }
+        // finally {
+        //     set({ isChatLoading: false });
+        // }
+    },
 
     // getUsers: async () => {
     //     set({ isUsersLoading: true })
@@ -158,6 +177,4 @@ export const useChatStore = create((set, get) => ({
 
     // optimize this one later later
     // setSelectedUser: (selectedUser) => set({ selectedUser })
-
-
 }))
