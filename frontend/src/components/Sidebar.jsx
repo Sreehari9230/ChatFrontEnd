@@ -20,7 +20,7 @@ const Sidebar = () => {
     setActiveDropdown(activeDropdown === department ? null : department);
     setDepartmentSelected(department);
     console.log(department);
-    console.log(departmentSelected);
+    // console.log(departmentSelected);
   };
 
   const handleTeamSelection = (team) => {
@@ -31,10 +31,10 @@ const Sidebar = () => {
     console.log(teamSelcted);
     if (team == "Onboarding Team") {
       console.log(`Chat History Loading For ${team}`);
-      getChatHistory(1);
+      // getChatHistory(1);
     } else if (team == "Recruitment Team") {
       console.log(`Chat History Loading For ${team}`);
-      getChatHistory(2);
+      // getChatHistory(2);
     }
   };
 

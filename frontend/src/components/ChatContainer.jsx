@@ -39,13 +39,14 @@ const ChatContainer = () => {
   //   );
 
   const formRenderContent = () => {
-    if (formButtonClicked) {
+    console.log(formButtonClicked)
+    // if (formButtonClicked) {
       // Show appropriate form based on team selection
       if (teamSelcted === "Recruitment Team") {
         return <RecruitmentForm />;
       } else if (teamSelcted === "Onboarding Team") {
         return <OnboardingForm />;
-      }
+      // }
     }
 
     // // Show welcome chat if there's chat history or new chat is clicked
