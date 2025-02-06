@@ -12,6 +12,7 @@ const ChatHeader = () => {
     chatHistory,
     teamSelcted,
     getChatHistory,
+    chatId,
   } = useChatStore();
 
   const handleModalOpen = () => setHistoryModal(true);
@@ -31,7 +32,9 @@ const ChatHeader = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div>
-            <h3 className="font-medium">CHAT ID</h3>
+            <h3 className="font-medium">
+              CHAT ID: {chatId !== null ? chatId : "Not Connected"}
+            </h3>
           </div>
         </div>
         {/* Right Section: History Icon */}

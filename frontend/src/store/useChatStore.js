@@ -77,6 +77,34 @@ export const useChatStore = create((set, get) => ({
 
     setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
 
+    // getChatHistory: async (teamSelected) => {
+    //     set({ isChatHistoryLoading: true });
+    //     try {
+    //         console.log('Fetching chat history...');
+    //         const accessToken = localStorage.getItem('access_token');
+    //         if (!accessToken) {
+    //             throw new Error('Access token is missing. Please log in again.');
+    //         }
+
+    //         const res = await axiosInstance.get(`/organization/agent/${teamSelected}/chat-sessions/`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${accessToken}`,
+    //             },
+    //         });
+    //         console.log('port is open?')
+
+    //         set((state) => {
+    //             console.log('Updated chat history:', res.data);
+    //             return { chatHistory: res.data };
+    //         });
+    //     } catch (error) {
+    //         toast.error(error.message);
+    //         console.error("Error fetching chat history:", error);
+    //     } finally {
+    //         set({ isChatHistoryLoading: false });
+    //     }
+    // },
+
     getChatHistory: async (teamSelected) => {
         set({ isChatHistoryLoading: true });
         try {
@@ -91,11 +119,20 @@ export const useChatStore = create((set, get) => ({
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            console.log('port is open?')
+
+            console.log('Port is open?');
 
             set((state) => {
                 console.log('Updated chat history:', res.data);
-                return { chatHistory: res.data };
+                const chatHistory = res.data;
+
+                // If chat history is not empty, update the chatId with the last chat session ID
+                const lastChatId = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1].id : null;
+
+                return {
+                    chatHistory,
+                    chatId: lastChatId, // Update chatId state
+                };
             });
         } catch (error) {
             toast.error(error.message);
@@ -104,6 +141,7 @@ export const useChatStore = create((set, get) => ({
             set({ isChatHistoryLoading: false });
         }
     },
+
 
     setHasChatHistory: () => {
         if (chatHistory.length == 0) {
