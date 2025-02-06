@@ -151,34 +151,63 @@ export const useChatStore = create((set, get) => ({
         }
     },
 
+    // getNewChat: async (teamSelected) => {
+    //     // set({ newChatClicked: true });
+    //     try {
+    //         console.log(`New Chat Is Fetching For ${teamSelected}`);
+
+    //         const accessToken = localStorage.getItem('access_token');
+    //         if (!accessToken) {
+    //             throw new Error('Access token is missing. Please log in again.');
+    //         }
+
+    //         const res = await axiosInstance.post(
+    //             `organization/agents/${teamSelected}/create-chat-message/`, {}, // Ensure the request body is an empty object if needed
+    //             {
+    //                 headers: {
+    //                     Authorization: `Bearer ${accessToken}`,
+    //                 },
+    //             }
+    //         );
+
+    //         set({ chatId: res.data.chat_message_id });
+    //         console.log(`New Chat ID: ${res.data.chat_message_id}`);
+    //     } catch (error) {
+    //         toast.error(error.message || "An error occurred while fetching the chat.");
+    //     }
+    //     // finally {
+    //     //     set({ isChatLoading: false });
+    //     // }
+    // },
+
     getNewChat: async (teamSelected) => {
-        // set({ newChatClicked: true });
         try {
             console.log(`New Chat Is Fetching For ${teamSelected}`);
-
+    
             const accessToken = localStorage.getItem('access_token');
             if (!accessToken) {
                 throw new Error('Access token is missing. Please log in again.');
             }
-
+    
             const res = await axiosInstance.post(
-                `organization/agents/${teamSelected}/create-chat-message/`, {}, // Ensure the request body is an empty object if needed
+                `organization/agents/${teamSelected}/create-chat-message/`,
+                {},
                 {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 }
             );
-
-            set({ chatId: res.data.chat_message_id });
-            console.log(`New Chat ID: ${res.data.chat_message_id}`);
+    
+            const newChatId = res.data.chat_message_id;
+            set((state) => ({ ...state, chatId: newChatId })); // ✅ Update chatId state
+    
+            console.log(`New Chat ID: ${newChatId}`);
         } catch (error) {
             toast.error(error.message || "An error occurred while fetching the chat.");
         }
-        // finally {
-        //     set({ isChatLoading: false });
-        // }
     },
+    
 
     // getUsers: async () => {
     //     set({ isUsersLoading: true })
