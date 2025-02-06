@@ -1,49 +1,62 @@
-import { useState, useEffect, useCallback } from "react";
+class WebSocketService {
+  constructor(chatId, onMessageReceived, onConnectionStatusChange) {
+    this.chatId = chatId;
+    this.ws = null;
+    this.onMessageReceived = onMessageReceived;
+    this.onConnectionStatusChange = onConnectionStatusChange;
+  }
 
-const useWebSocket = (url) => {
-  const [socket, setSocket] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    const ws = new WebSocket(url);
-
-    ws.onopen = () => {
-      console.log("WebSocket Connected");
-      setIsConnected(true);
-    };
-
-    ws.onmessage = (event) => {
-      console.log("Received:", event.data);
-      try {
-        const data = JSON.parse(event.data);
-        setMessages((prev) => [...prev, data]);
-      } catch (error) {
-        console.error("Invalid JSON:", error);
-      }
-    };
-
-    ws.onclose = () => {
-      console.log("WebSocket Disconnected");
-      setIsConnected(false);
-    };
-
-    setSocket(ws);
-
-    return () => {
-      ws.close();
-    };
-  }, [url]);
-
-  const sendMessage = useCallback((message) => {
-    if (socket && isConnected) {
-      socket.send(JSON.stringify(message));
-    } else {
-      console.error("WebSocket is not connected.");
+  connect() {
+    if (!this.chatId) {
+      console.error("WebSocketService: chatId is missing.");
+      return;
     }
-  }, [socket, isConnected]);
 
-  return { isConnected, messages, sendMessage };
-};
+    this.ws = new WebSocket(`wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/${this.chatId}/`);
 
-export default useWebSocket;
+    this.ws.onopen = () => {
+      console.log("✅ WebSocket Connected");
+      this.onConnectionStatusChange(true);
+    };
+
+    this.ws.onmessage = (event) => {
+      console.log("📩 Message received:", event.data);
+      this.onMessageReceived(event.data);
+    };
+
+    this.ws.onerror = (error) => {
+      console.error("❌ WebSocket Error:", error);
+    };
+
+    this.ws.onclose = (closeEvent) => {
+      console.log("🔴 WebSocket Disconnected", closeEvent.code, closeEvent.reason);
+    
+      // Attempt reconnection after a delay if the error is recoverable
+      if (![1000, 1006].includes(closeEvent.code)) {
+        setTimeout(() => {
+          this.connect();
+        }, 3000);
+      }
+    
+      this.onConnectionStatusChange(false);
+    };
+  }
+
+  sendMessage(message) {
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify(message));
+      console.log("📤 Message sent:", message);
+    } else {
+      console.error("❌ WebSocket is not open.");
+    }
+  }
+
+  close() {
+    if (this.ws) {
+      this.ws.close();
+      console.log("🛑 WebSocket Closed");
+    }
+  }
+}
+
+export default WebSocketService;
