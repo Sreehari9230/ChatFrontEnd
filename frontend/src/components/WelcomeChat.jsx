@@ -28,9 +28,9 @@ const WelcomeChat = () => {
     setChatManuallyButtonClicked()
     if (teamSelcted == "Onboarding Team") {
       console.log("insode if");
-      getNewChat(1);
+      // getNewChat(1);
     } else if (teamSelcted == "Recruitment Team") {
-      getNewChat(2);
+      // getNewChat(2);
     }
   };
 
