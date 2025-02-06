@@ -26,12 +26,12 @@ const WelcomeChat = () => {
     console.log(`Starting To Chat Manually in ${teamSelcted}`);
     console.log(teamSelcted);
     setChatManuallyButtonClicked()
-    // if (teamSelcted == "Onboarding Team") {
-    //   console.log("insode if");
-    //   getNewChat(1);
-    // } else if (teamSelcted == "Recruitment Team") {
-    //   getNewChat(2);
-    // }
+    if (teamSelcted == "Onboarding Team") {
+      console.log("insode if");
+      getNewChat(1);
+    } else if (teamSelcted == "Recruitment Team") {
+      getNewChat(2);
+    }
   };
 
   return (
