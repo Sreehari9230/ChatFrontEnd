@@ -65,8 +65,8 @@ const ChatContainer = () => {
 
   <div className="flex-1 flex flex-col overflow-auto">
   <ChatHeader />
-  
-  {newChatClicked || !hasChatHistory ? (
+  {formRenderContent()}
+  {/* {newChatClicked || !hasChatHistory ? (
     <WelcomeChat />
   ) : formButtonClicked ? (
     formRenderContent()
@@ -75,7 +75,7 @@ const ChatContainer = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
       <MessageInput />
     </>
-  ) : null}
+  ) : null} */}
 </div>
 
   );

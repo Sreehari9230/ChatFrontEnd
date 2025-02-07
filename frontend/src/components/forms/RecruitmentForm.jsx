@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useChatStore } from "../../store/useChatStore"; // Assuming you use a store
+import WebSocketService from "../../Websocket/websocket";
 
 const RecruitmentForm = () => {
+  const { chatId } = useChatStore(); // Get chat ID from store
+  const [wsService, setWsService] = useState(null);
+
   const [formData, setFormData] = useState({
     jobTitle: "",
     department: "",
@@ -10,298 +15,145 @@ const RecruitmentForm = () => {
     targetDeadline: "",
   });
 
+  useEffect(() => {
+    if (chatId) {
+      const service = new WebSocketService(
+        chatId,
+        () => {},
+        () => {}
+      );
+      service.connect();
+      setWsService(service);
+
+      return () => service.close();
+    }
+  }, [chatId]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+
+    if (wsService && wsService.ws.readyState === WebSocket.OPEN) {
+      const payload = {
+        action: "form_submission",
+        data: formData,
+      };
+
+      wsService.sendMessage(payload);
+      console.log("📤 Form data sent via WebSocket:", payload);
+    } else {
+      console.error("❌ WebSocket is not connected.");
+    }
   };
 
-  const handleChatManually = () => {
-    console.log("Chat manually button clicked!");
-  };
   return (
-    // <div>
-    // <form
-    //   className="p-6 border rounded-lg shadow-md bg-white max-w-md mx-auto"
-    //   onSubmit={handleSubmit}
-    //   aria-labelledby="recruitment-form-title"
-    // >
-    //   <h2 id="recruitment-form-title" className="text-xl font-bold mb-6">New Recruitment Request</h2>
-
-    //   {/* Job Title */}
-    //   <div className="form-control mb-4">
-    //     <label htmlFor="jobTitle" className="label">
-    //       <span className="label-text font-medium">Job Title</span>
-    //     </label>
-    //     <input
-    //       id="jobTitle"
-    //       type="text"
-    //       name="jobTitle"
-    //       placeholder="Enter job title"
-    //       value={formData.jobTitle}
-    //       onChange={handleChange}
-    //       className="input input-bordered w-full"
-    //       required
-    //       aria-required="true"
-    //     />
-    //   </div>
-
-    //   {/* Department */}
-    //   <div className="form-control mb-4">
-    //     <label htmlFor="department" className="label">
-    //       <span className="label-text font-medium">Department</span>
-    //     </label>
-    //     <input
-    //       id="department"
-    //       type="text"
-    //       name="department"
-    //       placeholder="Enter department name"
-    //       value={formData.department}
-    //       onChange={handleChange}
-    //       className="input input-bordered w-full"
-    //       required
-    //       aria-required="true"
-    //     />
-    //   </div>
-
-    //   {/* Number of Positions */}
-    //   <div className="form-control mb-4">
-    //     <label htmlFor="positions" className="label">
-    //       <span className="label-text font-medium">Number of Positions</span>
-    //     </label>
-    //     <input
-    //       id="positions"
-    //       type="number"
-    //       name="positions"
-    //       placeholder="Enter number of positions"
-    //       value={formData.positions}
-    //       onChange={handleChange}
-    //       className="input input-bordered w-full"
-    //       min={1}
-    //       required
-    //       aria-required="true"
-    //     />
-    //   </div>
-
-    //   {/* Required Skills */}
-    //   <div className="form-control mb-4">
-    //     <label htmlFor="skills" className="label">
-    //       <span className="label-text font-medium">Required Skills</span>
-    //     </label>
-    //     <textarea
-    //       id="skills"
-    //       name="skills"
-    //       placeholder="List required skills"
-    //       value={formData.skills}
-    //       onChange={handleChange}
-    //       className="textarea textarea-bordered w-full"
-    //       required
-    //       aria-required="true"
-    //       rows={4}
-    //     ></textarea>
-    //   </div>
-
-    //   {/* Experience Level */}
-    //   <div className="form-control mb-4">
-    //     <label htmlFor="experienceLevel" className="label">
-    //       <span className="label-text font-medium">Experience Level</span>
-    //     </label>
-    //     <select
-    //       id="experienceLevel"
-    //       name="experienceLevel"
-    //       value={formData.experienceLevel}
-    //       onChange={handleChange}
-    //       className="select select-bordered w-full"
-    //       required
-    //       aria-required="true"
-    //     >
-    //       <option value="">Select experience level</option>
-    //       <option value="Entry Level">Entry Level</option>
-    //       <option value="Mid Level">Mid Level</option>
-    //       <option value="Senior Level">Senior Level</option>
-    //     </select>
-    //   </div>
-
-    //   {/* Target Deadline */}
-    //   <div className="form-control mb-6">
-    //     <label htmlFor="targetDeadline" className="label">
-    //       <span className="label-text font-medium">Target Deadline</span>
-    //     </label>
-    //     <input
-    //       id="targetDeadline"
-    //       type="date"
-    //       name="targetDeadline"
-    //       value={formData.targetDeadline}
-    //       onChange={handleChange}
-    //       className="input input-bordered w-full"
-    //       required
-    //       aria-required="true"
-    //     />
-    //   </div>
-
-    //   {/* Buttons */}
-    //   <div className="flex gap-4">
-    //     <button
-    //       type="submit"
-    //       className="btn btn-primary w-full"
-    //       aria-label="Submit Recruitment Request"
-    //     >
-    //       Submit Request
-    //     </button>
-    //     <button
-    //       type="button"
-    //       className="btn btn-secondary w-full"
-    //       onClick={handleChatManually}
-    //       aria-label="Open Manual Chat"
-    //     >
-    //       Chat Manually
-    //     </button>
-    //   </div>
-    // </form>
-    // </div>
-
+<div className="flex justify-center mt-4">
     <form
-      className="p-6 border rounded-lg shadow-md max-w-md w-full mx-auto"
+      className="p-4 border rounded-lg shadow max-w-lg w-full bg-base-100"
       onSubmit={handleSubmit}
-      aria-labelledby="recruitment-form-title"
     >
-      <h2 id="recruitment-form-title" className="text-xl font-bold mb-6">
-        New Recruitment Request
-      </h2>
+      <h2 className="text-lg font-semibold mb-4 text-center">New Recruitment Request</h2>
 
-      {/* Job Title */}
-      <div className="form-control mb-4">
-        <label htmlFor="jobTitle" className="label">
-          <span className="label-text font-medium">Job Title</span>
-        </label>
-        <input
-          id="jobTitle"
-          type="text"
-          name="jobTitle"
-          placeholder="Enter job title"
-          value={formData.jobTitle}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-          required
-          aria-required="true"
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Job Title */}
+        <div className="form-control">
+          <label className="label-text">Job Title</label>
+          <input
+            type="text"
+            name="jobTitle"
+            placeholder="Enter job title"
+            value={formData.jobTitle}
+            onChange={handleChange}
+            className="input input-sm input-bordered w-full"
+            required
+          />
+        </div>
+
+        {/* Department */}
+        <div className="form-control">
+          <label className="label-text">Department</label>
+          <input
+            type="text"
+            name="department"
+            placeholder="Enter department"
+            value={formData.department}
+            onChange={handleChange}
+            className="input input-sm input-bordered w-full"
+            required
+          />
+        </div>
+
+        {/* Number of Positions */}
+        <div className="form-control">
+          <label className="label-text">Positions</label>
+          <input
+            type="number"
+            name="positions"
+            placeholder="Count"
+            value={formData.positions}
+            onChange={handleChange}
+            className="input input-sm input-bordered w-full"
+            min={1}
+            required
+          />
+        </div>
+
+        {/* Experience Level */}
+        <div className="form-control">
+          <label className="label-text">Experience Level</label>
+          <select
+            name="experienceLevel"
+            value={formData.experienceLevel}
+            onChange={handleChange}
+            className="select select-sm select-bordered w-full"
+            required
+          >
+            <option value="">Select</option>
+            <option value="Entry Level">Entry</option>
+            <option value="Mid Level">Mid</option>
+            <option value="Senior Level">Senior</option>
+          </select>
+        </div>
+
+        {/* Required Skills */}
+        <div className="form-control md:col-span-2">
+          <label className="label-text">Skills</label>
+          <textarea
+            name="skills"
+            placeholder="List required skills"
+            value={formData.skills}
+            onChange={handleChange}
+            className="textarea textarea-sm input-bordered w-full"
+            rows={2}
+            required
+          ></textarea>
+        </div>
+
+        {/* Target Deadline */}
+        <div className="form-control md:col-span-2">
+          <label className="label-text">Target Deadline</label>
+          <input
+            type="date"
+            name="targetDeadline"
+            value={formData.targetDeadline}
+            onChange={handleChange}
+            className="input input-sm input-bordered w-full"
+            required
+          />
+        </div>
       </div>
 
-      {/* Department */}
-      <div className="form-control mb-4">
-        <label htmlFor="department" className="label">
-          <span className="label-text font-medium">Department</span>
-        </label>
-        <input
-          id="department"
-          type="text"
-          name="department"
-          placeholder="Enter department name"
-          value={formData.department}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-          required
-          aria-required="true"
-        />
-      </div>
-
-      {/* Number of Positions */}
-      <div className="form-control mb-4">
-        <label htmlFor="positions" className="label">
-          <span className="label-text font-medium">Number of Positions</span>
-        </label>
-        <input
-          id="positions"
-          type="number"
-          name="positions"
-          placeholder="Enter number of positions"
-          value={formData.positions}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-          min={1}
-          required
-          aria-required="true"
-        />
-      </div>
-
-      {/* Required Skills */}
-      <div className="form-control mb-4">
-        <label htmlFor="skills" className="label">
-          <span className="label-text font-medium">Required Skills</span>
-        </label>
-        <textarea
-          id="skills"
-          name="skills"
-          placeholder="List required skills"
-          value={formData.skills}
-          onChange={handleChange}
-          className="textarea input-bordered w-full"
-          required
-          aria-required="true"
-          rows={4}
-        ></textarea>
-      </div>
-
-      {/* Experience Level */}
-      <div className="form-control mb-4">
-        <label htmlFor="experienceLevel" className="label">
-          <span className="label-text font-medium">Experience Level</span>
-        </label>
-        <select
-          id="experienceLevel"
-          name="experienceLevel"
-          value={formData.experienceLevel}
-          onChange={handleChange}
-          className="select input-bordered w-full"
-          required
-          aria-required="true"
-        >
-          <option value="">Select experience level</option>
-          <option value="Entry Level">Entry Level</option>
-          <option value="Mid Level">Mid Level</option>
-          <option value="Senior Level">Senior Level</option>
-        </select>
-      </div>
-
-      {/* Target Deadline */}
-      <div className="form-control mb-6">
-        <label htmlFor="targetDeadline" className="label">
-          <span className="label-text font-medium">Target Deadline</span>
-        </label>
-        <input
-          id="targetDeadline"
-          type="date"
-          name="targetDeadline"
-          value={formData.targetDeadline}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-          required
-          aria-required="true"
-        />
-      </div>
-
-      {/* Buttons */}
-      <div className="flex gap-4 w-full">
-        <button
-          type="submit"
-          className="btn flex-1"
-          aria-label="Submit Recruitment Request"
-        >
+      {/* Submit Button */}
+      <div className="mt-4">
+        <button type="submit" className="btn btn-primary btn-sm w-full">
           Submit Request
-        </button>
-        <button
-          type="button"
-          className="btn flex-1"
-          onClick={handleChatManually}
-          aria-label="Open Manual Chat"
-        >
-          Chat Manually
         </button>
       </div>
     </form>
+  </div>
   );
 };
 
