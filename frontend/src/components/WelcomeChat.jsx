@@ -25,7 +25,7 @@ const WelcomeChat = () => {
   const chatManuallyButton = () => {
     console.log(`Starting To Chat Manually in ${teamSelcted}`);
     console.log(teamSelcted);
-    setChatManuallyButtonClicked()
+    setChatManuallyButtonClicked();
     if (teamSelcted == "Onboarding Team") {
       console.log("insode if");
       // getNewChat(1);
@@ -56,8 +56,11 @@ const WelcomeChat = () => {
           onClick={handleNewForm}
           className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48"
         >
-          Start new onboarding
+          {teamSelcted === "Onboarding Team"
+            ? "Start New Onboarding"
+            : "Start New Recruitment"}
         </button>
+
         <button
           onClick={chatManuallyButton}
           className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48"
