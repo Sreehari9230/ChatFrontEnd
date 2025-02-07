@@ -50,7 +50,7 @@ const RecruitmentForm = () => {
   };
 
   return (
-<div className="flex justify-center mt-4">
+<div className="flex justify-center mt-4 pt-10">
     <form
       className="p-4 border rounded-lg shadow max-w-lg w-full bg-base-100"
       onSubmit={handleSubmit}
