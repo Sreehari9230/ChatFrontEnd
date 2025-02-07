@@ -59,7 +59,13 @@ export const useChatStore = create((set, get) => ({
     setNewChatButtonClicked: () => {
         set({ newChatButtonClicked: true })
     },
-    
+
+
+    // setFormButton: () => {
+    //     set({ formButtonClicked: true })
+    //     set({ newChatClicked: false })
+    // },
+
     setDepartmentSelected: (department) => {
         set({ deaprtmentSelected: department })
     },

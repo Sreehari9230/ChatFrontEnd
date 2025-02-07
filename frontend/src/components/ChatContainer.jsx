@@ -31,6 +31,7 @@ const ChatContainer = () => {
     // if (formButtonClicked) {
       // Show appropriate form based on team selection
       if (teamSelcted === "Recruitment Team") {
+        console.log('insode render content')
         return <RecruitmentForm />;
       } else if (teamSelcted === "Onboarding Team") {
         return <OnboardingForm />;
@@ -48,19 +49,35 @@ const ChatContainer = () => {
 
   return (
 
-    <div className="flex-1 flex flex-col overflow-auto">
-    <ChatHeader />
-    {!hasChatHistory || newChatClicked ? (
-      <WelcomeChat />
-    ) : formButtonClicked ? (
-      formRenderContent()
-    ) : chatManuallyButtonClicked || !hasChatHistory ? ( // Fixed syntax
-      <>
-        <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
-        <MessageInput />
-      </>
-    ) : null} {/* Added a fallback */}
-  </div>
+  //   <div className="flex-1 flex flex-col overflow-auto">
+  //   <ChatHeader />
+  //   {!hasChatHistory || newChatClicked ? (
+  //     <WelcomeChat />
+  //   ) : formButtonClicked ? (
+  //     formRenderContent()
+  //   ) : chatManuallyButtonClicked || !hasChatHistory ? ( // Fixed syntax
+  //     <>
+  //       <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
+  //       <MessageInput />
+  //     </>
+  //   ) : null} {/* Added a fallback */}
+  // </div>
+
+  <div className="flex-1 flex flex-col overflow-auto">
+  <ChatHeader />
+  
+  {newChatClicked || !hasChatHistory ? (
+    <WelcomeChat />
+  ) : formButtonClicked ? (
+    formRenderContent()
+  ) : chatManuallyButtonClicked || hasChatHistory ? (
+    <>
+      <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
+      <MessageInput />
+    </>
+  ) : null}
+</div>
+
   );
 };
 
