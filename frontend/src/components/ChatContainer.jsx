@@ -8,6 +8,7 @@ import { formatMessageTime } from "../lib/utils";
 import OnboardingForm from "./forms/OnboardingForm";
 import RecruitmentForm from "./forms/RecruitmentForm";
 import WelcomeChat from "./WelcomeChat";
+import ChatBubbles from "./ChatBubbles"
 
 const ChatContainer = () => {
   const {
@@ -65,7 +66,8 @@ const ChatContainer = () => {
 
   <div className="flex-1 flex flex-col overflow-auto">
   <ChatHeader />
-  {formRenderContent()}
+  {/* {formRenderContent()}/ */}
+  <ChatBubbles/>
   {/* {newChatClicked || !hasChatHistory ? (
     <WelcomeChat />
   ) : formButtonClicked ? (
