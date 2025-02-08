@@ -45,11 +45,23 @@ class WebSocketService {
   sendMessage(message) {
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
       this.ws.send(JSON.stringify(message));
+
       console.log("📤 Message sent:", message);
     } else {
       console.error("❌ WebSocket is not open.");
     }
   }
+
+    // New function to fetch chat messages
+    fetchChatMessages() {
+      if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+        const message = { action: "fetch_messages" };
+        this.ws.send(JSON.stringify(message));
+        console.log("📤 Sent request to fetch chat messages:", message);
+      } else {
+        console.error("❌ WebSocket is not open. Cannot fetch chat messages.");
+      }
+    }
 
   close() {
     if (this.ws) {
