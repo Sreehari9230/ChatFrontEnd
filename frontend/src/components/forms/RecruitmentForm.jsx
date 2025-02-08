@@ -7,12 +7,11 @@ const RecruitmentForm = () => {
   const [wsService, setWsService] = useState(null);
 
   const [formData, setFormData] = useState({
-    jobTitle: "",
-    department: "",
-    positions: 1,
-    skills: "",
-    experienceLevel: "",
-    targetDeadline: "",
+    job_title: "",
+    location: "",
+    company_name: "",
+    job_requirement: "",
+    expected_reach_out: 0,
   });
 
   useEffect(() => {
@@ -38,8 +37,8 @@ const RecruitmentForm = () => {
 
     if (wsService && wsService.ws.readyState === WebSocket.OPEN) {
       const payload = {
-        action: "form_submission",
-        data: formData,
+        action: "form",
+        form: formData,
       };
 
       wsService.sendMessage(payload);
@@ -50,110 +49,96 @@ const RecruitmentForm = () => {
   };
 
   return (
-<div className="flex justify-center mt-4 pt-10">
-    <form
-      className="p-4 border rounded-lg shadow max-w-lg w-full bg-base-100"
-      onSubmit={handleSubmit}
-    >
-      <h2 className="text-lg font-semibold mb-4 text-center">New Recruitment Request</h2>
+    <div className="flex justify-center mt-4 pt-10">
+      <form
+        className="p-4 border-gray-50 rounded-lg shadow max-w-lg w-full bg-base-100"
+        onSubmit={handleSubmit}
+      >
+        <h2 className="text-lg font-semibold mb-4 text-center">
+          New Recruitment Request
+        </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Job Title */}
-        <div className="form-control">
-          <label className="label-text">Job Title</label>
-          <input
-            type="text"
-            name="jobTitle"
-            placeholder="Enter job title"
-            value={formData.jobTitle}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            required
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Job Title */}
+          <div className="form-control">
+            <label className="label-text">Job Title</label>
+            <input
+              type="text"
+              name="job_title"
+              placeholder="Enter job title"
+              value={formData.job_title}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          {/* Location */}
+          <div className="form-control">
+            <label className="label-text">Location</label>
+            <input
+              type="text"
+              name="location"
+              placeholder="Enter job location"
+              value={formData.location}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          {/* Company Name */}
+          <div className="form-control md:col-span-2">
+            <label className="label-text">Company Name</label>
+            <input
+              type="text"
+              name="company_name"
+              placeholder="Enter company name"
+              value={formData.company_name}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          {/* Job Requirement */}
+          <div className="form-control md:col-span-2">
+            <label className="label-text">Job Requirement</label>
+            <textarea
+              name="job_requirement"
+              placeholder="List required skills"
+              value={formData.job_requirement}
+              onChange={handleChange}
+              className="textarea textarea-sm input-bordered w-full"
+              rows={2}
+              required
+            ></textarea>
+          </div>
+
+          {/* Expected Reach Out */}
+          <div className="form-control md:col-span-2">
+            <label className="label-text">Expected Reach Out</label>
+            <input
+              type="number"
+              name="expected_reach_out"
+              placeholder="Enter expected reach out count"
+              value={formData.expected_reach_out}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              min={1}
+              required
+            />
+          </div>
         </div>
 
-        {/* Department */}
-        <div className="form-control">
-          <label className="label-text">Department</label>
-          <input
-            type="text"
-            name="department"
-            placeholder="Enter department"
-            value={formData.department}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            required
-          />
+        {/* Submit Button */}
+        <div className="mt-4">
+          <button type="submit" className="btn btn-primary btn-sm w-full">
+            Submit Request
+          </button>
         </div>
-
-        {/* Number of Positions */}
-        <div className="form-control">
-          <label className="label-text">Positions</label>
-          <input
-            type="number"
-            name="positions"
-            placeholder="Count"
-            value={formData.positions}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            min={1}
-            required
-          />
-        </div>
-
-        {/* Experience Level */}
-        <div className="form-control">
-          <label className="label-text">Experience Level</label>
-          <select
-            name="experienceLevel"
-            value={formData.experienceLevel}
-            onChange={handleChange}
-            className="select select-sm select-bordered w-full"
-            required
-          >
-            <option value="">Select</option>
-            <option value="Entry Level">Entry</option>
-            <option value="Mid Level">Mid</option>
-            <option value="Senior Level">Senior</option>
-          </select>
-        </div>
-
-        {/* Required Skills */}
-        <div className="form-control md:col-span-2">
-          <label className="label-text">Skills</label>
-          <textarea
-            name="skills"
-            placeholder="List required skills"
-            value={formData.skills}
-            onChange={handleChange}
-            className="textarea textarea-sm input-bordered w-full"
-            rows={2}
-            required
-          ></textarea>
-        </div>
-
-        {/* Target Deadline */}
-        <div className="form-control md:col-span-2">
-          <label className="label-text">Target Deadline</label>
-          <input
-            type="date"
-            name="targetDeadline"
-            value={formData.targetDeadline}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            required
-          />
-        </div>
-      </div>
-
-      {/* Submit Button */}
-      <div className="mt-4">
-        <button type="submit" className="btn btn-primary btn-sm w-full">
-          Submit Request
-        </button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
   );
 };
 
