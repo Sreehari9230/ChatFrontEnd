@@ -9,7 +9,7 @@ const ChatBubbles = () => {
 
   // useEffect(() => {
   //   if (!chatId) return;
-  
+    
   //   const service = new WebSocketService(
   //     chatId,
   //     (data) => handleWebSocketMessage(data),
