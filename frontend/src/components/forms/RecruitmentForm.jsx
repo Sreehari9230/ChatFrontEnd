@@ -45,7 +45,7 @@ const RecruitmentForm = () => {
       console.log("📤 Form data sent via WebSocket:", payload);
     } else {
       console.error("❌ WebSocket is not connected.");
-    }
+    } 
   };
 
   return (
