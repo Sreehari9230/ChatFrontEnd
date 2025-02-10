@@ -5,11 +5,11 @@ import { HistoryIcon } from "lucide-react";
 
 
 export const useChatStore = create((set, get) => ({
-    messages: [],
-    users: [],
-    selectedUsers: null,
-    isUsersLoading: false,
-    isMessagesLoading: false,
+    // messages: [],
+    // users: [],
+    // selectedUsers: null,
+    // isUsersLoading: false,
+    // isMessagesLoading: false,
 
     isDeparmentLoading: false,
     deaprtmentSelected: '',
@@ -23,17 +23,12 @@ export const useChatStore = create((set, get) => ({
 
     hasChatHistory: false,
 
-
     isHistoryModalOpen: false,
-
-
 
     newChatClicked: false,
     newChatId: null,
 
-
     chatId: null,
-
 
     formButtonClicked: false,
 
@@ -142,7 +137,6 @@ export const useChatStore = create((set, get) => ({
         }
     },
 
-
     setHasChatHistory: () => {
         if (chatHistory.length == 0) {
             set({ hasChatHistory: false })
@@ -183,12 +177,12 @@ export const useChatStore = create((set, get) => ({
     getNewChat: async (teamSelected) => {
         try {
             console.log(`New Chat Is Fetching For ${teamSelected}`);
-    
+
             const accessToken = localStorage.getItem('access_token');
             if (!accessToken) {
                 throw new Error('Access token is missing. Please log in again.');
             }
-    
+
             const res = await axiosInstance.post(
                 `organization/agents/${teamSelected}/create-chat-message/`,
                 {},
@@ -198,51 +192,13 @@ export const useChatStore = create((set, get) => ({
                     },
                 }
             );
-    
+
             const newChatId = res.data.chat_message_id;
             set((state) => ({ ...state, chatId: newChatId })); // ✅ Update chatId state
-    
+
             console.log(`New Chat ID: ${newChatId}`);
         } catch (error) {
             toast.error(error.message || "An error occurred while fetching the chat.");
         }
     },
-    
-
-    // getUsers: async () => {
-    //     set({ isUsersLoading: true })
-    //     try {
-    //         const res = await axiosInstance.get('/messages/users');
-    //         set({ users: res.data })
-    //     } catch (error) {
-    //         toast.error(error.response.data.message)
-    //     } finally {
-    //         set({ isUsersLoading: false })
-    //     }
-    // },
-
-    // getMessages: async (userId) => {
-    //     set({ isMessagesLoading: true })
-    //     try {
-    //         const res = await axiosInstance.get(`/messages/${userId}`)
-    //         set({ messages: res.data })
-    //     } catch (error) {
-    //         toast.error(error.response.data.message)
-    //     } finally {
-    //         set({ isMessagesLoading: false })
-    //     }
-    // },
-
-    // sendMessage: async (messageData) => {
-    //     const { selectedUser, messages } = get()
-    //     try {
-    //         const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData)
-    //         set({ messages: [...messages, res.data] })
-    //     } catch (error) {
-    //         toast.error(error.response.data.message)
-    //     }
-    // },
-
-    // optimize this one later later
-    // setSelectedUser: (selectedUser) => set({ selectedUser })
 }))

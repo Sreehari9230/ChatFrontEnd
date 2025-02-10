@@ -19,20 +19,20 @@ export const useAuthStore = create((set) => ({
 
     checkAuth: () => {
         try {
-          const token = localStorage.getItem("token");
-    
-          if (token) {
-            set({ userAuth: true });
-          } else {
-            set({ userAuth: false });
-          }
+            const token = localStorage.getItem("token");
+
+            if (token) {
+                set({ userAuth: true });
+            } else {
+                set({ userAuth: false });
+            }
         } catch (error) {
-          toast.error("Error checking authentication");
-          set({ userAuth: false });
+            toast.error("Error checking authentication");
+            set({ userAuth: false });
         } finally {
-          set({ isCheckingAuth: false });
+            set({ isCheckingAuth: false });
         }
-      },
+    },
 
     // function to check auth when reloading the page the page will be checking if the user is authenticated
     // checkAuth: async () => {
@@ -136,20 +136,3 @@ export const useAuthStore = create((set) => ({
     updateProfile: async (data) => { },
 
 }))
-
-
-
-
-
-
-
-
-// authUser: null,
-// accessToken: null,
-// refreshToken: null,
-// userRole: null,
-// userId: null,
-
-// isLoggingIn: false,
-
-// Login logic
