@@ -41,7 +41,6 @@ export const useChatStore = create((set, get) => ({
         set({ hasChatHistory: false })
         set({ newChatClicked: false })
         set({ formButtonClicked: true })
-
     },
 
     setChatManuallyButtonClicked: () => {
