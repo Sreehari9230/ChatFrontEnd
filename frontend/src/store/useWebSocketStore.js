@@ -12,6 +12,9 @@ const useWebSocketStore = create((set, get) => ({
   connectWebSocket: (chatId) => {
     if (!chatId) return;
 
+
+    
+
     const existingService = get().wsService;
     if (existingService) {
       existingService.close(); // Close existing connection before reconnecting
