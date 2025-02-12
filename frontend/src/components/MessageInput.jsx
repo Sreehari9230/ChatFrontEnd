@@ -4,7 +4,7 @@ import { Plus, Paperclip, Send, Wifi, WifiOff } from "lucide-react";
 import WebSocketService from "../Websocket/websocket";
 
 const MessageInput = () => {
-  const { teamSelcted, getNewChat, chatId } = useChatStore();
+  const { teamSelcted, setNewChatButtonClicked, chatId } = useChatStore();
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
@@ -45,7 +45,7 @@ const MessageInput = () => {
     <div className="p-4 w-full">
       <form className="flex items-center gap-2">
         <button
-          onClick={() => getNewChat(1)}
+          onClick={() => setNewChatButtonClicked()}
           type="button"
           className="hidden sm:flex btn btn-circle text-zinc-400"
         >
