@@ -51,6 +51,11 @@ const ChatContainer = () => {
 
   return (
 
+    // chatheader should be shown regardless 
+    // chatbubbles and chat input shouldbe shown if there is no form or there is no newchat ui shown
+    // form should be shown if the form button in the newUi is clicked
+    // newUi should be shpwn if the user gets in and he has no prevous chat in the team or he has clicked the newChat button 
+
   //   <div className="flex-1 flex flex-col overflow-auto">
   //   <ChatHeader />
   //   {!hasChatHistory || newChatClicked ? (
@@ -83,5 +88,9 @@ const ChatContainer = () => {
 
   );
 };
+
+
+
+
 
 export default ChatContainer;
