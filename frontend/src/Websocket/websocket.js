@@ -12,7 +12,8 @@ class WebSocketService {
       return;
     }
 
-    this.ws = new WebSocket(`wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/11/`);
+    this.ws = new WebSocket(`wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/${this.chatId}/`);
+    
 
     this.ws.onopen = () => {
       console.log("✅ WebSocket Connected");

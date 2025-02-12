@@ -1,42 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import WebSocketService from "../Websocket/websocket";
+import useWebSocketStore from "../store/useWebSocketStore";
 
 const ChatBubbles = () => {
   const { chatId } = useChatStore();
   const [messages, setMessages] = useState([]);
   const [wsService, setWsService] = useState(null);
+
+  const { 
+    // messages, 
+    fetchChatMessages } = useWebSocketStore(); // ✅ Get fetchMessages
+
+      useEffect(() => {
+        if (chatId) {
+          fetchChatMessages(chatId); // ✅ Fetch messages when chatId changes
+        }
+      }, [chatId, fetchChatMessages]);
  
-  useEffect(() => {
-    if (!chatId) return;
+  // useEffect(() => {
+  //   if (!chatId) return;
   
-    const service = new WebSocketService(
-      chatId,
-      (data) => handleWebSocketMessage(data),
-      () => {
-        console.log("✅ WebSocket connected");
-        service.fetchChatMessages(); // Automatically fetch chat messages when connected
-      },
-      () => console.log("❌ WebSocket disconnected")
-    );
+  //   const service = new WebSocketService(
+  //     chatId,
+  //     (data) => handleWebSocketMessage(data),
+  //     () => {
+  //       console.log("✅ WebSocket connected");
+  //       service.fetchChatMessages(); // Automatically fetch chat messages when connected
+  //     },
+  //     () => console.log("❌ WebSocket disconnected")
+  //   );
   
-    service.connect();
-    setWsService(service);
+  //   service.connect();
+  //   setWsService(service);
   
-    return () => service.close();
-  }, [chatId]);
+  //   return () => service.close();
+  // }, [chatId]);
   
-  const handleWebSocketMessage = (data) => {
-    if (data.action === "show_messages") {
-      console.log("📩 Received chat history:", data.messages);
-      setMessages([...data.messages]); // Ensure a new array reference
-    }
-  };
+  // const handleWebSocketMessage = (data) => {
+  //   if (data.action === "show_messages") {
+  //     console.log("📩 Received chat history:", data.messages);
+  //     setMessages([...data.messages]); // Ensure a new array reference
+  //   }
+  // };
   
-  // Log messages after it updates
-  useEffect(() => {
-    console.log("✅ Messages updated:", messages);
-  }, [messages]); // Runs whenever messages state updates
+  // // Log messages after it updates
+  // useEffect(() => {
+  //   console.log("✅ Messages updated:", messages);
+  // }, [messages]); // Runs whenever messages state updates
   
 
   return (
