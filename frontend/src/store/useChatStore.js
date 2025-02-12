@@ -71,6 +71,10 @@ export const useChatStore = create((set, get) => ({
 
     setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
 
+    updateChatId: (id) => {
+        set({ chatId: id})
+    },
+
     // getChatHistory: async (teamSelected) => {
     //     set({ isChatHistoryLoading: true });
     //     try {
