@@ -8,7 +8,7 @@ import { formatMessageTime } from "../lib/utils";
 import OnboardingForm from "./forms/OnboardingForm";
 import RecruitmentForm from "./forms/RecruitmentForm";
 import WelcomeChat from "./WelcomeChat";
-import ChatBubbles from "./ChatBubbles"
+import ChatBubbles from "./ChatBubbles";
 
 const ChatContainer = () => {
   const {
@@ -18,25 +18,23 @@ const ChatContainer = () => {
     selectedUser,
     teamSelcted,
     chatHistory,
-    newChatClicked,
+    newChatButtonClicked,
     formButtonClicked,
     hasChatHistory,
-    chatManuallyButtonClicked
+    chatManuallyButtonClicked,
   } = useChatStore();
   // console.log(teamSelcted, "hehe");
   const { authUser } = useAuthStore();
-  
-
 
   const formRenderContent = () => {
-    console.log(formButtonClicked)
+    console.log(formButtonClicked);
     // if (formButtonClicked) {
-      // Show appropriate form based on team selection
-      if (teamSelcted === "Recruitment Team") {
-        console.log('insode render content')
-        return <RecruitmentForm />;
-      } else if (teamSelcted === "Onboarding Team") {
-        return <OnboardingForm />;
+    // Show appropriate form based on team selection
+    if (teamSelcted === "Recruitment Team") {
+      console.log("insode render content");
+      return <RecruitmentForm />;
+    } else if (teamSelcted === "Onboarding Team") {
+      return <OnboardingForm />;
       // }
     }
 
@@ -50,47 +48,44 @@ const ChatContainer = () => {
   };
 
   return (
-
-    // chatheader should be shown regardless 
+    // chatheader should be shown regardless
     // chatbubbles and chat input shouldbe shown if there is no form or there is no newchat ui shown
     // form should be shown if the form button in the newUi is clicked
-    // newUi should be shpwn if the user gets in and he has no prevous chat in the team or he has clicked the newChat button 
+    // newUi should be shpwn if the user gets in and he has no prevous chat in the team or he has clicked the newChat button
 
-  //   <div className="flex-1 flex flex-col overflow-auto">
-  //   <ChatHeader />
-  //   {!hasChatHistory || newChatClicked ? (
-  //     <WelcomeChat />
-  //   ) : formButtonClicked ? (
-  //     formRenderContent()
-  //   ) : chatManuallyButtonClicked || !hasChatHistory ? ( // Fixed syntax
-  //     <>
-  //       <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
-  //       <MessageInput />
-  //     </>
-  //   ) : null} {/* Added a fallback */}
-  // </div>
+    <div className="flex-1 flex flex-col overflow-auto">
+      <ChatHeader />
+      {!hasChatHistory || newChatButtonClicked ? (
+        <WelcomeChat />
+      ) : formButtonClicked ? (
+        formRenderContent()
+      ) : chatManuallyButtonClicked || hasChatHistory ? ( // Fixed syntax
+        <>
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <ChatBubbles />
+          </div>
+          <MessageInput />
+        </>
+      ) : null}{" "}
+      {/* Added a fallback */}
+    </div>
 
-  <div className="flex-1 flex flex-col overflow-auto">
-  <ChatHeader />
-  {/* {formRenderContent()}/ */}
-  <ChatBubbles/>
-  {/* {newChatClicked || !hasChatHistory ? (
-    <WelcomeChat />
-  ) : formButtonClicked ? (
-    formRenderContent()
-  ) : chatManuallyButtonClicked || hasChatHistory ? (
-    <>
-      <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
-      <MessageInput />
-    </>
-  ) : null} */}
-</div>
-
+    //   <div className="flex-1 flex flex-col overflow-auto">
+    //   <ChatHeader />
+    //   {/* {formRenderContent()}/ */}
+    //   <ChatBubbles/>
+    //   {/* {newChatClicked || !hasChatHistory ? (
+    //     <WelcomeChat />
+    //   ) : formButtonClicked ? (
+    //     formRenderContent()
+    //   ) : chatManuallyButtonClicked || hasChatHistory ? (
+    //     <>
+    //       <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
+    //       <MessageInput />
+    //     </>
+    //   ) : null} */}
+    // </div>
   );
 };
-
-
-
-
 
 export default ChatContainer;
