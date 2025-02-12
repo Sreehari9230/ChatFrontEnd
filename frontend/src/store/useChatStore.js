@@ -150,21 +150,21 @@ export const useChatStore = create((set, get) => ({
             }
 
             // Commenting out the real API request
-            // const res = await axiosInstance.get(`/organization/agent/${teamSelected}/chat-sessions/`, {
-            //     headers: {
-            //         Authorization: `Bearer ${accessToken}`,
-            //     },
-            // });
+            const res = await axiosInstance.get(`/organization/agent/${teamSelected}/chat-sessions/`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
 
             // Using mock data instead
-            const res = {
-                data: [
-                    { id: 24, created_at: "2025-01-25T14:01:20.375896Z" },
-                    { id: 25, created_at: "2025-01-25T14:03:47.737136Z" },
-                    { id: 26, created_at: "2025-01-25T14:04:11.003386Z" },
-                    { id: 27, created_at: "2025-01-25T14:11:01.846740Z" },
-                ],
-            };
+            // const res = {
+            //     data: [
+            //         { id: 24, created_at: "2025-01-25T14:01:20.375896Z" },
+            //         { id: 25, created_at: "2025-01-25T14:03:47.737136Z" },
+            //         { id: 26, created_at: "2025-01-25T14:04:11.003386Z" },
+            //         { id: 27, created_at: "2025-01-25T14:11:01.846740Z" },
+            //     ],
+            // };
 
             set((state) => {
                 console.log('Updated chat history:', res.data);

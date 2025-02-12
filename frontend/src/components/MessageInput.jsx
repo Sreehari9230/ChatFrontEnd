@@ -3,43 +3,56 @@ import { useChatStore } from "../store/useChatStore";
 import { Plus, Paperclip, Send, Wifi, WifiOff } from "lucide-react";
 import WebSocketService from "../Websocket/websocket";
 
+import useWebSocketStore from "../store/useWebSocketStore";
+
 const MessageInput = () => {
   const { teamSelcted, setNewChatButtonClicked, chatId } = useChatStore();
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
-  const [isConnected, setIsConnected] = useState(false);
+  // const [isConnected, setIsConnected] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [wsService, setWsService] = useState(null);
 
-  useEffect(() => {
-    const service = new WebSocketService(chatId, handleMessageReceived, setIsConnected);
-    service.connect();
-    setWsService(service);
 
-    return () => {
-      service.close();
+    const { sendMessage, isConnected } = useWebSocketStore();
+    // const [message, setMessage] = useState("");
+  
+    const handleSendMessage = () => {
+      if (message.trim()) {
+        sendMessage({ action: "chat_manually", message });
+        setMessage("");
+      }
     };
-  }, [chatId]);
 
-  const handleMessageReceived = (data) => {
-    const parsedData = JSON.parse(data);
-    let responseContent = parsedData.response?.message_id || JSON.stringify(parsedData, null, 2);
+  // useEffect(() => {
+  //   const service = new WebSocketService(chatId, handleMessageReceived, setIsConnected);
+  //   service.connect();
+  //   setWsService(service);
 
-    setChatHistory((prev) => prev.filter((msg) => msg.type !== "thinking"));
-    setChatHistory((prev) => [...prev, { type: "received", content: responseContent }]);
-    setIsThinking(false);
-  };
+  //   return () => {
+  //     service.close();
+  //   };
+  // }, [chatId]);
 
-  const sendMessage = useCallback(() => {
-    if (wsService && message.trim()) {
-      const payload = { action: "chat_manually", message };
-      wsService.sendMessage(payload);
-      setChatHistory((prev) => [...prev, { type: "sent", content: message }]);
-      setMessage("");
-      setIsThinking(true);
-      setChatHistory((prev) => [...prev, { type: "thinking", content: "Thinking..." }]);
-    }
-  }, [wsService, message]);
+  // const handleMessageReceived = (data) => {
+  //   const parsedData = JSON.parse(data);
+  //   let responseContent = parsedData.response?.message_id || JSON.stringify(parsedData, null, 2);
+
+  //   setChatHistory((prev) => prev.filter((msg) => msg.type !== "thinking"));
+  //   setChatHistory((prev) => [...prev, { type: "received", content: responseContent }]);
+  //   setIsThinking(false);
+  // };
+
+  // const sendMessage = useCallback(() => {
+  //   if (wsService && message.trim()) {
+  //     const payload = { action: "chat_manually", message };
+  //     wsService.sendMessage(payload);
+  //     setChatHistory((prev) => [...prev, { type: "sent", content: message }]);
+  //     setMessage("");
+  //     setIsThinking(true);
+  //     setChatHistory((prev) => [...prev, { type: "thinking", content: "Thinking..." }]);
+  //   }
+  // }, [wsService, message]);
 
   return (
     <div className="p-4 w-full">
@@ -69,7 +82,7 @@ const MessageInput = () => {
           {isConnected ? <Wifi size={16} className="text-success" /> : <WifiOff size={16} className="text-error" />}
         </div>
 
-        <button type="submit" className="btn btn-sm btn-circle" disabled={!message.trim()} onClick={sendMessage}>
+        <button type="submit" className="btn btn-sm btn-circle" disabled={!message.trim()} onClick={handleSendMessage}>
           <Send size={22} />
         </button>
       </form>
