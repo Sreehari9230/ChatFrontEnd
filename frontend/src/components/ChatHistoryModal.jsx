@@ -4,7 +4,7 @@ import { Plus, X } from "lucide-react";
 
 // Chat History Modal Component
 const ChatHistoryModal = ({ chats, onClose }) => {
-  const { chatHistory, isChatHistoryLoading } = useChatStore();
+  const { chatHistory, isChatHistoryLoading, updateChatId } = useChatStore();
 
   // Log chatHistory to check if it's being updated
   useEffect(() => {
@@ -33,6 +33,10 @@ const ChatHistoryModal = ({ chats, onClose }) => {
           .reverse()
           .map((chat) => (
             <li
+            onClick={() => {
+              onClose();
+              updateChatId(chat.id);
+            }}
               key={chat.id}
               className="p-3 bg-base-200 rounded-md shadow-sm hover:bg-base-300 transition"
             >

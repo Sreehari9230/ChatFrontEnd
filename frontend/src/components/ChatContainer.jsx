@@ -12,10 +12,6 @@ import ChatBubbles from "./ChatBubbles";
 
 const ChatContainer = () => {
   const {
-    messages,
-    getMessages,
-    isMessagesLoading,
-    selectedUser,
     teamSelcted,
     chatHistory,
     newChatButtonClicked,
