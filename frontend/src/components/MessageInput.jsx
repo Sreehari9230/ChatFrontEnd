@@ -13,46 +13,15 @@ const MessageInput = () => {
   const [isThinking, setIsThinking] = useState(false);
   const [wsService, setWsService] = useState(null);
 
+  const { sendMessage, isConnected } = useWebSocketStore();
+  // const [message, setMessage] = useState("");
 
-    const { sendMessage, isConnected } = useWebSocketStore();
-    // const [message, setMessage] = useState("");
-  
-    const handleSendMessage = () => {
-      if (message.trim()) {
-        sendMessage({ action: "chat_manually", message });
-        setMessage("");
-      }
-    };
-
-  // useEffect(() => {
-  //   const service = new WebSocketService(chatId, handleMessageReceived, setIsConnected);
-  //   service.connect();
-  //   setWsService(service);
-
-  //   return () => {
-  //     service.close();
-  //   };
-  // }, [chatId]);
-
-  // const handleMessageReceived = (data) => {
-  //   const parsedData = JSON.parse(data);
-  //   let responseContent = parsedData.response?.message_id || JSON.stringify(parsedData, null, 2);
-
-  //   setChatHistory((prev) => prev.filter((msg) => msg.type !== "thinking"));
-  //   setChatHistory((prev) => [...prev, { type: "received", content: responseContent }]);
-  //   setIsThinking(false);
-  // };
-
-  // const sendMessage = useCallback(() => {
-  //   if (wsService && message.trim()) {
-  //     const payload = { action: "chat_manually", message };
-  //     wsService.sendMessage(payload);
-  //     setChatHistory((prev) => [...prev, { type: "sent", content: message }]);
-  //     setMessage("");
-  //     setIsThinking(true);
-  //     setChatHistory((prev) => [...prev, { type: "thinking", content: "Thinking..." }]);
-  //   }
-  // }, [wsService, message]);
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      sendMessage({ action: "chat_manually", message });
+      setMessage("");
+    }
+  };
 
   return (
     <div className="p-4 w-full">
@@ -73,16 +42,28 @@ const MessageInput = () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button type="button" className="hidden sm:flex btn btn-circle text-zinc-400">
+          <button
+            type="button"
+            className="hidden sm:flex btn btn-circle text-zinc-400"
+          >
             <Paperclip size={20} />
           </button>
         </div>
 
         <div className="flex items-center">
-          {isConnected ? <Wifi size={16} className="text-success" /> : <WifiOff size={16} className="text-error" />}
+          {isConnected ? (
+            <Wifi size={16} className="text-success" />
+          ) : (
+            <WifiOff size={16} className="text-error" />
+          )}
         </div>
 
-        <button type="submit" className="btn btn-sm btn-circle" disabled={!message.trim()} onClick={handleSendMessage}>
+        <button
+          type="submit"
+          className="btn btn-sm btn-circle"
+          disabled={!message.trim()}
+          onClick={handleSendMessage}
+        >
           <Send size={22} />
         </button>
       </form>
