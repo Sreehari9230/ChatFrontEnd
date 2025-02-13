@@ -2,7 +2,8 @@ import { create } from "zustand";
 
 const useWebSocketStore = create((set, get) => ({
   ws: null,
-  messages: [],
+  currentMessages: [],
+  fetchedMessages: [],
   isConnected: false,
 
   connect: (chatId) => {
@@ -29,11 +30,19 @@ const useWebSocketStore = create((set, get) => ({
       try {
         const data = JSON.parse(event.data);
         console.log("📩 Message received:", data);
-        set((state) => ({ messages: [...state.messages, data] }));
+    
+        if (data.action === "show_messages" && Array.isArray(data.messages)) {
+          // Set fetchedMessages to the received messages array
+          set({ fetchedMessages: data.messages });
+        } else {
+          // If it's another type of message, append it to the messages state
+          set((state) => ({ messages: [...state.message, data] }));
+        }
       } catch (error) {
         console.error("❌ Error parsing WebSocket message:", error);
       }
     };
+    
 
     ws.onerror = (error) => console.error("❌ WebSocket Error:", error);
 
@@ -63,6 +72,9 @@ const useWebSocketStore = create((set, get) => ({
   fetchChatMessages: () => {
     const ws = get().ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
+      // Clear fetchedMessages before sending the request
+      set({ fetchedMessages: [] });
+  
       const message = { action: "fetch_messages" };
       ws.send(JSON.stringify(message));
       console.log("📤 Sent request to fetch chat messages:", message);

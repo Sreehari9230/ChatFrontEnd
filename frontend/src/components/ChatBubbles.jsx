@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import WebSocketService from "../Websocket/websocket";
 import useWebSocketStore from "../store/useWebSocketStore";
+import { formatMessageTime } from "../lib/utils";
 
 const ChatBubbles = () => {
   const { chatId } = useChatStore();
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
   const [wsService, setWsService] = useState(null);
 
   const { 
-    // messages, 
-    fetchChatMessages } = useWebSocketStore(); // ✅ Get fetchMessages
+    messages, 
+    fetchChatMessages,
+    fetchedMessages } = useWebSocketStore(); // ✅ Get fetchMessages
 
       useEffect(() => {
         if (chatId) {
@@ -51,19 +53,31 @@ const ChatBubbles = () => {
   
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
-  <div className="flex-1 overflow-y-auto p-4 space-y-4">
-    {messages.length > 0 ? (
-      messages.map((msg) => (
-        <div key={msg._id} className="p-2 border rounded-lg bg-gray-100">
-          <p><strong>{msg.user}:</strong> {msg.message || JSON.stringify(msg.form, null, 2)}</p>
+    // <div className="flex-1 overflow-y-auto p-4 space-y-4">
+<div className="flex-1 overflow-y-auto p-4 space-y-4">
+  {fetchedMessages.length === 0 ? (
+    <p className="text-center text-gray-500">No previous chat</p>
+  ) : (
+    fetchedMessages.map((msg, index) => (
+      <div
+        key={msg._id || index}
+        className={`chat ${msg.user === "AI" ? "chat-start" : "chat-end"}`}
+      >
+        <div className="chat-header mb-1">
+          <time className="text-xs opacity-50 ml-1">
+            {new Date(msg.timestamp).toLocaleTimeString()}
+          </time>
         </div>
-      ))
-    ) : (
-      <p>No messages yet.</p>
-    )}
-  </div>
-    </div>
+        <div className="chat-bubble flex flex-col">
+          <p>{msg.message}</p>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
+
+    // </div>
   );
 };
 
