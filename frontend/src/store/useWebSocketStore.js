@@ -26,23 +26,40 @@ const useWebSocketStore = create((set, get) => ({
       get().fetchChatMessages(); // Fetch chat history when connected
     };
 
+    // ws.onmessage = (event) => {
+    //   try {
+    //     const data = JSON.parse(event.data);
+    //     console.log("📩 Message received:", data);
+
+    //     if (data.action === "show_messages" && Array.isArray(data.messages)) {
+    //       // Set fetchedMessages to the received messages array
+    //       set({ fetchedMessages: data.messages });
+    //     } else {
+    //       // If it's another type of message, append it to the messages state
+    //       set((state) => ({ currentMessages: [...state.message, data] }));
+    //     }
+    //   } catch (error) {
+    //     console.error("❌ Error parsing WebSocket message:", error);
+    //   }
+    // };
+
+
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
         console.log("📩 Message received:", data);
-    
+
         if (data.action === "show_messages" && Array.isArray(data.messages)) {
           // Set fetchedMessages to the received messages array
           set({ fetchedMessages: data.messages });
-        } else {
-          // If it's another type of message, append it to the messages state
-          set((state) => ({ currentMessages: [...state.message, data] }));
+        } else if (data.action === "new_message") {
+          // Push new message to currentMessages
+          set((state) => ({ currentMessages: [...state.currentMessages, data] }));
         }
       } catch (error) {
         console.error("❌ Error parsing WebSocket message:", error);
       }
     };
-    
 
     ws.onerror = (error) => console.error("❌ WebSocket Error:", error);
 
@@ -59,22 +76,45 @@ const useWebSocketStore = create((set, get) => ({
     set({ ws });
   },
 
+  // sendMessage: (message) => {
+  //   const ws = get().ws;
+  //   if (ws && ws.readyState === WebSocket.OPEN) {
+  //     ws.send(JSON.stringify(message));
+  //     console.log("📤 Message sent:", message);
+  //   } else {
+  //     console.error("❌ WebSocket is not open.");
+  //   }
+  // },
+
   sendMessage: (message) => {
     const ws = get().ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify(message));
       console.log("📤 Message sent:", message);
+
+      // Push sent message to currentMessages
+      set((state) => ({ currentMessages: [...state.currentMessages, message] }));
+
+
+      //         // Push to currentMessages only if action is "chat_manually" or "form"
+      //   if (message.action === "chat_manually" || message.action === "form") {
+      //     set((state) => ({ currentMessages: [...state.currentMessages, message] }));
+      //   }
+      // } else {
+      //   console.error("❌ WebSocket is not open.");
+      // }
     } else {
       console.error("❌ WebSocket is not open.");
     }
   },
+
 
   fetchChatMessages: () => {
     const ws = get().ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
       // Clear fetchedMessages before sending the request
       set({ fetchedMessages: [] });
-  
+
       const message = { action: "fetch_messages" };
       ws.send(JSON.stringify(message));
       console.log("📤 Sent request to fetch chat messages:", message);

@@ -8,9 +8,11 @@ import { format } from "date-fns";
 const ChatBubbles = () => {
   const { chatId } = useChatStore();
   const [wsService, setWsService] = useState(null);
-  const { messages, fetchChatMessages, fetchedMessages } = useWebSocketStore(); // ✅ Get fetchMessages
-
+  const { currentMessages, fetchChatMessages, fetchedMessages } =
+    useWebSocketStore(); // ✅ Get fetchMessages
   let lastDate = null;
+
+  console.log("currentMSG", currentMessages);
 
   useEffect(() => {
     if (chatId) {
@@ -51,6 +53,33 @@ const ChatBubbles = () => {
                 <div className="chat-bubble flex flex-col">
                   <p>{msg.message}</p>
                 </div>
+              </div>
+            </div>
+          );
+        })
+      )}
+
+
+
+      {currentMessages.length === 0 ? (
+        <p className="text-center text-gray-500">No current chat</p>
+      ) : (
+        currentMessages.map((msg, index) => {
+          const isUserMessage =
+            msg.action === "chat_manually" || msg.action === "form";
+          const messageText =
+            typeof msg.message === "object" ? msg.message.message : msg.message;
+
+          return (
+            <div
+              key={index}
+              className={`chat ${isUserMessage ? "chat-end" : "chat-start"}`}
+            >
+              <div className="chat-header mb-1">
+              <time className="text-xs opacity-50 ml-1">timestampNotGiven</time>
+              </div>
+              <div className="chat-bubble flex flex-col">
+                <p>{messageText}</p>
               </div>
             </div>
           );
