@@ -26,24 +26,6 @@ const useWebSocketStore = create((set, get) => ({
       get().fetchChatMessages(); // Fetch chat history when connected
     };
 
-    // ws.onmessage = (event) => {
-    //   try {
-    //     const data = JSON.parse(event.data);
-    //     console.log("📩 Message received:", data);
-
-    //     if (data.action === "show_messages" && Array.isArray(data.messages)) {
-    //       // Set fetchedMessages to the received messages array
-    //       set({ fetchedMessages: data.messages });
-    //     } else {
-    //       // If it's another type of message, append it to the messages state
-    //       set((state) => ({ currentMessages: [...state.message, data] }));
-    //     }
-    //   } catch (error) {
-    //     console.error("❌ Error parsing WebSocket message:", error);
-    //   }
-    // };
-
-
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
@@ -76,16 +58,6 @@ const useWebSocketStore = create((set, get) => ({
     set({ ws });
   },
 
-  // sendMessage: (message) => {
-  //   const ws = get().ws;
-  //   if (ws && ws.readyState === WebSocket.OPEN) {
-  //     ws.send(JSON.stringify(message));
-  //     console.log("📤 Message sent:", message);
-  //   } else {
-  //     console.error("❌ WebSocket is not open.");
-  //   }
-  // },
-
   sendMessage: (message) => {
     const ws = get().ws;
     if (ws && ws.readyState === WebSocket.OPEN) {
@@ -107,7 +79,6 @@ const useWebSocketStore = create((set, get) => ({
       console.error("❌ WebSocket is not open.");
     }
   },
-
 
   fetchChatMessages: () => {
     const ws = get().ws;

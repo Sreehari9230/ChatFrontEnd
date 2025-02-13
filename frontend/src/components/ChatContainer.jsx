@@ -10,7 +10,7 @@ import RecruitmentForm from "./forms/RecruitmentForm";
 import WelcomeChat from "./WelcomeChat";
 import ChatBubbles from "./ChatBubbles";
 
-import useWebSocketStore from "../store/useWebSocketStore"
+import useWebSocketStore from "../store/useWebSocketStore";
 
 const ChatContainer = () => {
   const {
@@ -20,21 +20,19 @@ const ChatContainer = () => {
     formButtonClicked,
     hasChatHistory,
     chatManuallyButtonClicked,
-    chatId
+    chatId,
   } = useChatStore();
   // console.log(teamSelcted, "hehe");
   const { authUser } = useAuthStore();
 
-    const { connect } = useWebSocketStore(); // ✅ Extract connect function
+  const { connect } = useWebSocketStore(); // ✅ Extract connect function
 
-      // ✅ Connect WebSocket when chatId changes
-      useEffect(() => {
-        if (chatId) {
-          connect(chatId);
-        }
-      }, [chatId, connect]);
-
-
+  // ✅ Connect WebSocket when chatId changes
+  useEffect(() => {
+    if (chatId) {
+      connect(chatId);
+    }
+  }, [chatId, connect]);
 
   const formRenderContent = () => {
     console.log(formButtonClicked);

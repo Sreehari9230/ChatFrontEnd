@@ -51,15 +51,25 @@ const ChatBubbles = () => {
                   </time>
                 </div>
                 <div className="chat-bubble flex flex-col">
-                  <p>{msg.message}</p>
+                  {msg.message ? (
+                    <p>{msg.message}</p>
+                  ) : msg.form ? (
+                    <div className="space-y-1">
+                      {Object.entries(msg.form).map(([key, value]) => (
+                        <p key={key}>
+                          <strong>{key}:</strong> {value}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No content</p>
+                  )}
                 </div>
               </div>
             </div>
           );
         })
       )}
-
-
 
       {currentMessages.length === 0 ? (
         <p className="text-center text-gray-500">No current chat</p>
@@ -76,7 +86,9 @@ const ChatBubbles = () => {
               className={`chat ${isUserMessage ? "chat-end" : "chat-start"}`}
             >
               <div className="chat-header mb-1">
-              <time className="text-xs opacity-50 ml-1">timestampNotGiven</time>
+                <time className="text-xs opacity-50 ml-1">
+                  timestampNotGiven
+                </time>
               </div>
               <div className="chat-bubble flex flex-col">
                 <p>{messageText}</p>
