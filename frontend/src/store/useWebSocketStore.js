@@ -36,7 +36,7 @@ const useWebSocketStore = create((set, get) => ({
           set({ fetchedMessages: data.messages });
         } else {
           // If it's another type of message, append it to the messages state
-          set((state) => ({ messages: [...state.message, data] }));
+          set((state) => ({ currentMessages: [...state.message, data] }));
         }
       } catch (error) {
         console.error("❌ Error parsing WebSocket message:", error);
