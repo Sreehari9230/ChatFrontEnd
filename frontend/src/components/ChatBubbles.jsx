@@ -6,8 +6,12 @@ import { format } from "date-fns";
 
 const ChatBubbles = () => {
   const { chatId } = useChatStore();
-  const { currentMessages, fetchChatMessages, fetchedMessages } =
-    useWebSocketStore();
+  const {
+    currentMessages,
+    fetchChatMessages,
+    fetchedMessages,
+    responseIsThinking,
+  } = useWebSocketStore();
   let lastDate = null;
   const chatEndRef = useRef(null); // Ref to track the last message
   // const [wsService, setWsService] = useState(null);
@@ -22,6 +26,15 @@ const ChatBubbles = () => {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [fetchedMessages, currentMessages]);
+
+  const parseBoxMessage = (message) => {
+    try {
+      return message ? JSON.parse(message) : null;
+    } catch (error) {
+      console.error("Error parsing box message:", error);
+      return null;
+    }
+  };
 
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -77,28 +90,41 @@ const ChatBubbles = () => {
       {currentMessages.length === 0 ? (
         <p className="text-center text-gray-500">No current chat</p>
       ) : (
-        currentMessages.map((msg, index) => {
-          const isUserMessage =
-            msg.action === "chat_manually" || msg.action === "form";
-          const messageText =
-            typeof msg.message === "object" ? msg.message.message : msg.message;
+        <>
+          {currentMessages.map((msg, index) => {
+            const isUserMessage =
+              msg.action === "chat_manually" || msg.action === "form";
+            const messageText =
+              typeof msg.message === "object"
+                ? msg.message.message
+                : msg.message;
 
-          return (
-            <div
-              key={index}
-              className={`chat ${isUserMessage ? "chat-end" : "chat-start"}`}
-            >
-              <div className="chat-header mb-1">
-                <time className="text-xs opacity-50 ml-1">
-                  timestampNotGiven
-                </time>
+            return (
+              <div
+                key={index}
+                className={`chat ${isUserMessage ? "chat-end" : "chat-start"}`}
+              >
+                <div className="chat-header mb-1">
+                  <time className="text-xs opacity-50 ml-1">
+                    timestampNotGiven
+                  </time>
+                </div>
+                <div className="chat-bubble flex flex-col">
+                  <p>{messageText}</p>
+                </div>
               </div>
+            );
+          })}
+
+          {/* Show "Thinking..." bubble when responseIsThinking is true */}
+          {responseIsThinking && (
+            <div className="chat chat-start">
               <div className="chat-bubble flex flex-col">
-                <p>{messageText}</p>
+                <p className="flex items-center">Thinking...</p>
               </div>
             </div>
-          );
-        })
+          )}
+        </>
       )}
 
       {/* Empty div for auto scroll */}
@@ -108,3 +134,13 @@ const ChatBubbles = () => {
 };
 
 export default ChatBubbles;
+
+// Type: "box";
+// chat_message_id: "105";
+// message: '{"Job Posting": "COMPLETED", "Sourcing Automation": "COMPLETED", "Application Tracking": "PENDING", "Resume Screening": "PENDING", "ATS Manager": "PENDING", "Candidate Outreach": "PENDING", "Interview Coordinator": "PENDING", "Interview Preparation": "PENDING", "Offer Letter Generator": "PENDING"}';
+// message_number: 1189;
+// session_id: "2";
+// task_name: "RESULT";
+// timestamp: "2025-02-14T15:29:21.578440";
+// user: "AI";
+// _id: "67acbb4fb34a0dce00220555";

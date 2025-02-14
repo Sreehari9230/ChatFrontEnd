@@ -5,6 +5,7 @@ const useWebSocketStore = create((set, get) => ({
   currentMessages: [],
   fetchedMessages: [],
   isConnected: false,
+  responseIsThinking: true,
 
   connect: (chatId) => {
     if (!chatId) {
@@ -30,13 +31,16 @@ const useWebSocketStore = create((set, get) => ({
       try {
         const data = JSON.parse(event.data);
         console.log("📩 Message received:", data);
-
+    
         if (data.action === "show_messages" && Array.isArray(data.messages)) {
           // Set fetchedMessages to the received messages array
           set({ fetchedMessages: data.messages });
         } else if (data.action === "new_message") {
-          // Push new message to currentMessages
-          set((state) => ({ currentMessages: [...state.currentMessages, data] }));
+          // Push new message to currentMessages and set responseIsThinking to false
+          set((state) => ({
+            currentMessages: [...state.currentMessages, data],
+            responseIsThinking: false, // Set to false when a response is received
+          }));
         }
       } catch (error) {
         console.error("❌ Error parsing WebSocket message:", error);
@@ -63,12 +67,13 @@ const useWebSocketStore = create((set, get) => ({
     if (ws && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify(message));
       console.log("📤 Message sent:", message);
-
       // Push sent message to currentMessages
       set((state) => ({ currentMessages: [...state.currentMessages, message] }));
-
-
-      //         // Push to currentMessages only if action is "chat_manually" or "form"
+      // Set responseIsThinking to true only for "chat_manually" or "form" actions
+      if (message.action === "chat_manually" || message.action === "form") {
+        set({ responseIsThinking: true });
+      }
+      // Push to currentMessages only if action is "chat_manually" or "form"
       //   if (message.action === "chat_manually" || message.action === "form") {
       //     set((state) => ({ currentMessages: [...state.currentMessages, message] }));
       //   }
