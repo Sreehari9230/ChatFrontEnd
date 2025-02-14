@@ -10,7 +10,6 @@ const ProfilePage = () => {
     if (!file) return;
 
     const reader = new FileReader();
-
     reader.readAsDataURL(file);
 
     reader.onload = async () => {

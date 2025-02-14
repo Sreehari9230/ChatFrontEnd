@@ -5,8 +5,6 @@ import ChatHistoryModal from "./ChatHistoryModal";
 
 const ChatHeader = () => {
   const {
-    // selectedUser,
-    // setSelectedUser,
     isHistoryModalOpen,
     setHistoryModal,
     chatHistory,
@@ -17,15 +15,6 @@ const ChatHeader = () => {
 
   const handleModalOpen = () => setHistoryModal(true);
   const handleModalClose = () => setHistoryModal(false);
-  // const handleGetChatHistory = (team) => {
-  //   if (team == "Onboarding Team") {
-  //     console.log(`Chat History Loading For ${team}`)
-  //     getChatHistory(1);
-  //   } else if( team == 'Recruitment Team'){
-  //     console.log(`Chat History Loading For ${team}`)
-  //     getChatHistory(2)
-  //   }
-  // };
 
   return (
     <div className="p-2.5 border-b border-base-300">

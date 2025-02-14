@@ -1,32 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useChatStore } from "../../store/useChatStore"; // Assuming you use a store
-import WebSocketService from "../../Websocket/websocket";
+// import WebSocketService from "../../Websocket/websocket";
 import useWebSocketStore from "../../store/useWebSocketStore";
 
 const RecruitmentForm = () => {
   const { chatId } = useChatStore(); // Get chat ID from store
-  const [wsService, setWsService] = useState(null);
-    const { sendMessage } = useWebSocketStore();
-  
-
+  const { sendMessage } = useWebSocketStore();
   const [formData, setFormData] = useState({
-     job_title: "",
-     location: "",
-     company_name: "",
-     job_requirement: "",
-     expected_reach_out: 0,
-   });
- 
-   const handleChange = (e) => {
-     setFormData({ ...formData, [e.target.name]: e.target.value });
-   };
- 
-   const handleSubmit = (e) => {
-     e.preventDefault();
-     sendMessage({ action: "form", form: formData });
-     console.log("📤 Form data sent via WebSocket:", formData);
-   };
- 
+    job_title: "",
+    location: "",
+    company_name: "",
+    job_requirement: "",
+    expected_reach_out: 0,
+  });
+  // const [wsService, setWsService] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendMessage({ action: "form", form: formData });
+    console.log("📤 Form data sent via WebSocket:", formData);
+  };
 
   return (
     <div className="flex justify-center mt-4 pt-10">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Plus, Paperclip, Send, Wifi, WifiOff } from "lucide-react";
-import WebSocketService from "../Websocket/websocket";
+// import WebSocketService from "../Websocket/websocket";
 
 import useWebSocketStore from "../store/useWebSocketStore";
 
@@ -9,11 +9,10 @@ const MessageInput = () => {
   const { teamSelcted, setNewChatButtonClicked, chatId } = useChatStore();
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
-  // const [isConnected, setIsConnected] = useState(false);
-  const [isThinking, setIsThinking] = useState(false);
-  const [wsService, setWsService] = useState(null);
-
   const { sendMessage, isConnected } = useWebSocketStore();
+  // const [isConnected, setIsConnected] = useState(false);
+  // const [isThinking, setIsThinking] = useState(false);
+  // const [wsService, setWsService] = useState(null);
   // const [message, setMessage] = useState("");
 
   const handleSendMessage = () => {
