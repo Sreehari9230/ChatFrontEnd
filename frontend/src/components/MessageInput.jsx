@@ -9,7 +9,7 @@ const MessageInput = () => {
   const { teamSelcted, setNewChatButtonClicked, chatId } = useChatStore();
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
-  const { sendMessage, isConnected } = useWebSocketStore();
+  const { sendMessage, isConnected, responseIsThinking } = useWebSocketStore();
   // const [isConnected, setIsConnected] = useState(false);
   // const [isThinking, setIsThinking] = useState(false);
   // const [wsService, setWsService] = useState(null);
@@ -28,7 +28,7 @@ const MessageInput = () => {
         <button
           onClick={() => setNewChatButtonClicked()}
           type="button"
-          className="hidden sm:flex btn btn-circle text-zinc-400"
+          className="hidden sm:flex btn btn-circle"
         >
           <Plus size={20} />
         </button>
@@ -41,15 +41,15 @@ const MessageInput = () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button
+          {/* <button
             type="button"
             className="hidden sm:flex btn btn-circle text-zinc-400"
           >
             <Paperclip size={20} />
-          </button>
+          </button> */}
         </div>
 
-        <div className="flex items-center">
+        <div className="hidden sm:flex btn btn-circle">
           {isConnected ? (
             <Wifi size={16} className="text-success" />
           ) : (
@@ -59,8 +59,8 @@ const MessageInput = () => {
 
         <button
           type="submit"
-          className="btn btn-sm btn-circle"
-          disabled={!message.trim()}
+          className="hidden sm:flex btn btn-circle"
+          disabled={responseIsThinking || !message.trim()}
           onClick={handleSendMessage}
         >
           <Send size={22} />
