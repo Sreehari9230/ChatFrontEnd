@@ -45,6 +45,8 @@ const ChatBubbles = () => {
           const msgDate = format(new Date(msg.timestamp), "yyyy-MM-dd");
           const showDateSeparator = lastDate !== msgDate;
           lastDate = msgDate;
+          const parsedBoxMessage =
+            msg.Type === "box" ? parseBoxMessage(msg.message) : null;
 
           return (
             <div key={msg._id || index}>
@@ -66,8 +68,45 @@ const ChatBubbles = () => {
                     {format(new Date(msg.timestamp), "h:mm a")}
                   </time>
                 </div>
-                <div className="chat-bubble flex flex-col">
+                {/* <div className="chat-bubble flex flex-col">
                   {msg.message ? (
+                    <p>{msg.message}</p>
+                  ) : msg.form ? (
+                    <div className="space-y-1">
+                      {Object.entries(msg.form).map(([key, value]) => (
+                        <p key={key}>
+                          <strong>{key}:</strong> {value}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No content</p>
+                  )}
+                </div> */}
+
+                <div className="chat-bubble flex flex-col">
+                  {parsedBoxMessage ? (
+                    <div className="flex flex-col gap-4">
+                      <table className="w-full text-sm">
+                        <thead></thead>
+                        <tbody>
+                          {Object.entries(parsedBoxMessage).map(
+                            ([key, value]) => (
+                              <tr key={key}>
+                                <td className="px-2 py-1">{key}</td>
+                                <td className="px-2 py-1">{value}</td>
+                              </tr>
+                            )
+                          )}
+                        </tbody>
+                      </table>
+                      <div className="flex justify-center">
+                        <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                          Retry
+                        </button>
+                      </div>
+                    </div>
+                  ) : msg.message ? (
                     <p>{msg.message}</p>
                   ) : msg.form ? (
                     <div className="space-y-1">
