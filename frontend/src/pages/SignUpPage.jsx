@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,25 +19,26 @@ const SignUpPage = () => {
     email: "",
     password: "",
   });
-
   const { signup, isSigningUp } = useAuthStore();
 
   const validateForm = () => {
-    if (!formData.fullName.trim())return toast.error("Full name is required");
+    if (!formData.fullName.trim()) return toast.error("Full name is required");
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for valid email format
-    if (!formData.email.trim())return toast.error("Email is required")
-    if (!emailRegex.test(formData.email))return toast.error("Please enter a valid email address");
-    if (!formData.password.trim())return toast.error("Password is required")
-    if (formData.password.length < 6)return toast.error("Password must be at least 6 characters");
+    if (!formData.email.trim()) return toast.error("Email is required");
+    if (!emailRegex.test(formData.email))
+      return toast.error("Please enter a valid email address");
+    if (!formData.password.trim()) return toast.error("Password is required");
+    if (formData.password.length < 6)
+      return toast.error("Password must be at least 6 characters");
     console.log("Form submitted successfully:", formData);
-    return true
+    return true;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const success = validateForm()
-    if(success == true)signup(formData)
+    const success = validateForm();
+    if (success == true) signup(formData);
   };
 
   return (

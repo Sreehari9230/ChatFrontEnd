@@ -6,12 +6,11 @@ import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
-
   const { login, isLogginIn, fetchHome } = useAuthStore();
 
   const validateForm = () => {

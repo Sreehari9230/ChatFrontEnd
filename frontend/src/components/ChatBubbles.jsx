@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
-import WebSocketService from "../Websocket/websocket";
+// import WebSocketService from "../Websocket/websocket";
 import useWebSocketStore from "../store/useWebSocketStore";
-import { formatMessageTime } from "../lib/utils";
 import { format } from "date-fns";
 
 const ChatBubbles = () => {
   const { chatId } = useChatStore();
-  const [wsService, setWsService] = useState(null);
   const { currentMessages, fetchChatMessages, fetchedMessages } =
-    useWebSocketStore(); // ✅ Get fetchMessages
+    useWebSocketStore();
   let lastDate = null;
-
-  console.log("currentMSG", currentMessages);
+  const chatEndRef = useRef(null); // Ref to track the last message
+  // const [wsService, setWsService] = useState(null);
 
   useEffect(() => {
     if (chatId) {
-      fetchChatMessages(chatId); // ✅ Fetch messages when chatId changes
+      fetchChatMessages(chatId);
     }
   }, [chatId, fetchChatMessages]);
+
+  // Scroll to bottom when messages update
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [fetchedMessages, currentMessages]);
 
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -28,7 +31,7 @@ const ChatBubbles = () => {
         fetchedMessages.map((msg, index) => {
           const msgDate = format(new Date(msg.timestamp), "yyyy-MM-dd");
           const showDateSeparator = lastDate !== msgDate;
-          lastDate = msgDate; // Update last seen date
+          lastDate = msgDate;
 
           return (
             <div key={msg._id || index}>
@@ -97,6 +100,9 @@ const ChatBubbles = () => {
           );
         })
       )}
+
+      {/* Empty div for auto scroll */}
+      <div ref={chatEndRef}></div>
     </div>
   );
 };

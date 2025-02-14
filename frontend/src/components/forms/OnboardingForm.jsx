@@ -1,43 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useChatStore } from "../../store/useChatStore"; // Assuming you use a store
-import WebSocketService from "../../Websocket/websocket";
+// import WebSocketService from "../../Websocket/websocket";
 import useWebSocketStore from "../../store/useWebSocketStore";
 
 const OnboardingForm = () => {
   const { chatId } = useChatStore(); // Get chat ID from store
-  const [wsService, setWsService] = useState(null);
   const { sendMessage } = useWebSocketStore(); // ✅ Extract WebSocket send function
-  
+  const [formData, setFormData] = useState({
+    employeeId: "",
+    employeeName: "",
+    email: "",
+    department: "",
+    position: "",
+    startDate: "",
+  });
+  // const [wsService, setWsService] = useState(null);
 
- const [formData, setFormData] = useState({
-     employeeId: "",
-     employeeName: "",
-     email: "",
-     department: "",
-     position: "",
-     startDate: "",
-   });
- 
-   const handleChange = (e) => {
-     setFormData({ ...formData, [e.target.name]: e.target.value });
-   };
- 
-   const handleSubmit = (e) => {
-     e.preventDefault();
- 
-     if (!chatId) {
-       console.error("❌ No chat ID available.");
-       return;
-     }
- 
-     const payload = {
-       action: "form",
-       form: formData,
-     };
- 
-     sendMessage(payload); // ✅ Use Zustand WebSocket state
-     console.log("📤 Form data sent via WebSocket:", payload);
-   };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!chatId) {
+      console.error("❌ No chat ID available.");
+      return;
+    }
+    const payload = {
+      action: "form",
+      form: formData,
+    };
+    sendMessage(payload); // ✅ Use Zustand WebSocket state
+    console.log("📤 Form data sent via WebSocket:", payload);
+  };
 
   return (
     <div className="flex justify-center mt-4 pt-10">
