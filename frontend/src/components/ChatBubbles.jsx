@@ -11,10 +11,59 @@ const ChatBubbles = () => {
     fetchChatMessages,
     fetchedMessages,
     responseIsThinking,
+    sendMessage,
   } = useWebSocketStore();
   let lastDate = null;
   const chatEndRef = useRef(null); // Ref to track the last message
   // const [wsService, setWsService] = useState(null);
+
+  const handleRetryButton = () => {
+    sendMessage({ action: "retry" });
+  };
+
+  function formatJobPosting(text) {
+    // Split the text into lines and process each line
+    const lines = text.split("\n");
+    let formattedText = "";
+
+    for (let line of lines) {
+      // Remove leading/trailing whitespace
+      line = line.trim();
+
+      // Skip empty lines
+      if (!line) continue;
+
+      // Handle main headings (two stars)
+      if (line.startsWith("**") && line.endsWith("**") && !line.includes(":")) {
+        const heading = line.replace(/\*\*/g, "");
+        formattedText += `<h2 class="text-lg font-semibold mt-4">${heading}</h2>`;
+      }
+      // Handle subheadings (one star)
+      else if (line.startsWith("*") && line.endsWith("*")) {
+        const subheading = line.replace(/\*/g, "");
+        formattedText += `<h3 class="text-md font-medium mt-3">${subheading}</h3>`;
+      }
+      // Handle points (hyphen)
+      else if (line.startsWith("-")) {
+        line = line.substring(1).trim(); // Remove hyphen and trim
+
+        // Remove ** if wrapping key
+        line = line.replace(/\*\*/g, "");
+
+        const [key, value] = line.split(":").map((s) => s.trim());
+
+        if (value) {
+          // Check if the value contains a URL
+          if (value.includes("http://") || value.includes("https://")) {
+            formattedText += `<p><strong>${key}:</strong> <a href="${value}" class="text-blue-500 underline" target="_blank">Click here</a></p>`;
+          } else {
+            formattedText += `<p><strong>${key}:</strong> ${value}</p>`;
+          }
+        }
+      }
+    }
+    return formattedText;
+  }
 
   useEffect(() => {
     if (chatId) {
@@ -68,21 +117,6 @@ const ChatBubbles = () => {
                     {format(new Date(msg.timestamp), "h:mm a")}
                   </time>
                 </div>
-                {/* <div className="chat-bubble flex flex-col">
-                  {msg.message ? (
-                    <p>{msg.message}</p>
-                  ) : msg.form ? (
-                    <div className="space-y-1">
-                      {Object.entries(msg.form).map(([key, value]) => (
-                        <p key={key}>
-                          <strong>{key}:</strong> {value}
-                        </p>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500">No content</p>
-                  )}
-                </div> */}
 
                 <div className="chat-bubble flex flex-col">
                   {parsedBoxMessage ? (
@@ -100,12 +134,24 @@ const ChatBubbles = () => {
                           )}
                         </tbody>
                       </table>
-                      <div className="flex justify-center">
-                        <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-                          Retry
-                        </button>
-                      </div>
+                      {msg.retry === false && (
+                        <div className="flex justify-center">
+                          <button
+                            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            onClick={handleRetryButton}
+                          >
+                            Retry
+                          </button>
+                        </div>
+                      )}
                     </div>
+                  ) : msg.Type === "text" ? (
+                    <div
+                      className="formatted-text"
+                      dangerouslySetInnerHTML={{
+                        __html: formatJobPosting(msg.message),
+                      }}
+                    />
                   ) : msg.message ? (
                     <p>{msg.message}</p>
                   ) : msg.form ? (
