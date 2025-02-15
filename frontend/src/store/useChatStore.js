@@ -254,3 +254,11 @@ export const useChatStore = create((set, get) => ({
         }
     },
 }))
+
+
+
+
+// const handleRetryButton = () => {
+//     sendMessage({ action: "retry"});
+//   }
+// };
