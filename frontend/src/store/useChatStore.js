@@ -2,6 +2,7 @@ import { create } from "zustand";
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../lib/axios'
 import { HistoryIcon } from "lucide-react";
+import useWebSocketStore from "./useWebSocketStore";
 
 
 export const useChatStore = create((set, get) => ({
@@ -71,8 +72,15 @@ export const useChatStore = create((set, get) => ({
 
     setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
 
+
     updateChatId: (id) => {
-        set({ chatId: id })
+        set({ chatId: id });
+
+        // Ensure messages are cleared in useWebSocketStore
+        useWebSocketStore.getState().ws?.close(); // Close the existing WebSocket connection
+        useWebSocketStore.setState({ currentMessages: [], fetchedMessages: [] });
+
+        console.log("Chat ID updated, messages cleared");
     },
 
     // getChatHistory: async (teamSelected) => {
