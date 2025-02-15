@@ -18,21 +18,19 @@ const ChatBubbles = () => {
   // const [wsService, setWsService] = useState(null);
 
   const handleRetryButton = () => {
-    sendMessage({ action: "retry" });
+    let message = "retry";
+    sendMessage({ action: "retry", message });
   };
 
   function formatJobPosting(text) {
     // Split the text into lines and process each line
     const lines = text.split("\n");
     let formattedText = "";
-
     for (let line of lines) {
       // Remove leading/trailing whitespace
       line = line.trim();
-
       // Skip empty lines
       if (!line) continue;
-
       // Handle main headings (two stars)
       if (line.startsWith("**") && line.endsWith("**") && !line.includes(":")) {
         const heading = line.replace(/\*\*/g, "");
@@ -46,12 +44,9 @@ const ChatBubbles = () => {
       // Handle points (hyphen)
       else if (line.startsWith("-")) {
         line = line.substring(1).trim(); // Remove hyphen and trim
-
         // Remove ** if wrapping key
         line = line.replace(/\*\*/g, "");
-
         const [key, value] = line.split(":").map((s) => s.trim());
-
         if (value) {
           // Check if the value contains a URL
           if (value.includes("http://") || value.includes("https://")) {
@@ -118,7 +113,7 @@ const ChatBubbles = () => {
                   </time>
                 </div>
 
-                <div className="chat-bubble flex flex-col">
+                <div className="chat-bubble chat-bubble-primary flex flex-col">
                   {parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
                       <table className="w-full text-sm">
@@ -134,7 +129,7 @@ const ChatBubbles = () => {
                           )}
                         </tbody>
                       </table>
-                      {msg.retry === false && (
+                      {msg.retry === "False" && (
                         <div className="flex justify-center">
                           <button
                             className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -177,8 +172,9 @@ const ChatBubbles = () => {
       ) : (
         <>
           {currentMessages.map((msg, index) => {
-            const isUserMessage =
-              msg.action === "chat_manually" || msg.action === "form";
+            // const isAgentMessage = msg.user === "AI";
+            const isActionMessage =
+              msg.action === "retry" || msg.action === "chat_manually";
             const messageText =
               typeof msg.message === "object"
                 ? msg.message.message
@@ -187,14 +183,19 @@ const ChatBubbles = () => {
             return (
               <div
                 key={index}
-                className={`chat ${isUserMessage ? "chat-end" : "chat-start"}`}
+                className={`chat ${
+                  isActionMessage ? "chat-end" : "chat-start"
+                }`}
               >
                 <div className="chat-header mb-1">
+                  {!isActionMessage && (
+                    <span className="font-bold">{msg.user}</span>
+                  )}
                   <time className="text-xs opacity-50 ml-1">
                     timestampNotGiven
                   </time>
                 </div>
-                <div className="chat-bubble flex flex-col">
+                <div className="chat-bubble chat-bubble-primary flex flex-col">
                   <p>{messageText}</p>
                 </div>
               </div>
@@ -204,7 +205,7 @@ const ChatBubbles = () => {
           {/* Show "Thinking..." bubble when responseIsThinking is true */}
           {responseIsThinking && (
             <div className="chat chat-start">
-              <div className="chat-bubble flex flex-col">
+              <div className="chat-bubble chat-bubble-primary flex flex-col">
                 <p className="flex items-center">Thinking...</p>
               </div>
             </div>

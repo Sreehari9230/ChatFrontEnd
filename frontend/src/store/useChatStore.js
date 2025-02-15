@@ -144,16 +144,16 @@ export const useChatStore = create((set, get) => ({
         set({ isChatHistoryLoading: true });
         try {
             console.log('Fetching chat history...');
-            const accessToken = localStorage.getItem('access_token');
-            if (!accessToken) {
-                throw new Error('Access token is missing. Please log in again.');
-            }
+            // const accessToken = localStorage.getItem('access_token');
+            // if (!accessToken) {
+            //     throw new Error('Access token is missing. Please log in again.');
+            // }
 
             // Commenting out the real API request
             const res = await axiosInstance.get(`/organization/agent/${teamSelected}/chat-sessions/`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
+                // headers: {
+                //     Authorization: `Bearer ${accessToken}`,
+                // },
             });
 
             // Using mock data instead
@@ -239,9 +239,9 @@ export const useChatStore = create((set, get) => ({
                 `organization/agents/${teamSelected}/create-chat-message/`,
                 {},
                 {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
+                    // headers: {
+                    //     Authorization: `Bearer ${accessToken}`,
+                    // },
                 }
             );
 
