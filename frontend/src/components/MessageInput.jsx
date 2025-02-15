@@ -60,7 +60,7 @@ const MessageInput = () => {
         <button
           type="submit"
           className="hidden sm:flex btn btn-circle"
-          disabled={responseIsThinking || !message.trim()}
+          disabled={!message.trim()}
           onClick={handleSendMessage}
         >
           <Send size={22} />
