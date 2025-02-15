@@ -9,58 +9,58 @@ const useWebSocketStore = create((set, get) => ({
 
   connect: (chatId) => {
     if (!chatId) {
-      console.error("WebSocketStore: chatId is missing.");
-      return;
+        console.error("WebSocketStore: chatId is missing.");
+        return;
     }
 
     // Close existing connection if any
     const existingWs = get().ws;
     if (existingWs) {
-      existingWs.close();
+        existingWs.close();
     }
+
+    // Clear messages before reconnecting
+    set({ currentMessages: [], fetchedMessages: [] });
 
     const ws = new WebSocket(`wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/${chatId}/`);
 
     ws.onopen = () => {
-      console.log("✅ WebSocket Connected");
-      set({ isConnected: true });
-      get().fetchChatMessages(); // Fetch chat history when connected
+        console.log("✅ WebSocket Connected");
+        set({ isConnected: true });
+        get().fetchChatMessages(); // Fetch chat history when connected
     };
 
     ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        console.log("📩 Message received:", data);
-    
-        if (data.action === "show_messages" && Array.isArray(data.messages)) {
-          // Set fetchedMessages to the received messages array
-          set({ fetchedMessages: data.messages });
-        } else if (data.action === "new_message") {
-          // Push new message to currentMessages and set responseIsThinking to false
-          set((state) => ({
-            currentMessages: [...state.currentMessages, data],
-            responseIsThinking: false, // Set to false when a response is received
-          }));
+        try {
+            const data = JSON.parse(event.data);
+            console.log("📩 Message received:", data);
+
+            if (data.action === "show_messages" && Array.isArray(data.messages)) {
+                set({ fetchedMessages: data.messages });
+            } else if (data.action === "new_message") {
+                set((state) => ({
+                    currentMessages: [...state.currentMessages, data],
+                    responseIsThinking: false,
+                }));
+            }
+        } catch (error) {
+            console.error("❌ Error parsing WebSocket message:", error);
         }
-      } catch (error) {
-        console.error("❌ Error parsing WebSocket message:", error);
-      }
     };
 
     ws.onerror = (error) => console.error("❌ WebSocket Error:", error);
 
     ws.onclose = (closeEvent) => {
-      console.log("🔴 WebSocket Disconnected", closeEvent.code, closeEvent.reason);
-      set({ isConnected: false });
+        console.log("🔴 WebSocket Disconnected", closeEvent.code, closeEvent.reason);
+        set({ isConnected: false });
 
-      // Attempt reconnection for non-normal closures
-      if (![1000, 1006].includes(closeEvent.code)) {
-        setTimeout(() => get().connect(chatId), 3000);
-      }
+        if (![1000, 1006].includes(closeEvent.code)) {
+            setTimeout(() => get().connect(chatId), 3000);
+        }
     };
 
     set({ ws });
-  },
+},
 
   sendMessage: (message) => {
     const ws = get().ws;
