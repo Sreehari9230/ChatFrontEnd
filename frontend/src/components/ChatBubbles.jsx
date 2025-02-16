@@ -28,11 +28,17 @@ const ChatBubbles = () => {
     const lines = text.split("\n");
     let formattedText = "";
     let inList = false; // Track whether we are in a list
-
+  
+    // Regular expression to detect URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+  
     for (let line of lines) {
       line = line.trim();
       if (!line) continue;
-
+  
+      // Convert URLs into clickable links
+      line = line.replace(urlRegex, (url) => `<a href="${url}" class="text-blue-500 underline" target="_blank">${url}</a>`);
+  
       if (line.startsWith("**") && line.endsWith("**") && !line.includes(":")) {
         // Main heading
         const heading = line.replace(/\*\*/g, "");
@@ -45,7 +51,7 @@ const ChatBubbles = () => {
         // Bullet points or key-value pairs
         line = line.substring(1).trim();
         line = line.replace(/\*\*/g, "");
-
+  
         if (line.includes(":")) {
           const [key, value] = line.split(":").map((s) => s.trim());
           formattedText += `<p><strong>${key}:</strong> ${value}</p>`;
@@ -66,13 +72,14 @@ const ChatBubbles = () => {
         formattedText += `<p>${line}</p>`;
       }
     }
-
+  
     if (inList) {
       formattedText += "</ul>"; // Ensure list is closed
     }
-
+  
     return formattedText;
   }
+  
 
   useEffect(() => {
     if (chatId) {
