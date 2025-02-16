@@ -89,6 +89,122 @@ const Sidebar = () => {
             </div>
           )}
         </div>
+
+        {/* Marketing Department with Teams */}
+        <div>
+          <button
+            onClick={() => handleDropdown("Marketing")}
+            className="
+        w-full p-3 flex items-center gap-3
+        hover:bg-base-300 transition-colors
+      "
+          >
+            <span className="font-medium truncate">Marketing Department</span>
+            <span className="ml-auto hidden lg:inline">
+              {activeDropdown === "Marketing" ? (
+                <ChevronDown className="size-4" />
+              ) : (
+                <ChevronRight className="size-4" />
+              )}
+            </span>
+          </button>
+
+          {activeDropdown === "Marketing" && (
+            <div className="pl-6">
+              <button
+                onClick={() => handleTeamSelection("SEO Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "SEO Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">SEO Team</span>
+              </button>
+              <button
+                onClick={() => handleTeamSelection("Marketing Research Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Marketing Research Team"
+                    ? "bg-base-300"
+                    : ""
+                }`}
+              >
+                <span className="text-sm truncate">
+                  Marketing Research Team
+                </span>
+              </button>
+              <button
+                onClick={() => handleTeamSelection("Social Media Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Social Media Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Social Media Team</span>
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Sales Department with Teams */}
+        <div>
+          <button
+            onClick={() => handleDropdown("Sales")}
+            className="
+      w-full p-3 flex items-center gap-3
+      hover:bg-base-300 transition-colors
+    "
+          >
+            <span className="font-medium truncate">Sales Department</span>
+            <span className="ml-auto hidden lg:inline">
+              {activeDropdown === "Sales" ? (
+                <ChevronDown className="size-4" />
+              ) : (
+                <ChevronRight className="size-4" />
+              )}
+            </span>
+          </button>
+
+          {activeDropdown === "Sales" && (
+            <div className="pl-6">
+              <button
+                onClick={() => handleTeamSelection("Content Creation Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Content Creation Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Content Creation Team</span>
+              </button>
+              <button
+                onClick={() =>
+                  handleTeamSelection("Customer Relationship Team")
+                }
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Customer Relationship Team"
+                    ? "bg-base-300"
+                    : ""
+                }`}
+              >
+                <span className="text-sm truncate">
+                  Customer Relationship Team
+                </span>
+              </button>
+              <button
+                onClick={() => handleTeamSelection("Sales Strategy Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Sales Strategy Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Sales Strategy Team</span>
+              </button>
+              <button
+                onClick={() => handleTeamSelection("Lead Generation Team")}
+                className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
+                  selectedTeam === "Lead Generation Team" ? "bg-base-300" : ""
+                }`}
+              >
+                <span className="text-sm truncate">Lead Generation Team</span>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </aside>
   );
