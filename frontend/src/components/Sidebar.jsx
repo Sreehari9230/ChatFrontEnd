@@ -29,12 +29,22 @@ const Sidebar = () => {
     setTeamSelected(team);
     console.log(team);
     console.log(teamSelcted);
-    if (team == "Onboarding Team") {
+    const teamMap = {
+      "Onboarding Team": 1,
+      "Recruitment Team": 2,
+      "SEO Team": 3,
+      "Marketing Research Team": 4,
+      "Social Media Team": 7,
+      "Content Creation": 6,
+      "Customer Relations": 8,
+      "Sales Strategy": 9,
+      "Lead Generation": 5,
+    };
+    if (teamMap[team]) {
       console.log(`Chat History Loading For ${team}`);
-      getChatHistory(1);
-    } else if (team == "Recruitment Team") {
-      console.log(`Chat History Loading For ${team}`);
-      getChatHistory(2);
+      getChatHistory(teamMap[team]);
+    } else {
+      console.log("Invalid Team Selected");
     }
   };
 
@@ -165,16 +175,16 @@ const Sidebar = () => {
           {activeDropdown === "Sales" && (
             <div className="pl-6">
               <button
-                onClick={() => handleTeamSelection("Content Creation Team")}
+                onClick={() => handleTeamSelection("Content Creation")}
                 className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
                   selectedTeam === "Content Creation Team" ? "bg-base-300" : ""
                 }`}
               >
-                <span className="text-sm truncate">Content Creation Team</span>
+                <span className="text-sm truncate">Content Creation</span>
               </button>
               <button
                 onClick={() =>
-                  handleTeamSelection("Customer Relationship Team")
+                  handleTeamSelection("Customer Relations")
                 }
                 className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
                   selectedTeam === "Customer Relationship Team"
@@ -183,24 +193,24 @@ const Sidebar = () => {
                 }`}
               >
                 <span className="text-sm truncate">
-                  Customer Relationship Team
+                  Customer Relationship
                 </span>
               </button>
               <button
-                onClick={() => handleTeamSelection("Sales Strategy Team")}
+                onClick={() => handleTeamSelection("Sales Strategy")}
                 className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
                   selectedTeam === "Sales Strategy Team" ? "bg-base-300" : ""
                 }`}
               >
-                <span className="text-sm truncate">Sales Strategy Team</span>
+                <span className="text-sm truncate">Sales Strategy</span>
               </button>
               <button
-                onClick={() => handleTeamSelection("Lead Generation Team")}
+                onClick={() => handleTeamSelection("Lead Generation")}
                 className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
                   selectedTeam === "Lead Generation Team" ? "bg-base-300" : ""
                 }`}
               >
-                <span className="text-sm truncate">Lead Generation Team</span>
+                <span className="text-sm truncate">Lead Generation</span>
               </button>
             </div>
           )}
