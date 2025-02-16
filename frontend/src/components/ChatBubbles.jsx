@@ -3,6 +3,7 @@ import { useChatStore } from "../store/useChatStore";
 // import WebSocketService from "../Websocket/websocket";
 import useWebSocketStore from "../store/useWebSocketStore";
 import { format } from "date-fns";
+import MessageSkeleton from "./skeletons/MessageSkeleton";
 
 const ChatBubbles = () => {
   const { chatId } = useChatStore();
@@ -12,6 +13,7 @@ const ChatBubbles = () => {
     fetchedMessages,
     responseIsThinking,
     sendMessage,
+    isFetchMessagesLoading,
   } = useWebSocketStore();
   let lastDate = null;
   const chatEndRef = useRef(null); // Ref to track the last message
@@ -92,6 +94,7 @@ const ChatBubbles = () => {
     }
   };
 
+  if (isFetchMessagesLoading) return <MessageSkeleton />;
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
       {fetchedMessages.length === 0 ? (
@@ -179,86 +182,97 @@ const ChatBubbles = () => {
         })
       )}
 
-{currentMessages.length === 0 ? (
-  <p className="text-center text-gray-500">No current chat</p>
-) : (
-  <>
-    {currentMessages.map((msg, index) => {
-      const isActionMessage =
-        msg.action === "retry" || msg.action === "chat_manually";
-      const messageText =
-        typeof msg.message === "object" ? msg.message.message : msg.message;
-      const parsedBoxMessage =
-        msg.message.Type === "box" ? parseBoxMessage(msg.message.message) : null;
+      {currentMessages.length === 0 ? (
+        <p className="text-center text-gray-500">No current chat</p>
+      ) : (
+        <>
+          {currentMessages.map((msg, index) => {
+            const isActionMessage =
+              msg.action === "retry" || msg.action === "chat_manually";
+            const messageText =
+              typeof msg.message === "object"
+                ? msg.message.message
+                : msg.message;
+            const parsedBoxMessage =
+              msg.message.Type === "box"
+                ? parseBoxMessage(msg.message.message)
+                : null;
 
-      return (
-        <div
-          key={index}
-          className={`chat ${isActionMessage ? "chat-end" : "chat-start"}`}
-        >
-          <div className="chat-header mb-1">
-            {!isActionMessage && <span className="font-bold">{msg.user}</span>}
-            <time className="text-xs opacity-50 ml-1">timestampNotGiven</time>
-          </div>
-
-          <div className="chat-bubble chat-bubble-primary flex flex-col">
-            {parsedBoxMessage ? (
-              <div className="flex flex-col gap-4">
-                <table className="w-full text-sm">
-                  <tbody>
-                    {Object.entries(parsedBoxMessage).map(([key, value]) => (
-                      <tr key={key}>
-                        <td className="px-2 py-1">{key}</td>
-                        <td className="px-2 py-1">{value}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {msg.message.retry === "False" && (
-                  <div className="flex justify-center">
-                    <button
-                      className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                      onClick={handleRetryButton}
-                    >
-                      Retry
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : msg.message.Type === "text" ? (
+            return (
               <div
-                className="formatted-text"
-                dangerouslySetInnerHTML={{
-                  __html: formatJobPosting(messageText),
-                }}
-              />
-            ) : msg.form ? (
-              <div className="space-y-1">
-                {Object.entries(msg.form).map(([key, value]) => (
-                  <p key={key}>
-                    <strong>{key}:</strong> {value}
-                  </p>
-                ))}
+                key={index}
+                className={`chat ${
+                  isActionMessage ? "chat-end" : "chat-start"
+                }`}
+              >
+                <div className="chat-header mb-1">
+                  {!isActionMessage && (
+                    <span className="font-bold">{msg.user}</span>
+                  )}
+                  <time className="text-xs opacity-50 ml-1">
+                    timestampNotGiven
+                  </time>
+                </div>
+
+                <div className="chat-bubble chat-bubble-primary flex flex-col">
+                  {parsedBoxMessage ? (
+                    <div className="flex flex-col gap-4">
+                      <table className="w-full text-sm">
+                        <tbody>
+                          {Object.entries(parsedBoxMessage).map(
+                            ([key, value]) => (
+                              <tr key={key}>
+                                <td className="px-2 py-1">{key}</td>
+                                <td className="px-2 py-1">{value}</td>
+                              </tr>
+                            )
+                          )}
+                        </tbody>
+                      </table>
+                      {msg.message.retry === "False" && (
+                        <div className="flex justify-center">
+                          <button
+                            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            onClick={handleRetryButton}
+                          >
+                            Retry
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : msg.message.Type === "text" ? (
+                    <div
+                      className="formatted-text"
+                      dangerouslySetInnerHTML={{
+                        __html: formatJobPosting(messageText),
+                      }}
+                    />
+                  ) : msg.form ? (
+                    <div className="space-y-1">
+                      {Object.entries(msg.form).map(([key, value]) => (
+                        <p key={key}>
+                          <strong>{key}:</strong> {value}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p>{messageText}</p>
+                  )}
+                </div>
               </div>
-            ) : (
-              <p>{messageText}</p>
-            )}
-          </div>
-        </div>
-      );
-    })}
+            );
+          })}
 
-    {/* Show "Thinking..." bubble when responseIsThinking is true */}
-    {responseIsThinking && (
-      <div className="chat chat-start">
-        <div className="chat-bubble chat-bubble-primary flex flex-col">
-          <p className="flex items-center">Thinking...</p>
-        </div>
-      </div>
-    )}
-  </>
-)}
-
+          {/* Show "Thinking..." bubble when responseIsThinking is true */}
+          {responseIsThinking && (
+            <div className="chat chat-start">
+              <div className="chat-bubble chat-bubble-primary flex flex-col">
+                <p className="flex items-center">Thinking...</p>
+              </div>
+            </div>
+          )}
+        </>
+      )}
 
       {/* Empty div for auto scroll */}
       <div ref={chatEndRef}></div>

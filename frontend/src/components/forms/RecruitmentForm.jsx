@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useChatStore } from "../../store/useChatStore"; // Assuming you use a store
-// import WebSocketService from "../../Websocket/websocket";
+import { useChatStore } from "../../store/useChatStore";
 import useWebSocketStore from "../../store/useWebSocketStore";
 
 const RecruitmentForm = () => {
-  const { chatId } = useChatStore(); // Get chat ID from store
+  const { chatId } = useChatStore();
   const { sendMessage } = useWebSocketStore();
   const [formData, setFormData] = useState({
     job_title: "",
@@ -13,7 +12,6 @@ const RecruitmentForm = () => {
     job_requirement: "",
     expected_reach_out: 0,
   });
-  // const [wsService, setWsService] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

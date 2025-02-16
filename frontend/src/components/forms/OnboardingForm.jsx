@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useChatStore } from "../../store/useChatStore"; // Assuming you use a store
-// import WebSocketService from "../../Websocket/websocket";
+import { useChatStore } from "../../store/useChatStore";
 import useWebSocketStore from "../../store/useWebSocketStore";
 
 const OnboardingForm = () => {
@@ -14,7 +13,6 @@ const OnboardingForm = () => {
     position: "",
     startDate: "",
   });
-  // const [wsService, setWsService] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,7 +28,7 @@ const OnboardingForm = () => {
       action: "form",
       form: formData,
     };
-    sendMessage(payload); // ✅ Use Zustand WebSocket state
+    sendMessage(payload);
     console.log("📤 Form data sent via WebSocket:", payload);
   };
 

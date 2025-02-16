@@ -10,6 +10,7 @@ import RecruitmentForm from "./forms/RecruitmentForm";
 import WelcomeChat from "./WelcomeChat";
 import ChatBubbles from "./ChatBubbles";
 import useWebSocketStore from "../store/useWebSocketStore";
+import MessageSkeleton from "./skeletons/MessageSkeleton";
 
 const ChatContainer = () => {
   const {
@@ -24,7 +25,7 @@ const ChatContainer = () => {
   // console.log(teamSelcted, "hehe");
   const { authUser } = useAuthStore();
 
-  const { connect } = useWebSocketStore(); // ✅ Extract connect function
+  const { connect, isFetchMessagesLoading } = useWebSocketStore(); // ✅ Extract connect function
 
   // ✅ Connect WebSocket when chatId changes
   useEffect(() => {
@@ -61,10 +62,14 @@ const ChatContainer = () => {
     // newUi should be shpwn if the user gets in and he has no prevous chat in the team or he has clicked the newChat button
 
     <div className="flex-1 flex flex-col overflow-auto">
-       {/* <RecruitmentForm/>  */}
+      {/* <RecruitmentForm/>  */}
       <ChatHeader />
       {!hasChatHistory || newChatButtonClicked ? (
-        <WelcomeChat />
+        isFetchMessagesLoading ? (
+          <MessageSkeleton />
+        ) : (
+          <WelcomeChat />
+        )
       ) : formButtonClicked ? (
         formRenderContent()
       ) : chatManuallyButtonClicked || hasChatHistory ? ( // Fixed syntax
