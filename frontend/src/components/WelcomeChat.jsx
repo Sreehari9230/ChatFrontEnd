@@ -1,5 +1,6 @@
 import React from "react";
 import { useChatStore } from "../store/useChatStore";
+import { teamMap } from "../lib/utils";
 
 const WelcomeChat = () => {
   const {
@@ -15,10 +16,11 @@ const WelcomeChat = () => {
     console.log(`Starting New Form in ${teamSelcted}`);
     console.log(teamSelcted);
     setFormButtonClicked();
-    if (teamSelcted == "Onboarding Team") {
-      // getNewChat(1);
-    } else if (teamSelcted == "Recruitment Team") {
-      // getNewChat(2);
+
+    if (teamMap[teamSelcted]) {
+      // getNewChat(teamMap[teamSelcted]);
+    } else {
+      console.log("Invalid Team Selected");
     }
   };
 
@@ -26,11 +28,12 @@ const WelcomeChat = () => {
     console.log(`Starting To Chat Manually in ${teamSelcted}`);
     console.log(teamSelcted);
     setChatManuallyButtonClicked();
-    if (teamSelcted == "Onboarding Team") {
-      console.log("insode if");
-      // getNewChat(1);
-    } else if (teamSelcted == "Recruitment Team") {
-      // getNewChat(2);
+
+    if (teamMap[teamSelcted]) {
+      console.log("Inside if");
+      // getNewChat(teamMap[teamSelcted]);
+    } else {
+      console.log("Invalid Team Selected");
     }
   };
 
