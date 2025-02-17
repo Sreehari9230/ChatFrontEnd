@@ -84,23 +84,23 @@ const ChatContainer = () => {
 
     <div className="flex-1 flex flex-col overflow-auto">
       {/* <RecruitmentForm/>  */}
-      {/* <ChatHeader />
+      <ChatHeader />
       {!hasChatHistory || newChatButtonClicked ? (
         isFetchMessagesLoading ? (
           <MessageSkeleton />
         ) : (
           <WelcomeChat />
         )
-      ) : formButtonClicked ? ( */}
-      {formRenderContent()}
-      {/* ) : chatManuallyButtonClicked || hasChatHistory ? ( // Fixed syntax
+      ) : formButtonClicked ? (
+        formRenderContent()
+      ) : chatManuallyButtonClicked || hasChatHistory ? ( // Fixed syntax
         <>
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <ChatBubbles />
           </div>
           <MessageInput />
         </>
-      ) : null}{" "} */}
+      ) : null}{" "}
       {/* Added a fallback */}
     </div>
 
