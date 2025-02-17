@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { ChevronDown, ChevronRight, Group, Users } from "lucide-react";
+import { teamMap } from "../lib/utils"
 
 const Sidebar = () => {
   const {
@@ -29,17 +30,6 @@ const Sidebar = () => {
     setTeamSelected(team);
     console.log(team);
     console.log(teamSelcted);
-    const teamMap = {
-      "Onboarding Team": 1,
-      "Recruitment Team": 2,
-      "SEO Team": 3,
-      "Marketing Research Team": 4,
-      "Social Media Team": 7,
-      "Content Creation": 6,
-      "Customer Relations": 8,
-      "Sales Strategy": 9,
-      "Lead Generation": 5,
-    };
     if (teamMap[team]) {
       console.log(`Chat History Loading For ${team}`);
       getChatHistory(teamMap[team]);
