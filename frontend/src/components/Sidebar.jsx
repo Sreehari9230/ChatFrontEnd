@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { ChevronDown, ChevronRight, Group, Users } from "lucide-react";
-import { teamMap } from "../lib/utils"
+import { teamMap } from "../lib/utils";
 
 const Sidebar = () => {
   const {
@@ -147,10 +147,7 @@ const Sidebar = () => {
         <div>
           <button
             onClick={() => handleDropdown("Sales")}
-            className="
-      w-full p-3 flex items-center gap-3
-      hover:bg-base-300 transition-colors
-    "
+            className="w-full p-3 flex items-center gap-3 hover:bg-base-300 transition-colors"
           >
             <span className="font-medium truncate">Sales Department</span>
             <span className="ml-auto hidden lg:inline">
@@ -173,18 +170,14 @@ const Sidebar = () => {
                 <span className="text-sm truncate">Content Creation</span>
               </button>
               <button
-                onClick={() =>
-                  handleTeamSelection("Customer Relations")
-                }
+                onClick={() => handleTeamSelection("Customer Relations")}
                 className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors ${
                   selectedTeam === "Customer Relationship Team"
                     ? "bg-base-300"
                     : ""
                 }`}
               >
-                <span className="text-sm truncate">
-                  Customer Relationship
-                </span>
+                <span className="text-sm truncate">Customer Relationship</span>
               </button>
               <button
                 onClick={() => handleTeamSelection("Sales Strategy")}
