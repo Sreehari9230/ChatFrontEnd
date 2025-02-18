@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
@@ -10,10 +10,12 @@ import { useAuthStore } from "./store/useAuthStore";
 import { useThemeStore } from "./store/useThemeStore";
 import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
+import RaiseATicketModal from "./components/RaiseATicketModal";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
   const { theme } = useThemeStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // useEffect(() => {
   //   checkAuth();
@@ -29,7 +31,8 @@ const App = () => {
 
   return (
     <div data-theme={theme}>
-      <Navbar />
+      <Navbar onOpenTicket={() => setIsModalOpen(true)} />
+      <RaiseATicketModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <Routes>
         {/* <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/home" />} /> */}
