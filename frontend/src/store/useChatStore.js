@@ -196,6 +196,20 @@ export const useChatStore = create((set, get) => ({
     },
 
 
+    postTicket: async (message) => {
+        try {
+            const res = await axiosInstance.post(`/blabla/api/blanjnj`, {
+                message
+                // headers: {
+                //     Authorization: `Bearer ${accessToken}`,
+                // },
+            });
+        } catch (error) {
+            toast.error(error.message);
+        }
+    },
+
+
 
     setHasChatHistory: () => {
         if (chatHistory.length == 0) {
