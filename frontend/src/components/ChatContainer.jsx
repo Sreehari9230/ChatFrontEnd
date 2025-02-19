@@ -28,6 +28,7 @@ const ChatContainer = () => {
     hasChatHistory,
     chatManuallyButtonClicked,
     chatId,
+    isChatHistoryLoading
   } = useChatStore();
   // console.log(teamSelcted, "hehe");
   const { authUser } = useAuthStore();
