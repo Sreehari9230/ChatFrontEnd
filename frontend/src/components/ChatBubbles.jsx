@@ -160,7 +160,7 @@ const ChatBubbles = () => {
                     <span className="font-bold">{msg.user}</span>
                   )}
                   <time className="text-xs opacity-50 ml-1">
-                    timestampNotGiven
+                  {format(new Date(msg.timestamp), "h:mm a")}
                   </time>
                 </div>
 
