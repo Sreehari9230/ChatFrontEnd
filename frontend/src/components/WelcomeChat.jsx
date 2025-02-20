@@ -18,7 +18,7 @@ const WelcomeChat = () => {
     setFormButtonClicked();
 
     if (teamMap[teamSelcted]) {
-      // getNewChat(teamMap[teamSelcted]);
+      getNewChat(teamMap[teamSelcted]);
     } else {
       console.log("Invalid Team Selected");
     }
@@ -31,7 +31,7 @@ const WelcomeChat = () => {
 
     if (teamMap[teamSelcted]) {
       console.log("Inside if");
-      // getNewChat(teamMap[teamSelcted]);
+      getNewChat(teamMap[teamSelcted]);
     } else {
       console.log("Invalid Team Selected");
     }

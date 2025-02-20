@@ -138,13 +138,17 @@ const ChatBubbles = () => {
         <>
           {currentMessages.map((msg, index) => {
             const isActionMessage =
-              msg.action === "retry" || msg.action === "chat_manually";
+              msg.action === "retry" ||
+              msg.action === "chat_manually" ||
+              msg.action === "form";
+
             const messageText =
               typeof msg.message === "object"
                 ? msg.message.message
                 : msg.message;
+
             const parsedBoxMessage =
-              msg.message.Type === "box"
+              msg.message?.Type === "box"
                 ? parseBoxMessage(msg.message.message)
                 : null;
 
@@ -156,9 +160,6 @@ const ChatBubbles = () => {
                 }`}
               >
                 <div className="chat-header mb-1">
-                  {/* {!isActionMessage && (
-                    <span className="font-bold">{msg.user}</span>
-                  )} */}
                   <time className="text-xs opacity-50 ml-1">
                     CurrentMessage
                   </time>
@@ -179,7 +180,7 @@ const ChatBubbles = () => {
                           )}
                         </tbody>
                       </table>
-                      {msg.message.retry === "False" && (
+                      {msg.message?.retry === "False" && (
                         <div className="flex justify-center">
                           <button
                             className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -190,14 +191,7 @@ const ChatBubbles = () => {
                         </div>
                       )}
                     </div>
-                  ) : msg.message.Type === "text" ? (
-                    <div
-                      className="formatted-text"
-                      dangerouslySetInnerHTML={{
-                        __html: formatJobPosting(messageText),
-                      }}
-                    />
-                  ) : msg.form ? (
+                  ) : msg.action === "form" && msg.form ? ( // Check if action is "form"
                     <div className="space-y-1">
                       {Object.entries(msg.form).map(([key, value]) => (
                         <p key={key}>
@@ -205,6 +199,13 @@ const ChatBubbles = () => {
                         </p>
                       ))}
                     </div>
+                  ) : msg.message?.Type === "text" ? (
+                    <div
+                      className="formatted-text"
+                      dangerouslySetInnerHTML={{
+                        __html: formatJobPosting(messageText),
+                      }}
+                    />
                   ) : (
                     <p>{messageText}</p>
                   )}
