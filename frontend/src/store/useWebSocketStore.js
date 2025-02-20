@@ -40,7 +40,7 @@ const useWebSocketStore = create((set, get) => ({
 
         if (data.action === "show_messages" && Array.isArray(data.messages)) {
           set({ fetchedMessages: data.messages });
-          set({ isFetchMessagesLoading: false })
+          set({ isFetchMessagesLoading: false });
         } else if (data.action === "new_message") {
           set((state) => ({
             currentMessages: [...state.currentMessages, data],
@@ -48,11 +48,10 @@ const useWebSocketStore = create((set, get) => ({
           }));
         }
 
-        // Set formResponseIsLoading to false when receiving "formresponse"
+        // Set formResponseIsLoading to false when receiving "form_response"
         if (data.action === "form_response") {
           set({ formResponseIsLoading: false });
         }
-
 
       } catch (error) {
         console.error("❌ Error parsing WebSocket message:", error);
@@ -85,13 +84,15 @@ const useWebSocketStore = create((set, get) => ({
       ws.send(JSON.stringify(messageWithTimestamp));
       console.log("📤 Message sent:", messageWithTimestamp);
 
-      // Push sent message to currentMessages
-      set((state) => ({
-        currentMessages: [...state.currentMessages, messageWithTimestamp],
-      }));
+      // Push sent message to currentMessages ONLY if it's NOT a "form" action
+      if (message.action !== "form") {
+        set((state) => ({
+          currentMessages: [...state.currentMessages, messageWithTimestamp],
+        }));
+      }
 
       // Set responseIsThinking to true only for "chat_manually" or "form" actions
-      if (message.action === "chat_manually" || message.action === "form") {
+      if (message.action === "chat_manually") {
         set({ responseIsThinking: true });
       }
 
@@ -99,7 +100,6 @@ const useWebSocketStore = create((set, get) => ({
       if (message.action === "form") {
         set({ formResponseIsLoading: true });
       }
-
 
     } else {
       console.error("❌ WebSocket is not open.");
