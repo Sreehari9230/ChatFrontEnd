@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useWebSocketStore from "../../store/useWebSocketStore";
+import { Loader2 } from "lucide-react";
 
 const MarketingResearchForm = () => {
-  const { sendMessage } = useWebSocketStore(); // WebSocket send function
+  const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
   const [topic, setTopic] = useState(""); // State for input
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Track response status
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,10 +16,15 @@ const MarketingResearchForm = () => {
       form: { topic },
     };
     sendMessage(payload);
-    console.log("📤 Topic data sent via WebSocket:", payload);
-
-    setTopic(""); // Clear input after submission
+    setIsWaitingForResponse(true); // Set waiting flag
   };
+
+  useEffect(() => {
+    if (isWaitingForResponse && !formResponseIsLoading) {
+      setTopic(""); // Clear input after submission
+      setIsWaitingForResponse(false); // Reset flag
+    }
+  }, [formResponseIsLoading, isWaitingForResponse]);
 
   return (
     <div className="flex justify-center mt-4 pt-10">
@@ -26,7 +33,7 @@ const MarketingResearchForm = () => {
         onSubmit={handleSubmit}
       >
         <h2 className="text-lg font-semibold mb-4 text-center">
-          Topic Submission in Marketing Research 
+          Topic Submission in Marketing Research
         </h2>
 
         {/* Input Field */}
@@ -46,13 +53,21 @@ const MarketingResearchForm = () => {
 
         {/* Submit Button */}
         <div className="mt-4">
-          <button type="submit" className="btn btn-primary btn-sm w-full">
-            Submit Topic
+          <button
+            type="submit"
+            className="btn btn-primary btn-sm w-full flex items-center justify-center"
+            disabled={formResponseIsLoading}
+          >
+            {formResponseIsLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Submit Topic"
+            )}
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
-export default MarketingResearchForm
+export default MarketingResearchForm;

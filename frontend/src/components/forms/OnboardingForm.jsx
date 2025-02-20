@@ -7,10 +7,9 @@ const OnboardingForm = () => {
   const { chatId, formIsSubmitted } = useChatStore(); // Get chat ID and submission handler
   const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Local state to track response status
-
   const [formData, setFormData] = useState({
-    employeeId: "",
-    employeeName: "",
+    employee_id: "",
+    first_name: "",
     email: "",
     department: "",
     position: "",
