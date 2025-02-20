@@ -108,31 +108,10 @@ const RecruitmentForm = () => {
             />
           </div>
         </div>
-
         {/* Submit Button */}
         <div className="mt-4">
-          <button
-            type="submit"
-            className="btn btn-primary btn-sm w-full"
-            disabled={formResponseIsLoading}
-          >
-            {formResponseIsLoading ? (
-              <div className="flex justify-center items-center">
-                <svg
-                  className="animate-spin h-4 w-4 mr-2 text-white"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <circle cx="12" cy="12" r="10" strokeOpacity="0.25"></circle>
-                  <path d="M4 12a8 8 0 0 1 8-8" strokeOpacity="0.75"></path>
-                </svg>
-                Processing...
-              </div>
-            ) : (
-              "Submit Request"
-            )}
+          <button type="submit" className="btn btn-primary btn-sm w-full">
+            Submit Request
           </button>
         </div>
       </form>
