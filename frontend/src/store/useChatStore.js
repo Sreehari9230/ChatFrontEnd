@@ -236,10 +236,10 @@ export const useChatStore = create((set, get) => ({
         try {
             console.log(`New Chat Is Fetching For ${teamSelected}`);
 
-            const accessToken = localStorage.getItem('access_token');
-            if (!accessToken) {
-                throw new Error('Access token is missing. Please log in again.');
-            }
+            // const accessToken = localStorage.getItem('access_token');
+            // if (!accessToken) {
+            //     throw new Error('Access token is missing. Please log in again.');
+            // }
 
             const res = await axiosInstance.post(
                 `organization/agents/${teamSelected}/create-chat-message/`,
