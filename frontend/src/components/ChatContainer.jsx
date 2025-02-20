@@ -55,7 +55,6 @@ const ChatContainer = () => {
   };
 
   const formRenderContent = () => {
-    console.log(formButtonClicked);
     if (
       // formButtonClicked &&
       teamSelcted

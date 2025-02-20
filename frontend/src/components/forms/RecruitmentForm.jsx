@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useChatStore } from "../../store/useChatStore";
 import useWebSocketStore from "../../store/useWebSocketStore";
+import { Loader2 } from "lucide-react";
 
 const RecruitmentForm = () => {
   const { chatId, formIsSubmitted } = useChatStore();
   const { sendMessage, formResponseIsLoading } = useWebSocketStore();
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+
   const [formData, setFormData] = useState({
     job_title: "",
     location: "",
@@ -20,11 +23,15 @@ const RecruitmentForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     sendMessage({ action: "form", form: formData });
-    if (formResponseIsLoading == false) {
-      // console.log("📤 Form data sent via WebSocket:", formData);
-      formIsSubmitted();
-    }
+    setIsWaitingForResponse(true); // Mark that we are waiting for a response
   };
+
+  useEffect(() => {
+    if (isWaitingForResponse && !formResponseIsLoading) {
+      formIsSubmitted(); // Only call when formResponseIsLoading becomes false
+      setIsWaitingForResponse(false); // Reset flag
+    }
+  }, [formResponseIsLoading, isWaitingForResponse]);
 
   return (
     <div className="flex justify-center mt-4 pt-10">
@@ -110,8 +117,16 @@ const RecruitmentForm = () => {
         </div>
         {/* Submit Button */}
         <div className="mt-4">
-          <button type="submit" className="btn btn-primary btn-sm w-full">
-            Submit Request
+          <button
+            type="submit"
+            className="btn btn-primary btn-sm w-full flex items-center justify-center"
+            disabled={formResponseIsLoading}
+          >
+            {formResponseIsLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Submit Request"
+            )}
           </button>
         </div>
       </form>
