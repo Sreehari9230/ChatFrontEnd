@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useChatStore } from "../../store/useChatStore";
 import useWebSocketStore from "../../store/useWebSocketStore";
 import { Loader2 } from "lucide-react";
 
 const SalesStrategyForm = () => {
   const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
+  const { formIsSubmitted } = useChatStore(); // Extract form submission handler
+
   const [topic, setTopic] = useState(""); // State for input
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Track response status
 
@@ -21,10 +24,11 @@ const SalesStrategyForm = () => {
 
   useEffect(() => {
     if (isWaitingForResponse && !formResponseIsLoading) {
+      formIsSubmitted(); // Mark form as submitted when response is received
       setTopic(""); // Clear input after submission
       setIsWaitingForResponse(false); // Reset flag
     }
-  }, [formResponseIsLoading, isWaitingForResponse]);
+  }, [formResponseIsLoading, isWaitingForResponse, formIsSubmitted]);
 
   return (
     <div className="flex justify-center mt-4 pt-10">
