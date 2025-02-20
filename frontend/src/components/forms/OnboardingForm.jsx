@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useChatStore } from "../../store/useChatStore";
 import useWebSocketStore from "../../store/useWebSocketStore";
+import { Loader2 } from "lucide-react";
 
 const OnboardingForm = () => {
-  const { chatId } = useChatStore(); // Get chat ID from store
-  const { sendMessage } = useWebSocketStore(); // ✅ Extract WebSocket send function
+  const { chatId, formIsSubmitted } = useChatStore(); // Get chat ID and submission handler
+  const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Local state to track response status
+
   const [formData, setFormData] = useState({
     employeeId: "",
     employeeName: "",
@@ -29,8 +32,15 @@ const OnboardingForm = () => {
       form: formData,
     };
     sendMessage(payload);
-    console.log("📤 Form data sent via WebSocket:", payload);
+    setIsWaitingForResponse(true); // Set waiting flag
   };
+
+  useEffect(() => {
+    if (isWaitingForResponse && !formResponseIsLoading) {
+      formIsSubmitted(); // Call when response is received
+      setIsWaitingForResponse(false); // Reset flag
+    }
+  }, [formResponseIsLoading, isWaitingForResponse]);
 
   return (
     <div className="flex justify-center mt-4 pt-10">
@@ -129,8 +139,16 @@ const OnboardingForm = () => {
 
         {/* Submit Button */}
         <div className="mt-4">
-          <button type="submit" className="btn btn-primary btn-sm w-full">
-            Submit Request
+          <button
+            type="submit"
+            className="btn btn-primary btn-sm w-full flex items-center justify-center"
+            disabled={formResponseIsLoading}
+          >
+            {formResponseIsLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Submit Request"
+            )}
           </button>
         </div>
       </form>
