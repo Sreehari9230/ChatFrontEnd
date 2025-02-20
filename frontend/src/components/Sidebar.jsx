@@ -177,7 +177,7 @@ const Sidebar = () => {
                     : ""
                 }`}
               >
-                <span className="text-sm truncate">Customer Relationship</span>
+                <span className="text-sm truncate">Customer Relations</span>
               </button>
               <button
                 onClick={() => handleTeamSelection("Sales Strategy")}
