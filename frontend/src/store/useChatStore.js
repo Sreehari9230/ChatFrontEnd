@@ -6,11 +6,6 @@ import useWebSocketStore from "./useWebSocketStore";
 
 
 export const useChatStore = create((set, get) => ({
-    // messages: [],
-    // users: [],
-    // selectedUsers: null,
-    // isUsersLoading: false,
-    // isMessagesLoading: false,
 
     isDeparmentLoading: false,
     deaprtmentSelected: '',
@@ -18,17 +13,13 @@ export const useChatStore = create((set, get) => ({
     teamSelcted: '',
 
     isChatHistoryLoading: false,
-    // chats: [],
-    // isChatLoading: false,
     chatHistory: [],
-
     hasChatHistory: false,
 
     isHistoryModalOpen: false,
 
     newChatClicked: false,
-    newChatId: null,
-
+    // newChatId: null,
     chatId: null,
 
     formButtonClicked: false,
@@ -37,24 +28,34 @@ export const useChatStore = create((set, get) => ({
 
     newChatButtonClicked: false,
 
+    formIsSubmitted: () => {
+        console.log("Form submitted, showing chat bubbles & input");
+        // state.formButtonClicked = false; // Hide form
+        set({ formButtonClicked: false })
+        set({ newChatButtonClicked : false })
+    },
+
     setFormButtonClicked: () => {
-        console.log('insode setformbuttonclicked')
-        set({ hasChatHistory: false })
-        set({ newChatClicked: false })
+        console.log("Form button clicked, showing form UI");
+        // state.formButtonClicked = true; // Show form
         set({ formButtonClicked: true })
+
+
     },
 
     setChatManuallyButtonClicked: () => {
+        console.log("Chat manually button clicked, showing chat bubbles & input");
+        // state.formButtonClicked = false; // Hide form
+        // state.newChatButtonClicked = false; // Hide new chat UI
+        set({ formButtonClicked: false })
         set({ newChatButtonClicked: false })
-        set({ chatManuallyButtonClicked: true })
-        set({ hasChatHistory: false })
-        // set({ newChatClicked: false })
     },
 
     setNewChatButtonClicked: () => {
+        console.log("New chat button clicked, showing new chat UI");
+        // state.newChatButtonClicked = true;
         set({ newChatButtonClicked: true })
     },
-
 
     // setFormButton: () => {
     //     set({ formButtonClicked: true })
@@ -72,7 +73,6 @@ export const useChatStore = create((set, get) => ({
 
     setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
 
-
     updateChatId: (id) => {
         set({ chatId: id });
 
@@ -82,8 +82,6 @@ export const useChatStore = create((set, get) => ({
 
         console.log("Chat ID updated, messages cleared");
     },
-
-    // getChatHistory: async (teamSelected) => {
     //     set({ isChatHistoryLoading: true });
     //     try {
     //         console.log('Fetching chat history...');
@@ -195,7 +193,6 @@ export const useChatStore = create((set, get) => ({
         }
     },
 
-
     postTicket: async (message) => {
         try {
             const res = await axiosInstance.post(`/blabla/api/blanjnj`, {
@@ -209,8 +206,6 @@ export const useChatStore = create((set, get) => ({
         }
     },
 
-
-
     setHasChatHistory: () => {
         if (chatHistory.length == 0) {
             set({ hasChatHistory: false })
@@ -218,35 +213,6 @@ export const useChatStore = create((set, get) => ({
             set({ hasChatHistory: true })
         }
     },
-
-    // getNewChat: async (teamSelected) => {
-    //     // set({ newChatClicked: true });
-    //     try {
-    //         console.log(`New Chat Is Fetching For ${teamSelected}`);
-
-    //         const accessToken = localStorage.getItem('access_token');
-    //         if (!accessToken) {
-    //             throw new Error('Access token is missing. Please log in again.');
-    //         }
-
-    //         const res = await axiosInstance.post(
-    //             `organization/agents/${teamSelected}/create-chat-message/`, {}, // Ensure the request body is an empty object if needed
-    //             {
-    //                 headers: {
-    //                     Authorization: `Bearer ${accessToken}`,
-    //                 },
-    //             }
-    //         );
-
-    //         set({ chatId: res.data.chat_message_id });
-    //         console.log(`New Chat ID: ${res.data.chat_message_id}`);
-    //     } catch (error) {
-    //         toast.error(error.message || "An error occurred while fetching the chat.");
-    //     }
-    //     // finally {
-    //     //     set({ isChatLoading: false });
-    //     // }
-    // },
 
     getNewChat: async (teamSelected) => {
         try {
@@ -276,11 +242,3 @@ export const useChatStore = create((set, get) => ({
         }
     },
 }))
-
-
-
-
-// const handleRetryButton = () => {
-//     sendMessage({ action: "retry"});
-//   }
-// };
