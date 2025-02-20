@@ -4,7 +4,7 @@ import { useChatStore } from "../store/useChatStore";
 import useWebSocketStore from "../store/useWebSocketStore";
 import { format } from "date-fns";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
-import { formatJobPosting } from "../lib/utils";
+import { formatJobPosting, formatMessageTime } from "../lib/utils";
 
 const ChatBubbles = () => {
   const { chatId } = useChatStore();
@@ -156,11 +156,11 @@ const ChatBubbles = () => {
                 }`}
               >
                 <div className="chat-header mb-1">
-                  {!isActionMessage && (
+                  {/* {!isActionMessage && (
                     <span className="font-bold">{msg.user}</span>
-                  )}
+                  )} */}
                   <time className="text-xs opacity-50 ml-1">
-                  {format(new Date(msg.timestamp), "h:mm a")}
+                    CurrentMessage
                   </time>
                 </div>
 
