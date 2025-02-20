@@ -67,9 +67,27 @@ export const useChatStore = create((set, get) => ({
     },
 
     setTeamSelected: (team) => {
-        set({ teamSelcted: team })
-        set({ isTeamSelected: true })
+        set({
+            teamSelcted: team,
+            isTeamSelected: true,
+    
+            // Reset other states when team changes
+            // isDeparmentLoading: false,
+            // deaprtmentSelected: '',
+            // isChatHistoryLoading: false,
+            // chatHistory: [],
+            // hasChatHistory: false,
+            // isHistoryModalOpen: false,
+            newChatClicked: false,
+            // chatId: null,
+            formButtonClicked: false,
+            chatManuallyButtonClicked: false,
+            newChatButtonClicked: false,
+        });
+    
+        console.log(`Team selected: ${team}, resetting chat states.`);
     },
+    
 
     setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
 
