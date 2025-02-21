@@ -32,7 +32,7 @@ export const useChatStore = create((set, get) => ({
         console.log("Form submitted, showing chat bubbles & input");
         // state.formButtonClicked = false; // Hide form
         set({ formButtonClicked: false })
-        set({ newChatButtonClicked : false })
+        set({ newChatButtonClicked: false })
     },
 
     setFormButtonClicked: () => {
@@ -70,7 +70,7 @@ export const useChatStore = create((set, get) => ({
         set({
             teamSelcted: team,
             isTeamSelected: true,
-    
+
             // Reset other states when team changes
             // isDeparmentLoading: false,
             // deaprtmentSelected: '',
@@ -84,10 +84,10 @@ export const useChatStore = create((set, get) => ({
             chatManuallyButtonClicked: false,
             newChatButtonClicked: false,
         });
-    
+
         console.log(`Team selected: ${team}, resetting chat states.`);
     },
-    
+
 
     setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
 
@@ -253,7 +253,7 @@ export const useChatStore = create((set, get) => ({
 
             const newChatId = res.data.chat_message_id;
             set((state) => ({ ...state, chatId: newChatId })); // ✅ Update chatId state
-
+            
             console.log(`New Chat ID: ${newChatId}`);
         } catch (error) {
             toast.error(error.message || "An error occurred while fetching the chat.");
