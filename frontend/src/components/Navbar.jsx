@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageSquare, Settings } from "lucide-react";
+import { LogIn, MessageSquare, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ onOpenTicket }) => {
@@ -24,6 +24,11 @@ const Navbar = ({ onOpenTicket }) => {
               <Settings className="w-4 h-4" />
               <span className="hidden sm:inline">Settings</span>
             </Link>
+
+            {/* <Link to="/login" className="btn btn-sm gap-2 transition-colors">
+              <LogIn className="w-4 h-4" />
+              <span className="hidden sm:inline">Login Page</span>
+            </Link> */}
 
             <button
               className="btn btn-sm gap-2 transition-colors"
