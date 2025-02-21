@@ -83,7 +83,7 @@ const useWebSocketStore = create((set, get) => ({
 
       ws.send(JSON.stringify(messageWithTimestamp));
       console.log("📤 Message sent:", messageWithTimestamp);
- 
+
       // Push sent message to currentMessages ONLY if it's NOT a "form" action
       if (message.action !== "form") {
         set((state) => ({

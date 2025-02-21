@@ -52,9 +52,7 @@ const SeoForm = () => {
         className="p-4 border-gray-50 rounded-lg shadow max-w-lg w-full bg-base-100"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-lg font-semibold mb-4 text-center">
-          SEO Form
-        </h2>
+        <h2 className="text-lg font-semibold mb-4 text-center">SEO Form</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="form-control md:col-span-2">
