@@ -92,7 +92,7 @@ const useWebSocketStore = create((set, get) => ({
       }
 
       // Set responseIsThinking to true only for "chat_manually" or "form" actions
-      if (message.action === "chat_manually") {
+      if (message.action === "chat_manually" || message.action === "form") {
         set({ responseIsThinking: true });
       }
 
