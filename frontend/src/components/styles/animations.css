@@ -1,18 +1,12 @@
+.dot-animation::after {
+  content: "";
+  display: inline-block;
+  animation: dots 1.5s steps(3, end) infinite;
+}
+
 @keyframes dots {
-    0% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
-  }
-  
-  .dot-animate {
-    animation: dots 1.5s infinite;
-    display: inline-block;
-  }
-  
-  .dot-animate.delay-200 {
-    animation-delay: 0.2s;
-  }
-  
-  .dot-animate.delay-400 {
-    animation-delay: 0.4s;
-  }
+  0% { content: "."; }
+  33% { content: ".."; }
+  66% { content: "..."; }
+  100% { content: ""; }
+}

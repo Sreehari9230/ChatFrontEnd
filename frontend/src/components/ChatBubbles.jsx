@@ -5,6 +5,8 @@ import useWebSocketStore from "../store/useWebSocketStore";
 import { format } from "date-fns";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { formatJobPosting, formatMessageTime } from "../lib/utils";
+import { motion } from "framer-motion";
+import "./styles/animations.css";
 
 const ChatBubbles = () => {
   const { chatId } = useChatStore();
@@ -88,16 +90,27 @@ const ChatBubbles = () => {
                             ([key, value]) => (
                               <tr key={key}>
                                 <td className="px-2 py-1">{key}</td>
-                                <td className="px-2 py-1">{value}</td>
+                                <td
+                                  className={`px-2 py-1 font-bold ${
+                                    value === "COMPLETED"
+                                      ? "text-green-500"
+                                      : value === "PENDING"
+                                      ? "text-red-500"
+                                      : ""
+                                  }`}
+                                >
+                                  {value}
+                                </td>
                               </tr>
                             )
                           )}
                         </tbody>
                       </table>
+
                       {msg.retry === "False" && (
                         <div className="flex justify-center">
                           <button
-                            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            className="btn btn-primary"
                             onClick={handleRetryButton}
                           >
                             Retry
@@ -217,9 +230,17 @@ const ChatBubbles = () => {
           {/* Show "Thinking..." bubble when responseIsThinking is true */}
           {responseIsThinking && (
             <div className="chat chat-start">
-              <div className="chat-bubble chat-bubble-primary flex flex-col">
-                <p className="flex items-center">Thinking...</p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="chat-bubble chat-bubble-primary flex flex-col"
+              >
+                <p className="flex items-center">
+                  We are working on it
+                  <span className="dot-animation ml-1"></span>
+                </p>
+              </motion.div>
             </div>
           )}
         </>
