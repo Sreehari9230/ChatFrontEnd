@@ -4,7 +4,7 @@ import { teamMap } from "../lib/utils";
 
 const WelcomeChat = () => {
   const {
-    teamSelcted,
+    teamSelected,
     formButtonClicked,
     setFormButton,
     getNewChat,
@@ -13,29 +13,29 @@ const WelcomeChat = () => {
   } = useChatStore();
 
   const handleNewForm = () => {
-    console.log(`Starting New Form in ${teamSelcted}`);
-    console.log(teamSelcted);
+    console.log(`Starting New Form in ${teamSelected}`);
+    console.log(teamSelected);
     setFormButtonClicked();
 
-    if (teamMap[teamSelcted]) {
-      getNewChat(teamMap[teamSelcted]);
-    } else {
-      console.log("Invalid Team Selected");
-    }
+    // if (teamMap[teamSelcted]) {
+    //   getNewChat(teamMap[teamSelcted]);
+    // } else {
+    //   console.log("Invalid Team Selected");
+    // }
   };
 
-  const chatManuallyButton = () => {
-    console.log(`Starting To Chat Manually in ${teamSelcted}`);
-    console.log(teamSelcted);
-    setChatManuallyButtonClicked();
+  // const chatManuallyButton = () => {
+  //   console.log(`Starting To Chat Manually in ${teamSelcted}`);
+  //   console.log(teamSelcted);
+  //   setChatManuallyButtonClicked();
 
-    if (teamMap[teamSelcted]) {
-      console.log("Inside if");
-      getNewChat(teamMap[teamSelcted]);
-    } else {
-      console.log("Invalid Team Selected");
-    }
-  };
+  //   if (teamMap[teamSelcted]) {
+  //     console.log("Inside if");
+  //     getNewChat(teamMap[teamSelcted]);
+  //   } else {
+  //     console.log("Invalid Team Selected");
+  //   }
+  // };
 
   return (
     // <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
@@ -45,7 +45,7 @@ const WelcomeChat = () => {
         <div className="chat-bubble chat-bubble-primary p-4">
           <h2 className="text-lg font-bold mb-2">Hello,</h2>
           <p className="text-sm mb-2">
-            Welcome to The {teamSelcted}. I am your Team Manager and I am happy
+            Welcome to The {teamSelected}. I am your Team Manager and I am happy
             to assist you with any requirements you may have.
           </p>
           <p className="text-sm">
@@ -59,16 +59,15 @@ const WelcomeChat = () => {
           onClick={handleNewForm}
           className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48"
         >
-          New {teamSelcted}
+          New {teamSelected}
         </button>
 
-        <button
+        {/* <button
           onClick={chatManuallyButton}
           className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48"
         >
-          {/* Status of previous onboardings */}
           Chat Manually
-        </button>
+        </button> */}
       </div>
     </div>
     //   </div>

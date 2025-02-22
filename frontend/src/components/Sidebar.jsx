@@ -11,7 +11,7 @@ const Sidebar = () => {
     departmentSelected,
     isTeamSelected,
     setTeamSelected,
-    teamSelcted,
+    teamSelected,
     getChatHistory,
   } = useChatStore();
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -29,7 +29,7 @@ const Sidebar = () => {
     setSelectedTeam(team);
     setTeamSelected(team);
     console.log(team);
-    console.log(teamSelcted);
+    console.log(teamSelected);
     if (teamMap[team]) {
       console.log(`Chat History Loading For ${team}`);
       getChatHistory(teamMap[team]);
