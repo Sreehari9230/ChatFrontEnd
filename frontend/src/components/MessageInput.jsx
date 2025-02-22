@@ -2,18 +2,16 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Plus, Paperclip, Send, Wifi, WifiOff } from "lucide-react";
 // import WebSocketService from "../Websocket/websocket";
+import { teamMap } from "../lib/utils";
 
 import useWebSocketStore from "../store/useWebSocketStore";
 
 const MessageInput = () => {
-  const { teamSelcted, setNewChatButtonClicked, chatId } = useChatStore();
+  const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } =
+    useChatStore();
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const { sendMessage, isConnected, responseIsThinking } = useWebSocketStore();
-  // const [isConnected, setIsConnected] = useState(false);
-  // const [isThinking, setIsThinking] = useState(false);
-  // const [wsService, setWsService] = useState(null);
-  // const [message, setMessage] = useState("");
 
   const handleSendMessage = () => {
     if (message.trim()) {
@@ -22,11 +20,16 @@ const MessageInput = () => {
     }
   };
 
+  const handleNewChatButton = () => {
+    setNewChatButtonClicked();
+    getNewChat(teamMap[teamSelected]);
+  };
+
   return (
     <div className="p-4 w-full">
       <form className="flex items-center gap-2">
         <button
-          onClick={() => setNewChatButtonClicked()}
+          onClick={handleNewChatButton()}
           type="button"
           className="hidden sm:flex btn btn-circle"
         >

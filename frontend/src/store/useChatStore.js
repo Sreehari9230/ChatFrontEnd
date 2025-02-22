@@ -10,7 +10,7 @@ export const useChatStore = create((set, get) => ({
     isDeparmentLoading: false,
     deaprtmentSelected: '',
     isTeamSelected: false,
-    teamSelcted: '',
+    teamSelected: '',
 
     isChatHistoryLoading: false,
     chatHistory: [],
@@ -68,7 +68,7 @@ export const useChatStore = create((set, get) => ({
 
     setTeamSelected: (team) => {
         set({
-            teamSelcted: team,
+            teamSelected: team,
             isTeamSelected: true,
 
             // Reset other states when team changes

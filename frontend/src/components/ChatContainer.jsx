@@ -21,7 +21,7 @@ import MessageSkeleton from "./skeletons/MessageSkeleton";
 
 const ChatContainer = () => {
   const {
-    teamSelcted,
+    teamSelected,
     chatHistory,
     newChatButtonClicked,
     formButtonClicked,
@@ -56,11 +56,11 @@ const ChatContainer = () => {
   const formRenderContent = () => {
     if (
       // formButtonClicked &&
-      teamSelcted
+      teamSelected
     ) {
-      const SelectedForm = formComponents[teamSelcted];
+      const SelectedForm = formComponents[teamSelected];
       if (SelectedForm) {
-        console.log(`Rendering form for: ${teamSelcted}`);
+        console.log(`Rendering form for: ${teamSelected}`);
         return <SelectedForm />;
       }
     }
