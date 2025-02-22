@@ -33,9 +33,8 @@ const ChatContainer = () => {
   // console.log(teamSelcted, "hehe");
   const { authUser } = useAuthStore();
 
-  const { connect, isFetchMessagesLoading } = useWebSocketStore(); // ✅ Extract connect function
+  const { connect, isFetchMessagesLoading } = useWebSocketStore();
 
-  // ✅ Connect WebSocket when chatId changes
   useEffect(() => {
     if (chatId) {
       connect(chatId);
@@ -66,14 +65,6 @@ const ChatContainer = () => {
       }
     }
     return null;
-
-    // // Show welcome chat if there's chat history or new chat is clicked
-    // if (hasChatHistory || newChatClicked || chatManuallyButtonClicked) {
-    //   return <WelcomeChat />;
-    // }
-
-    // // Default welcome chat view
-    // return <WelcomeChat />;
   };
 
   return (
@@ -81,48 +72,6 @@ const ChatContainer = () => {
     // chatbubbles and chat input shouldbe shown if there is no form or there is no newchat ui shown
     // form should be shown if the form button in the newUi is clicked
     // newUi should be shpwn if the user gets in and he has no prevous chat in the team or he has clicked the newChat button
-
-    // <div className="flex-1 flex flex-col overflow-auto">
-    //   {/* <RecruitmentForm/>  */}
-    //   <ChatHeader />
-    //   {!hasChatHistory || newChatButtonClicked ? (
-    //     isFetchMessagesLoading ? (
-    //       <MessageSkeleton />
-    //     ) : (
-    //       <WelcomeChat />
-    //     )
-    //   ) : formButtonClicked ? (
-    //     formRenderContent()
-    //   ) : chatManuallyButtonClicked || hasChatHistory ? ( // Fixed syntax
-    //     <>
-    //       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-    //         <ChatBubbles />
-    //       </div>
-    //       <MessageInput />
-    //     </>
-    //   ) : null}{" "}
-    //   {/* Added a fallback */}
-    // </div>
-
-    // <div className="flex-1 flex flex-col overflow-auto">
-    //   <ChatHeader /> {/* Always Visible */}
-    //   {formButtonClicked ? (
-    //     formRenderContent() // Show form when form button is clicked
-    //   ) : !hasChatHistory || newChatButtonClicked ? (
-    //     isFetchMessagesLoading ? (
-    //       <MessageSkeleton />
-    //     ) : (
-    //       <WelcomeChat />
-    //     )
-    //   ) : (
-    //     <>
-    //       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-    //         <ChatBubbles /> {/* Show chat messages if form is not shown */}
-    //       </div>
-    //       <MessageInput /> {/* Always keep input with chat */}
-    //     </>
-    //   )}
-    // </div>
 
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader /> {/* Always Visible */}
@@ -143,22 +92,6 @@ const ChatContainer = () => {
         </>
       )}
     </div>
-
-    //   <div className="flex-1 flex flex-col overflow-auto">
-    //   <ChatHeader />
-    //   {/* {formRenderContent()}/ */}
-    //   <ChatBubbles/>
-    //   {/* {newChatClicked || !hasChatHistory ? (
-    //     <WelcomeChat />
-    //   ) : formButtonClicked ? (
-    //     formRenderContent()
-    //   ) : chatManuallyButtonClicked || hasChatHistory ? (
-    //     <>
-    //       <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
-    //       <MessageInput />
-    //     </>
-    //   ) : null} */}
-    // </div>
   );
 };
 
