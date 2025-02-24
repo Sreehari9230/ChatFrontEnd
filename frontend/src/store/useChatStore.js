@@ -179,7 +179,7 @@ export const useChatStore = create((set, get) => ({
                 //     Authorization: `Bearer ${accessToken}`,
                 // },
             });
-
+ 
             // Using mock data instead
             // const res = {
             //     data: [
