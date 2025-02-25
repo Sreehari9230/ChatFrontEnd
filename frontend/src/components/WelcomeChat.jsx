@@ -17,21 +17,21 @@ const WelcomeChat = () => {
     console.log(teamSelected);
     setFormButtonClicked();
 
-    // if (teamMap[teamSelcted]) {
-    //   getNewChat(teamMap[teamSelcted]);
+    // if (teamMap[teamSelected]) {
+    //   getNewChat(teamMap[teamSelected]);
     // } else {
     //   console.log("Invalid Team Selected");
     // }
   };
 
   // const chatManuallyButton = () => {
-  //   console.log(`Starting To Chat Manually in ${teamSelcted}`);
-  //   console.log(teamSelcted);
+  //   console.log(`Starting To Chat Manually in ${teamSelected}`);
+  //   console.log(teamSelected);
   //   setChatManuallyButtonClicked();
 
-  //   if (teamMap[teamSelcted]) {
+  //   if (teamMap[teamSelected]) {
   //     console.log("Inside if");
-  //     getNewChat(teamMap[teamSelcted]);
+  //     getNewChat(teamMap[teamSelected]);
   //   } else {
   //     console.log("Invalid Team Selected");
   //   }
