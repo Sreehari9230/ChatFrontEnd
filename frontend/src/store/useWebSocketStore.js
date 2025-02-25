@@ -39,11 +39,12 @@ const useWebSocketStore = create((set, get) => ({
         const data = JSON.parse(event.data);
         console.log("📩 Message received:", data);
 
-        // if (data.action === 'task_queued') {
-        //   set((state) => ({
-        //     ThinkingMessage: [...state.ThinkingMessage, data] // ✅ Corrected syntax
-        //   }));
-        // }
+        if (data.action === 'task_queued') {
+          set((state) => ({
+            ThinkingMessage: [data] // Always replace the previous message
+          }));
+        }
+        
 
         if (data.action === "show_messages" && Array.isArray(data.messages)) {
           set({ fetchedMessages: data.messages });
