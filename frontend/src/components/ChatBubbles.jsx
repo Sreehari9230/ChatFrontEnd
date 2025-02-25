@@ -175,7 +175,7 @@ const ChatBubbles = () => {
               >
                 <div className="chat-header mb-1">
                   <time className="text-xs opacity-50 ml-1">
-                    CurrentMessage
+                    {msg.message.timestamp}
                   </time>
                 </div>
 
