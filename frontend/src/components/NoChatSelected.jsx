@@ -13,14 +13,14 @@ const NoChatSelected = () => {
              justify-center animate-bounce"
             >
               {/* <MessageSquare className="w-8 h-8 text-primary " /> */}
-              <img src="/nypusAi.jpg" alt="ChatApp Logo" className="w-10 h-10 text-primary " />
+              <img src="/SmartTeams.jpg" alt="Logo" className="w-10 h-10 text-primary " />
             </div>
           </div>
         </div>
 
         {/* Welcome Text */}
-        <h2 className="text-2xl font-bold">Welcome to ChatApp!</h2>
-        <p className="text-base-content/60">Select a chat</p>
+        <h2 className="text-2xl font-bold">Welcome to Smart Teams!</h2>
+        <p className="text-base-content/60">Select a Team</p>
       </div>
     </div>
   );
