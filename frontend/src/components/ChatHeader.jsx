@@ -30,7 +30,7 @@ const ChatHeader = () => {
         <button
           onClick={() => {
             handleModalOpen();
-            // handleGetChat(teamSelcted);
+            // handleGetChat(teamSelected);
           }}
           className="p-2 hover:bg-gray-100 rounded-full transition"
         >

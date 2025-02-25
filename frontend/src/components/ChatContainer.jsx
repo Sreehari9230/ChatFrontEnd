@@ -30,7 +30,7 @@ const ChatContainer = () => {
     chatId,
     isChatHistoryLoading,
   } = useChatStore();
-  // console.log(teamSelcted, "hehe");
+  // console.log(teamSelected, "hehe");
   const { authUser } = useAuthStore();
 
   const { connect, isFetchMessagesLoading } = useWebSocketStore();
