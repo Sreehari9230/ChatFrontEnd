@@ -17,7 +17,7 @@ const Navbar = ({ onOpenTicket }) => {
                 {/* <MessageSquare className="w-5 h-5 text-primary" /> */}
                 <img src="/SmartTeams.jpg" alt="Logo" className="w-15 h-15" />
               </div>
-              <h1 className="text-lg font-bold">The One Piece Real</h1>
+              <h1 className="text-lg font-bold">Smart Teams</h1>
             </Link>
           </div>
 
