@@ -3,26 +3,26 @@ import { MessageSquare } from "lucide-react";
 
 const NoChatSelected = () => {
   return (
-    <div className="w-full flex flex-1 flex-col items-center justify-center p-16 bg-base-100/50">
-      <div className="max-w-md text-center space-y-6">
-        {/* Icon Display */}
-        <div className="flex justify-center gap-4 mb-4">
-          <div className="relative">
-            <div
-              className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center
-             justify-center animate-bounce"
-            >
-              {/* <MessageSquare className="w-8 h-8 text-primary " /> */}
-              <img src="/SmartTeams.jpg" alt="Logo" className="w-10 h-10 text-primary " />
-            </div>
-          </div>
+<div className="w-full flex flex-1 flex-col items-center justify-center p-16 bg-base-100/50">
+  <div className="max-w-md text-center space-y-8">
+    {/* Icon Display */}
+    <div className="flex justify-center gap-6 mb-6">
+      <div className="relative">
+        <div
+          className="w-50 h-50 rounded-2xl  flex items-center
+         justify-center animate-bounce"
+        >
+          <img src="/SmartTeams.jpg" alt="Logo" className="w-40 h-40 text-primary" />
         </div>
-
-        {/* Welcome Text */}
-        <h2 className="text-2xl font-bold">Welcome to Smart Teams!</h2>
-        <p className="text-base-content/60">Select a Team</p>
       </div>
     </div>
+
+    {/* Welcome Text */}
+    <h2 className="text-4xl font-bold">Welcome to Smart Teams!</h2>
+    <p className="text-lg text-base-content/60">Select a Team</p>
+  </div>
+</div>
+
   );
 };
 
