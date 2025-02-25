@@ -17,6 +17,7 @@ const ChatBubbles = () => {
     responseIsThinking,
     sendMessage,
     isFetchMessagesLoading,
+    ThinkingMessage,
   } = useWebSocketStore();
   let lastDate = null;
   const chatEndRef = useRef(null); // Ref to track the last message
@@ -237,7 +238,8 @@ const ChatBubbles = () => {
                 className="chat-bubble chat-bubble-primary flex flex-col"
               >
                 <p className="flex items-center">
-                  We are working on it
+                  {/* We are working on it */}
+                  ThinkingMessage[0].message
                   <span className="dot-animation ml-1"></span>
                 </p>
               </motion.div>
