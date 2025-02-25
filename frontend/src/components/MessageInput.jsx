@@ -10,7 +10,7 @@ const MessageInput = () => {
   const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } =
     useChatStore();
   const [message, setMessage] = useState("");
-  const [chatHistory, setChatHistory] = useState([]);
+  // const [chatHistory, setChatHistory] = useState([]);
   const { sendMessage, isConnected, responseIsThinking } = useWebSocketStore();
 
   const handleSendMessage = () => {
@@ -29,7 +29,7 @@ const MessageInput = () => {
     <div className="p-4 w-full">
       <form className="flex items-center gap-2">
         <button
-          onClick={handleNewChatButton()}
+          onClick={handleNewChatButton}
           type="button"
           className="hidden sm:flex btn btn-circle"
         >

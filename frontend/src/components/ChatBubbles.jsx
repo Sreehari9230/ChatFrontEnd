@@ -238,8 +238,9 @@ const ChatBubbles = () => {
                 className="chat-bubble chat-bubble-primary flex flex-col"
               >
                 <p className="flex items-center">
-                  {/* We are working on it */}
-                  ThinkingMessage[0].message
+                  {ThinkingMessage.length > 0 && ThinkingMessage[0]?.message
+                    ? ThinkingMessage[0].message
+                    : "We are working on it"}
                   <span className="dot-animation ml-1"></span>
                 </p>
               </motion.div>
