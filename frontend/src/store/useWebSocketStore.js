@@ -8,6 +8,7 @@ const useWebSocketStore = create((set, get) => ({
   isFetchMessagesLoading: false,
   isConnected: false,
   formResponseIsLoading: false,
+  ThinkingMessage: [],
 
 
   connect: (chatId) => {
@@ -37,6 +38,12 @@ const useWebSocketStore = create((set, get) => ({
       try {
         const data = JSON.parse(event.data);
         console.log("📩 Message received:", data);
+
+        if (data.action == 'task_queued') {
+          set((state) => {
+            ThinkingMessage: [...state.ThinkingMessage, data]
+          })
+        }
 
         if (data.action === "show_messages" && Array.isArray(data.messages)) {
           set({ fetchedMessages: data.messages });
