@@ -3,7 +3,7 @@ import { create } from "zustand";
 const useWebSocketStore = create((set, get) => ({
   ws: null,
   currentMessages: [],
-  responseIsThinking: true,
+  responseIsThinking: false,
   fetchedMessages: [],
   isFetchMessagesLoading: false,
   isConnected: false,

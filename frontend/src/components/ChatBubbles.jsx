@@ -26,6 +26,7 @@ const ChatBubbles = () => {
     let message = "retry";
     sendMessage({ action: "retry", message });
   };
+  console.log(currentMessages);
 
   useEffect(() => {
     if (chatId) {
@@ -173,9 +174,17 @@ const ChatBubbles = () => {
                   isActionMessage ? "chat-end" : "chat-start"
                 }`}
               >
+                {/* <div className="chat-header mb-1">
+                  <time className="text-xs opacity-50 ml-1">
+                  {formatMessageTime(msg.message ? msg.message.timestamp : msg.timestamp)}
+                  </time>
+                </div> */}
+
                 <div className="chat-header mb-1">
                   <time className="text-xs opacity-50 ml-1">
-                    {msg.message.timestamp}
+                    {formatMessageTime(
+                      msg.message.user ? msg.message.timestamp : msg.timestamp
+                    )}
                   </time>
                 </div>
 
