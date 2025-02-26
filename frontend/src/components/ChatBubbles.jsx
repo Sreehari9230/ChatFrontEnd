@@ -51,102 +51,101 @@ const ChatBubbles = () => {
   if (isFetchMessagesLoading) return <MessageSkeleton />;
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-{fetchedMessages.length === 0 ? (
-  <p className="text-center text-gray-500">No previous chat</p>
-) : (
-  fetchedMessages.map((msg, index) => {
-    const msgDate = format(new Date(msg.timestamp), "yyyy-MM-dd");
-    const showDateSeparator = lastDate !== msgDate;
-    lastDate = msgDate;
-    const parsedBoxMessage =
-      msg.Type === "box" ? parseBoxMessage(msg.message) : null;
+      {fetchedMessages.length === 0 ? (
+        <p className="text-center text-gray-500">No previous chat</p>
+      ) : (
+        fetchedMessages.map((msg, index) => {
+          const msgDate = format(new Date(msg.timestamp), "yyyy-MM-dd");
+          const showDateSeparator = lastDate !== msgDate;
+          lastDate = msgDate;
+          const parsedBoxMessage =
+            msg.Type === "box" ? parseBoxMessage(msg.message) : null;
 
-    return (
-      <div key={msg._id || index}>
-        {/* Date Separator */}
-        {showDateSeparator && (
-          <div className="text-center text-gray-400 text-sm my-2">
-            {format(new Date(msg.timestamp), "MMMM d, yyyy")}
-          </div>
-        )}
+          return (
+            <div key={msg._id || index}>
+              {/* Date Separator */}
+              {showDateSeparator && (
+                <div className="text-center text-gray-400 text-sm my-2">
+                  {format(new Date(msg.timestamp), "MMMM d, yyyy")}
+                </div>
+              )}
 
-        {/* Chat Message */}
-        <div
-          className={`chat ${
-            msg.user === "AI" ? "chat-start" : "chat-end"
-          }`}
-        >
-          <div className="chat-header mb-1">
-            <time className="text-xs opacity-50 ml-1">
-              {format(new Date(msg.timestamp), "h:mm a")}
-            </time>
-          </div>
-
-          <div className="chat-bubble chat-bubble-primary flex flex-col">
-            {parsedBoxMessage ? (
-              <div className="flex flex-col gap-4">
-                <table className="w-full text-sm">
-                  <thead></thead>
-                  <tbody>
-                    {Object.entries(parsedBoxMessage).map(
-                      ([key, value]) => (
-                        <tr key={key}>
-                          <td className="px-2 py-1">{key}</td>
-                          <td
-                            className={`px-2 py-1 font-bold ${
-                              value === "COMPLETED"
-                                ? "text-green-500"
-                                : value === "PENDING"
-                                ? "text-red-500"
-                                : ""
-                            }`}
-                          >
-                            {value}
-                          </td>
-                        </tr>
-                      )
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            ) : msg.Type === "text" ? (
+              {/* Chat Message */}
               <div
-                className="formatted-text"
-                dangerouslySetInnerHTML={{
-                  __html: formatJobPosting(msg.message),
-                }}
-              />
-            ) : msg.message ? (
-              <p>{msg.message}</p>
-            ) : msg.form ? (
-              <div className="space-y-1">
-                {Object.entries(msg.form).map(([key, value]) => (
-                  <p key={key}>
-                    <strong>{key}:</strong> {value}
-                  </p>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500">No content</p>
-            )}
-          </div>
-        </div>
-        {/* Retry Button Outside Chat Bubble */}
-        {msg.retry === "False" && (
-          <div className="flex justify-center mt-2">
-            <button
-              className="btn btn-primary"
-              onClick={handleRetryButton}
-            >
-              Retry
-            </button>
-          </div>
-        )}
-      </div>
-    );
-  })
-)}
+                className={`chat ${
+                  msg.user === "AI" ? "chat-start" : "chat-end"
+                }`}
+              >
+                <div className="chat-header mb-1">
+                  <time className="text-xs opacity-50 ml-1">
+                    {format(new Date(msg.timestamp), "h:mm a")}
+                  </time>
+                </div>
 
+                <div className="chat-bubble chat-bubble-primary flex flex-col">
+                  {parsedBoxMessage ? (
+                    <div className="flex flex-col gap-4">
+                      <table className="w-full text-sm">
+                        <thead></thead>
+                        <tbody>
+                          {Object.entries(parsedBoxMessage).map(
+                            ([key, value]) => (
+                              <tr key={key}>
+                                <td className="px-2 py-1">{key}</td>
+                                <td
+                                  className={`px-2 py-1 font-bold ${
+                                    value === "COMPLETED"
+                                      ? "text-green-500"
+                                      : value === "PENDING"
+                                      ? "text-red-500"
+                                      : ""
+                                  }`}
+                                >
+                                  {value}
+                                </td>
+                              </tr>
+                            )
+                          )}
+                        </tbody>
+                      </table>
+
+                      {msg.retry === "False" && (
+                        <div className="flex justify-center">
+                          <button
+                            className="btn btn-primary"
+                            onClick={handleRetryButton}
+                          >
+                            Retry
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : msg.Type === "text" ? (
+                    <div
+                      className="formatted-text"
+                      dangerouslySetInnerHTML={{
+                        __html: formatJobPosting(msg.message),
+                      }}
+                    />
+                  ) : msg.message ? (
+                    <p>{msg.message}</p>
+                  ) : msg.form ? (
+                    <div className="space-y-1">
+                      {Object.entries(msg.form).map(([key, value]) => (
+                        <p key={key}>
+                          <strong>{key}:</strong> {value}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No content</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })
+      )}
 
       {currentMessages.length === 0 ? (
         <p className="text-center text-gray-500">No current chat</p>
