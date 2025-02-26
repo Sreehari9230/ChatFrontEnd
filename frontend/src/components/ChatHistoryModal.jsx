@@ -22,7 +22,7 @@ const ChatHistoryModal = ({ chats, onClose }) => {
           <X size={30} />
         </button>
 
-        <h3 className="font-bold text-lg">Chat History</h3>
+        <h3 className="font-bold text-lg text-center">Chat History</h3>
 
         <ul className="space-y-2 mt-4">
           {isChatHistoryLoading ? (
