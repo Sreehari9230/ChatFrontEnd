@@ -59,12 +59,13 @@ const LoginPage = () => {
       <div className="text-center mb-8">
         <div className="flex flex-col items-center gap-2 group">
           <div
-            className="size-12 rounded-xl bg-primary/10 flex items-center justify-center 
+            className="size-20 rounded-xl bg-primary/10 flex items-center justify-center 
           group-hover:bg-primary/20 transition-colors"
           >
-            <MessageSquare className="size-6 text-primary" />
+            {/* <MessageSquare className="size-6 text-primary" /> */}
+            <img src="/SmartTeams.jpg" alt="Logo" className="size-12 text-primary" />
           </div>
-          <h1 className="text-2xl font-bold mt-2">Create Account</h1>
+          <h1 className="text-2xl font-bold mt-2">Log In</h1>
         </div>
       </div>
 
@@ -141,14 +142,14 @@ const LoginPage = () => {
       </form>
 
       {/* Login Prompt */}
-      <div className="text-center mt-4">
+      {/* <div className="text-center mt-4">
         <p className="text-base-content/60">
           Don&apos;t have an account?{" "}
           <Link to="/signup" className="link link-primary">
             Create Account
           </Link>
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };
