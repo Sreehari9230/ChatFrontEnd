@@ -23,13 +23,13 @@ const RecruitmentForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     sendMessage({ action: "form", form: formData });
-    setIsWaitingForResponse(true); // Mark that we are waiting for a response
+    setIsWaitingForResponse(true);
   };
 
   useEffect(() => {
     if (isWaitingForResponse && !formResponseIsLoading) {
-      formIsSubmitted(); // Only call when formResponseIsLoading becomes false
-      setIsWaitingForResponse(false); // Reset flag
+      formIsSubmitted();
+      setIsWaitingForResponse(false);
     }
   }, [formResponseIsLoading, isWaitingForResponse]);
 

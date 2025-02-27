@@ -32,7 +32,10 @@ const App = () => {
   return (
     <div data-theme={theme}>
       <Navbar onOpenTicket={() => setIsModalOpen(true)} />
-      <RaiseATicketModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <RaiseATicketModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
 
       <Routes>
         {/* <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/home" />} /> */}

@@ -20,7 +20,7 @@ const ChatBubbles = () => {
     ThinkingMessage,
   } = useWebSocketStore();
   let lastDate = null;
-  const chatEndRef = useRef(null); // Ref to track the last message
+  const chatEndRef = useRef(null);
 
   const handleRetryButton = () => {
     let message = "retry";
@@ -34,7 +34,6 @@ const ChatBubbles = () => {
     }
   }, [chatId, fetchChatMessages]);
 
-  // Scroll to bottom when messages update
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [fetchedMessages, currentMessages]);

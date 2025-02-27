@@ -4,9 +4,9 @@ import useWebSocketStore from "../../store/useWebSocketStore";
 import { Loader2 } from "lucide-react";
 
 const SalesStrategyForm = () => {
-  const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
-  const { formIsSubmitted } = useChatStore(); // Extract form submission handler
-  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Track response status
+  const { sendMessage, formResponseIsLoading } = useWebSocketStore();
+  const { formIsSubmitted } = useChatStore();
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
   const [formData, setFormData] = useState({
     topic: "",
     customer_segment: "",
@@ -22,27 +22,27 @@ const SalesStrategyForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formData).some((val) => !val.trim())) return; // Prevent sending empty fields
+    if (Object.values(formData).some((val) => !val.trim())) return;
 
     const payload = {
       action: "form",
       form: formData,
     };
     sendMessage(payload);
-    setIsWaitingForResponse(true); // Set waiting flag
+    setIsWaitingForResponse(true);
   };
 
   useEffect(() => {
     if (isWaitingForResponse && !formResponseIsLoading) {
-      formIsSubmitted(); // Mark form as submitted when response is received
+      formIsSubmitted();
       setFormData({
         topic: "",
         customer_segment: "",
         interaction_history: "",
         preferred_communication_channel: "",
         business_goal: "",
-      }); // Clear input after submission
-      setIsWaitingForResponse(false); // Reset flag
+      });
+      setIsWaitingForResponse(false);
     }
   }, [formResponseIsLoading, isWaitingForResponse, formIsSubmitted]);
 
@@ -52,7 +52,9 @@ const SalesStrategyForm = () => {
         className="p-4 border-gray-50 rounded-lg shadow max-w-lg w-full bg-base-100"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-lg font-semibold mb-4 text-center">Customer Relations Form</h2>
+        <h2 className="text-lg font-semibold mb-4 text-center">
+          Customer Relations Form
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="form-control md:col-span-2">
@@ -95,7 +97,9 @@ const SalesStrategyForm = () => {
           </div>
 
           <div className="form-control md:col-span-2">
-            <label className="label-text">Preferred Communication Channel</label>
+            <label className="label-text">
+              Preferred Communication Channel
+            </label>
             <input
               type="text"
               name="preferred_communication_channel"

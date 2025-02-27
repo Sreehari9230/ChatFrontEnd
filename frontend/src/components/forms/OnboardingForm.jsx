@@ -4,9 +4,9 @@ import useWebSocketStore from "../../store/useWebSocketStore";
 import { Loader2 } from "lucide-react";
 
 const OnboardingForm = () => {
-  const { chatId, formIsSubmitted } = useChatStore(); // Get chat ID and submission handler
-  const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
-  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Local state to track response status
+  const { chatId, formIsSubmitted } = useChatStore();
+  const { sendMessage, formResponseIsLoading } = useWebSocketStore();
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
   const [formData, setFormData] = useState({
     employee_id: "",
     first_name: "",
@@ -31,13 +31,13 @@ const OnboardingForm = () => {
       form: formData,
     };
     sendMessage(payload);
-    setIsWaitingForResponse(true); // Set waiting flag
+    setIsWaitingForResponse(true);
   };
 
   useEffect(() => {
     if (isWaitingForResponse && !formResponseIsLoading) {
-      formIsSubmitted(); // Call when response is received
-      setIsWaitingForResponse(false); // Reset flag
+      formIsSubmitted();
+      setIsWaitingForResponse(false);
     }
   }, [formResponseIsLoading, isWaitingForResponse]);
 
@@ -59,7 +59,7 @@ const OnboardingForm = () => {
               type="text"
               name="employeeId"
               placeholder="Enter Employee ID"
-              value={formData.employeeId}
+              value={formData.employee_id}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
               required
@@ -73,7 +73,7 @@ const OnboardingForm = () => {
               type="text"
               name="employeeName"
               placeholder="Enter Employee Name"
-              value={formData.employeeName}
+              value={formData.first_name}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
               required

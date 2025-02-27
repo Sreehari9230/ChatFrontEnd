@@ -4,29 +4,29 @@ import useWebSocketStore from "../../store/useWebSocketStore";
 import { Loader2 } from "lucide-react";
 
 const MarketingResearchForm = () => {
-  const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
-  const { formIsSubmitted } = useChatStore(); // Extract form submission handler
+  const { sendMessage, formResponseIsLoading } = useWebSocketStore();
+  const { formIsSubmitted } = useChatStore();
 
-  const [topic, setTopic] = useState(""); // State for input
-  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Track response status
+  const [topic, setTopic] = useState("");
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!topic.trim()) return; // Prevent sending empty topics
+    if (!topic.trim()) return;
 
     const payload = {
       action: "form",
       form: { topic },
     };
     sendMessage(payload);
-    setIsWaitingForResponse(true); // Set waiting flag
+    setIsWaitingForResponse(true);
   };
 
   useEffect(() => {
     if (isWaitingForResponse && !formResponseIsLoading) {
-      formIsSubmitted(); // Mark form as submitted when response is received
-      setTopic(""); // Clear input after submission
-      setIsWaitingForResponse(false); // Reset flag
+      formIsSubmitted();
+      setTopic("");
+      setIsWaitingForResponse(false);
     }
   }, [formResponseIsLoading, isWaitingForResponse, formIsSubmitted]);
 

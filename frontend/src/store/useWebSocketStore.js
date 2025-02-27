@@ -44,7 +44,7 @@ const useWebSocketStore = create((set, get) => ({
             ThinkingMessage: [data] // Always replace the previous message
           }));
         }
-        
+
 
         if (data.action === "show_messages" && Array.isArray(data.messages)) {
           set({ fetchedMessages: data.messages });

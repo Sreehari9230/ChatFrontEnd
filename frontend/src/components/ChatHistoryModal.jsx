@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Plus, X } from "lucide-react";
 
-// Chat History Modal Component
 const ChatHistoryModal = ({ chats, onClose }) => {
   const { chatHistory, isChatHistoryLoading, updateChatId } = useChatStore();
 
-  // Log chatHistory to check if it's being updated
   useEffect(() => {
     console.log(chatHistory, "inside chat history modal");
   }, [chatHistory]);
