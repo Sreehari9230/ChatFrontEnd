@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Plus, Send, Wifi, WifiOff } from "lucide-react";
 import useWebSocketStore from "../store/useWebSocketStore";
+import { teamMap } from "../lib/utils";
 
 const suggestions = [
   "Can you help me with onboarding tasks?",
@@ -28,7 +29,7 @@ const MessageInput = () => {
 
   const handleNewChatButton = () => {
     setNewChatButtonClicked();
-    getNewChat(teamSelected);
+    getNewChat(teamMap[teamSelected]);
   };
 
   return (
