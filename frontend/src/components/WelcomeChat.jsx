@@ -16,26 +16,7 @@ const WelcomeChat = () => {
     console.log(`Starting New Form in ${teamSelected}`);
     console.log(teamSelected);
     setFormButtonClicked();
-
-    // if (teamMap[teamSelected]) {
-    //   getNewChat(teamMap[teamSelected]);
-    // } else {
-    //   console.log("Invalid Team Selected");
-    // }
   };
-
-  // const chatManuallyButton = () => {
-  //   console.log(`Starting To Chat Manually in ${teamSelected}`);
-  //   console.log(teamSelected);
-  //   setChatManuallyButtonClicked();
-
-  //   if (teamMap[teamSelected]) {
-  //     console.log("Inside if");
-  //     getNewChat(teamMap[teamSelected]);
-  //   } else {
-  //     console.log("Invalid Team Selected");
-  //   }
-  // };
 
   return (
     // <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">

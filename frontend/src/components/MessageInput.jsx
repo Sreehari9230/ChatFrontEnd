@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Plus, Send, Wifi, WifiOff } from "lucide-react";
 import useWebSocketStore from "../store/useWebSocketStore";
-import { SuggestionsMap } from "../lib/suggestions"; // Import the suggestions map
+import { SuggestionsMap } from "../lib/suggestions";
 
 const MessageInput = () => {
-  const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } = useChatStore();
+  const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } =
+    useChatStore();
   const [message, setMessage] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { sendMessage, isConnected, responseIsThinking } = useWebSocketStore();
 
-  // Get suggestions dynamically based on teamSelected
   const allSuggestions = SuggestionsMap[teamSelected] || [];
 
-  // Filter suggestions based on user input
   const filteredSuggestions = allSuggestions.filter((suggestion) =>
     suggestion.toLowerCase().includes(message.toLowerCase())
   );
@@ -35,7 +34,11 @@ const MessageInput = () => {
   return (
     <div className="p-4 w-full relative">
       <form className="flex items-center gap-2" onSubmit={handleSendMessage}>
-        <button onClick={handleNewChatButton} type="button" className="hidden sm:flex btn btn-circle">
+        <button
+          onClick={handleNewChatButton}
+          type="button"
+          className="hidden sm:flex btn btn-circle"
+        >
           <Plus size={20} />
         </button>
 
@@ -66,16 +69,26 @@ const MessageInput = () => {
             onChange={(e) => {
               const inputValue = e.target.value;
               setMessage(inputValue);
-              setShowSuggestions(inputValue.length > 0 && filteredSuggestions.length > 0);
+              setShowSuggestions(
+                inputValue.length > 0 && filteredSuggestions.length > 0
+              );
             }}
           />
         </div>
 
         <div className="hidden sm:flex btn btn-circle">
-          {isConnected ? <Wifi size={16} className="text-success" /> : <WifiOff size={16} className="text-error" />}
+          {isConnected ? (
+            <Wifi size={16} className="text-success" />
+          ) : (
+            <WifiOff size={16} className="text-error" />
+          )}
         </div>
 
-        <button type="submit" className="hidden sm:flex btn btn-circle" disabled={!message.trim() || responseIsThinking}>
+        <button
+          type="submit"
+          className="hidden sm:flex btn btn-circle"
+          disabled={!message.trim() || responseIsThinking}
+        >
           <Send size={22} />
         </button>
       </form>

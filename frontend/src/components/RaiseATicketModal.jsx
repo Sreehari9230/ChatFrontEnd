@@ -9,7 +9,7 @@ const RaiseATicketModal = ({ isOpen, onClose }) => {
     postTicket(message);
   };
 
-  if (!isOpen) return null; // Prevent rendering when closed
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">

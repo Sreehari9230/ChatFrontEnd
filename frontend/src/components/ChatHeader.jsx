@@ -22,7 +22,8 @@ const ChatHeader = () => {
         <div className="flex items-center gap-3">
           <div>
             <h3 className="font-medium">
-              CHAT ID: {chatId !== null ? chatId : "Not Connected"} - {teamSelected}
+              CHAT ID: {chatId !== null ? chatId : "Not Connected"} -{" "}
+              {teamSelected}
             </h3>
           </div>
         </div>

@@ -4,9 +4,9 @@ import useWebSocketStore from "../../store/useWebSocketStore";
 import { Loader2 } from "lucide-react";
 
 const SeoForm = () => {
-  const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
-  const { formIsSubmitted } = useChatStore(); // Extract form submission handler
-  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Track response status
+  const { sendMessage, formResponseIsLoading } = useWebSocketStore();
+  const { formIsSubmitted } = useChatStore();
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
   const [formData, setFormData] = useState({
     website_name: "",
     competitors: "",
@@ -22,27 +22,27 @@ const SeoForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formData).some((val) => !val.trim())) return; // Prevent sending empty fields
+    if (Object.values(formData).some((val) => !val.trim())) return;
 
     const payload = {
       action: "form",
       form: formData,
     };
     sendMessage(payload);
-    setIsWaitingForResponse(true); // Set waiting flag
+    setIsWaitingForResponse(true);
   };
 
   useEffect(() => {
     if (isWaitingForResponse && !formResponseIsLoading) {
-      formIsSubmitted(); // Mark form as submitted when response is received
+      formIsSubmitted();
       setFormData({
         website_name: "",
         competitors: "",
         target_audience: "",
         ad_budget: "",
         primary_goals: "",
-      }); // Clear input after submission
-      setIsWaitingForResponse(false); // Reset flag
+      });
+      setIsWaitingForResponse(false);
     }
   }, [formResponseIsLoading, isWaitingForResponse, formIsSubmitted]);
 

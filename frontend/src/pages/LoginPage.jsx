@@ -63,7 +63,11 @@ const LoginPage = () => {
           group-hover:bg-primary/20 transition-colors"
           >
             {/* <MessageSquare className="size-6 text-primary" /> */}
-            <img src="/SmartTeams.jpg" alt="Logo" className="size-12 text-primary" />
+            <img
+              src="/SmartTeams.jpg"
+              alt="Logo"
+              className="size-12 text-primary"
+            />
           </div>
           <h1 className="text-2xl font-bold mt-2">Log In</h1>
         </div>

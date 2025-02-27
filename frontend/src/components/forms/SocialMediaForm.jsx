@@ -4,8 +4,8 @@ import useWebSocketStore from "../../store/useWebSocketStore";
 import { Loader2 } from "lucide-react";
 
 const SocialMediaForm = () => {
-  const { sendMessage, formResponseIsLoading } = useWebSocketStore(); // Extract WebSocket functions
-  const { formIsSubmitted } = useChatStore(); // Extract form submission handler
+  const { sendMessage, formResponseIsLoading } = useWebSocketStore();
+  const { formIsSubmitted } = useChatStore();
 
   const [formData, setFormData] = useState({
     competitors: "",
@@ -15,8 +15,7 @@ const SocialMediaForm = () => {
     goal: "",
   });
 
-  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false); // Track response status
-
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -24,7 +23,7 @@ const SocialMediaForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formData).some((val) => !val.trim())) return; // Prevent sending empty fields
+    if (Object.values(formData).some((val) => !val.trim())) return;
 
     const payload = {
       action: "form",
@@ -32,20 +31,20 @@ const SocialMediaForm = () => {
     };
 
     sendMessage(payload);
-    setIsWaitingForResponse(true); // Set waiting flag
+    setIsWaitingForResponse(true);
   };
 
   useEffect(() => {
     if (isWaitingForResponse && !formResponseIsLoading) {
-      formIsSubmitted(); // Mark form as submitted when response is received
+      formIsSubmitted();
       setFormData({
         competitors: "",
         campaign_theme: "",
         target_audience: "",
         platform: "",
         goal: "",
-      }); // Clear input after submission
-      setIsWaitingForResponse(false); // Reset flag
+      });
+      setIsWaitingForResponse(false);
     }
   }, [formResponseIsLoading, isWaitingForResponse, formIsSubmitted]);
 
