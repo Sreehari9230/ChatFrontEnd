@@ -179,7 +179,7 @@ export const useChatStore = create((set, get) => ({
                 //     Authorization: `Bearer ${accessToken}`,
                 // },
             });
- 
+
             // Using mock data instead
             // const res = {
             //     data: [
@@ -253,7 +253,7 @@ export const useChatStore = create((set, get) => ({
 
             const newChatId = res.data.chat_message_id;
             set((state) => ({ ...state, chatId: newChatId })); // ✅ Update chatId state
-            
+
             console.log(`New Chat ID: ${newChatId}`);
         } catch (error) {
             toast.error(error.message || "An error occurred while fetching the chat.");

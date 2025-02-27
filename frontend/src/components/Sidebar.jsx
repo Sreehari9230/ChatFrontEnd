@@ -4,12 +4,9 @@ import { Group } from "lucide-react";
 import { teamMap } from "../lib/utils";
 
 const Sidebar = () => {
-  const {
-    setDepartmentSelected,
-    setTeamSelected,
-    getChatHistory,
-  } = useChatStore();
-  
+  const { setDepartmentSelected, setTeamSelected, getChatHistory } =
+    useChatStore();
+
   const [selectedTeam, setSelectedTeamState] = useState(null);
 
   const handleTeamSelection = (team) => {
@@ -41,12 +38,22 @@ const Sidebar = () => {
           },
           {
             department: "Sales Department",
-            teams: ["Content Creation", "Customer Relations", "Sales Strategy", "Lead Generation"],
+            teams: [
+              "Content Creation",
+              "Customer Relations",
+              "Sales Strategy",
+              "Lead Generation",
+            ],
           },
         ].map(({ department, teams }, index) => (
-          <div key={department} className="collapse collapse-arrow bg-base-200 mb-2">
+          <div
+            key={department}
+            className="collapse collapse-arrow bg-base-200 mb-2"
+          >
             <input type="radio" name="sidebar-accordion" />
-            <div className="collapse-title text-lg font-medium">{department}</div>
+            <div className="collapse-title text-lg font-medium">
+              {department}
+            </div>
             <div className="collapse-content">
               {teams.map((team) => (
                 <button

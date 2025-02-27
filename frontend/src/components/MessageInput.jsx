@@ -3,13 +3,7 @@ import { useChatStore } from "../store/useChatStore";
 import { Plus, Send, Wifi, WifiOff } from "lucide-react";
 import useWebSocketStore from "../store/useWebSocketStore";
 import { teamMap } from "../lib/utils";
-
-const suggestions = [
-  "Can you help me with onboarding tasks?",
-  "Can you help me with lead generation tasks?",
-  "Can you help me with market research tasks?",
-  "Can you help me with CRM tasks?",
-];
+import { SuggestionsMap } from "../lib/suggestions";
 
 const MessageInput = () => {
   const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } =
@@ -17,6 +11,8 @@ const MessageInput = () => {
   const [message, setMessage] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { sendMessage, isConnected, responseIsThinking } = useWebSocketStore();
+
+  const suggestions = SuggestionsMap[teamSelected] || [];
 
   const handleSendMessage = (e) => {
     e.preventDefault();
