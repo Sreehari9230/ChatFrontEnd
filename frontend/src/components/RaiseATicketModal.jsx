@@ -17,7 +17,8 @@ const RaiseATicketModal = ({ isOpen, onClose }) => {
         <h2 className="text-xl font-bold mb-4">Raise a Ticket</h2>
 
         <textarea
-          className="textarea textarea-bordered w-full h-32"
+          // className="textarea textarea-bordered w-full h-32"
+          className="textarea textarea-secondary w-full h-32"
           placeholder="Describe your issue..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
