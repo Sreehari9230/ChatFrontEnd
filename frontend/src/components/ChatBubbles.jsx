@@ -26,7 +26,7 @@ const ChatBubbles = () => {
     let message = "retry";
     sendMessage({ action: "retry", message });
   };
-  console.log(currentMessages);
+  // console.log(currentMessages);
 
   useEffect(() => {
     if (chatId) {

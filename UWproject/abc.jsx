@@ -1,75 +1,63 @@
+// REAL MESSAGE INPUT
 
-  //   <div className="flex-1 flex flex-col overflow-auto">
-  //     <ChatHeader />
 
-  //     {/* {teamSelcted === "Recruitment Team" ? (
-  //       <RecruitmentForm />
-  //     ) : (
-  //       <OnboardingForm />
-  //     )} */}
 
-  //     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-  //         {/* Message 1 */}
-  // <div className="chat chat-end">
-  //   {/* <div className="chat-image avatar">
-  //     <div className="size-10 rounded-full border">
-  //       <img
-  //         src="./authUserAvatar.png"
-  //         alt="profile pic"
-  //       />
-  //     </div>
-  //   </div> */}
-  //   <div className="chat-header mb-1">
-  //     <time className="text-xs opacity-50 ml-1">10:00 AM</time>
-  //   </div>
-  //   <div className="chat-bubble flex flex-col">
-  //     <p>Hello, how are you?</p>
-  //   </div>
-  // </div>
+import React from "react";
+import { useChatStore } from "../store/useChatStore";
+import { teamMap } from "../lib/utils";
 
-  // {/* Message 2 */}
-  // <div className="chat chat-start">
-  //   {/* <div className="chat-image avatar">
-  //     <div className="size-10 rounded-full border">
-  //       <img
-  //         src="./selectedUserAvatar.png"
-  //         alt="profile pic"
-  //       />
-  //     </div>
-  //   </div> */}
-  //   <div className="chat-header mb-1">
-  //     <time className="text-xs opacity-50 ml-1">10:01 AM</time>
-  //   </div>
-  //   <div className="chat-bubble flex flex-col">
-  //     <p>I'm good, thank you! How about you?</p>
-  //   </div>
-  // </div>
+const WelcomeChat = () => {
+  const {
+    teamSelected,
+    formButtonClicked,
+    setFormButton,
+    getNewChat,
+    setFormButtonClicked,
+    setChatManuallyButtonClicked,
+  } = useChatStore();
 
-  // {/* Message 3 with an Image */}
-  // <div className="chat chat-end">
-  //   {/* <div className="chat-image avatar">
-  //     <div className="size-10 rounded-full border">
-  //       <img
-  //         src="./authUserAvatar.png"
-  //         alt="profile pic"
-  //       />
-  //     </div>
-  //   </div> */}
-  //   <div className="chat-header mb-1">
-  //     <time className="text-xs opacity-50 ml-1">10:02 AM</time>
-  //   </div>
-  //   <div className="chat-bubble flex flex-col">
-  //     {/* <img
-  //       src="./imageAttachment.png"
-  //       alt="Attachment"
-  //       className="sm:max-w-[200px] rounded-md mb-2"
-  //     /> */}
-  //     <p>Here’s the image you asked for!</p>
-  //   </div>
-  // </div>
-  //     </div>
+  const handleNewForm = () => {
+    console.log(`Starting New Form in ${teamSelected}`);
+    console.log(teamSelected);
+    setFormButtonClicked();
+  };
 
-  //     {/* Only show MessageInput when no form is displayed */}
-  //     {/* {!teamSelcted && <MessageInput />} */}
-  //    <MessageInput />
-  //   </div>
+  return (
+    // <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
+    //   <div className="card bg-base-100 w-full max-w-lg shadow-xl">
+    <div className="card-body p-4">
+      <div className="chat chat-start">
+        <div className="chat-bubble chat-bubble-primary p-4">
+          <h2 className="text-lg font-bold mb-2">Hello,</h2>
+          <p className="text-sm mb-2">
+            Welcome to The {teamSelected}. I am your Team Manager and I am happy
+            to assist you with any requirements you may have.
+          </p>
+          <p className="text-sm">
+            Please let us know how we can help you today!
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row justify-center gap-2 mt-3">
+        <button
+          onClick={handleNewForm}
+          className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48"
+        >
+          New {teamSelected}
+        </button>
+
+        {/* <button
+          onClick={chatManuallyButton}
+          className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48"
+        >
+          Chat Manually
+        </button> */}
+      </div>
+    </div>
+    //   </div>
+    // </div>
+  );
+};
+
+export default WelcomeChat;
