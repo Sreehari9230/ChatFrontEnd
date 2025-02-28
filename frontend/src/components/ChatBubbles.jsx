@@ -82,7 +82,9 @@ const ChatBubbles = () => {
                 </div>
 
                 <div className="chat-bubble chat-bubble-primary flex flex-col">
-                  {parsedBoxMessage ? (
+                  {msg.message?.error ? ( // Directly show error messages
+                    <p className="text-red-500">{msg.message.error}</p>
+                  ) : parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
                       <table className="w-full text-sm">
                         <thead></thead>
@@ -188,7 +190,9 @@ const ChatBubbles = () => {
                 </div>
 
                 <div className="chat-bubble chat-bubble-primary flex flex-col">
-                  {parsedBoxMessage ? (
+                  {msg.message?.error ? ( // Directly show error messages
+                    <p className="text-red-500">{msg.message.error}</p>
+                  ) : parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
                       <table className="w-full text-sm">
                         <tbody>
@@ -213,7 +217,7 @@ const ChatBubbles = () => {
                         </div>
                       )}
                     </div>
-                  ) : msg.action === "form" && msg.form ? ( // Check if action is "form"
+                  ) : msg.action === "form" && msg.form ? (
                     <div className="space-y-1">
                       {Object.entries(msg.form).map(([key, value]) => (
                         <p key={key}>
