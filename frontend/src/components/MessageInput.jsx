@@ -5,7 +5,6 @@ import useWebSocketStore from "../store/useWebSocketStore";
 import { SuggestionsMap } from "../lib/suggestions";
 import { teamMap } from "../lib/utils";
 
-
 const MessageInput = () => {
   const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } =
     useChatStore();
