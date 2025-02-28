@@ -3,6 +3,8 @@ import { useChatStore } from "../store/useChatStore";
 import { Plus, Send, Wifi, WifiOff } from "lucide-react";
 import useWebSocketStore from "../store/useWebSocketStore";
 import { SuggestionsMap } from "../lib/suggestions";
+import { teamMap } from "../lib/utils";
+
 
 const MessageInput = () => {
   const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } =
@@ -28,7 +30,7 @@ const MessageInput = () => {
 
   const handleNewChatButton = () => {
     setNewChatButtonClicked();
-    getNewChat(teamSelected);
+    getNewChat(teamMap[teamSelected]);
   };
 
   return (
