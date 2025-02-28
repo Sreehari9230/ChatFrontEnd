@@ -57,7 +57,7 @@ const useWebSocketStore = create((set, get) => ({
         }
 
         // Set formResponseIsLoading to false when receiving "form_response"
-        if (data.action === "form_response") {
+        if (data.action === "new_message") {
           set({ formResponseIsLoading: false });
         }
 
