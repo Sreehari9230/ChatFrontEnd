@@ -81,7 +81,7 @@ const ChatBubbles = () => {
                   </time>
                 </div>
 
-                <div className="chat-bubble chat-bubble-primary flex flex-col">
+                <div className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]">
                   {msg.message?.error ? ( // Directly show error messages
                     <p className="text-red-500">{msg.message.error}</p>
                   ) : parsedBoxMessage ? (
@@ -189,7 +189,7 @@ const ChatBubbles = () => {
                   </time>
                 </div>
 
-                <div className="chat-bubble chat-bubble-primary flex flex-col">
+                <div className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]">
                   {msg.message?.error ? ( // Directly show error messages
                     <p className="text-red-500">{msg.message.error}</p>
                   ) : parsedBoxMessage ? (
@@ -246,8 +246,8 @@ const ChatBubbles = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="chat-bubble chat-bubble-primary flex flex-col"
+                transition={{ duration: 0.5, ease: "easeInOut" }} 
+                className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]"
               >
                 <p className="flex items-center">
                   {ThinkingMessage.length > 0 && ThinkingMessage[0]?.message
