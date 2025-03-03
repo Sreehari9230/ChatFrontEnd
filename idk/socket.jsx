@@ -1,168 +1,143 @@
-// useEffect(() => {
-//     const ws = new WebSocket(
-//       "wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/2/"
-//     );
+import React, { useEffect, useRef, useState } from "react";
+import { useChatStore } from "../store/useChatStore";
+import useWebSocketStore from "../store/useWebSocketStore";
+import { format } from "date-fns";
+import MessageSkeleton from "./skeletons/MessageSkeleton";
+import { formatJobPosting, formatMessageTime } from "../lib/utils";
 
-//     ws.onopen = () => {
-//       console.log("WebSocket Connected");
-//       setIsConnected(true);
-//     };
+const FetchedBubbles = () => {
+  const { chatId } = useChatStore();
+  const {
+    fetchChatMessages,
+    fetchedMessages,
+    sendMessage,
+    isFetchMessagesLoading,
+  } = useWebSocketStore();
 
-//     ws.onmessage = (event) => {
-//       console.log("Received message:", event.data);
-//       const data = JSON.parse(event.data);
-//       let responseContent = "";
+  let lastDate = null;
 
-//       if (data.action === "form_response") {
-//         if (data.response && data.response.message_id) {
-//           responseContent = data.response.message_id;
-//         } else if (data.response && typeof data.response === "object") {
-//           responseContent = JSON.stringify(data.response, null, 2);
-//         } else {
-//           responseContent = JSON.stringify(data, null, 2);
-//         }
+  const handleRetryButton = () => {
+    let message = "retry";
+    sendMessage({ action: "retry", message });
+  };
 
-//         setChatHistory((prev) => prev.filter((msg) => msg.type !== "thinking"));
-//         setChatHistory((prev) => [
-//           ...prev,
-//           { type: "received", content: responseContent },
-//         ]);
-//         setIsThinking(false);
-//       }
-//     };
+  useEffect(() => {
+    if (chatId) {
+      fetchChatMessages(chatId);
+    }
+  }, [chatId, fetchChatMessages]);
 
-//     ws.onclose = () => {
-//       console.log("WebSocket Disconnected");
-//       setIsConnected(false);
-//     };
+  const parseBoxMessage = (message) => {
+    try {
+      return message ? JSON.parse(message) : null;
+    } catch (error) {
+      console.error("Error parsing box message:", error);
+      return null;
+    }
+  };
+  if (isFetchMessagesLoading) return <MessageSkeleton />;
+  return (
+    <>
+      {fetchedMessages.length === 0 ? (
+        <p className="text-center text-gray-500">No previous chat</p>
+      ) : (
+        fetchedMessages.map((msg, index) => {
+          const msgDate = format(new Date(msg.timestamp), "yyyy-MM-dd");
+          const showDateSeparator = lastDate !== msgDate;
+          lastDate = msgDate;
 
-//     setSocket(ws);
+          const parsedBoxMessage =
+            msg.Type === "box" ? parseBoxMessage(msg.message) : null;
 
-//     return () => {
-//       ws.close();
-//     };
-//   }, []);
-//   const sendMessage = useCallback(() => {
-//     if (socket && isConnected && message.trim()) {
-//       const payload = {
-//         action: "chat_manually",
-//         message: message,
-//       };
-//       socket.send(JSON.stringify(payload));
-//       setChatHistory((prev) => [...prev, { type: "sent", content: message }]);
-//       setMessage("");
-//       setIsThinking(true);
-//       setChatHistory((prev) => [
-//         ...prev,
-//         { type: "thinking", content: "Thinking..." },
-//       ]);
-//     }
-//   }, [socket, isConnected, message]);
+          return (
+            <div key={msg._id || index}>
+              {/* Date Separator */}
+              {showDateSeparator && (
+                <div className="text-center text-gray-400 text-sm my-2">
+                  {format(new Date(msg.timestamp), "MMMM d, yyyy")}
+                </div>
+              )}
 
-{
-  /* {imagePreview && (
-        <div className="mb-3 flex items-center gap-2">
-          <div className="relative">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
-            />
-            <button
-              onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300
-              flex items-center justify-center"
-              type="button"
-            >
-              <X className="size-3" />
-            </button>
-          </div>
-        </div>
-      )} */
-}
+              {/* Chat Message */}
+              <div
+                className={`chat ${
+                  msg.user === "AI" ? "chat-start" : "chat-end"
+                }`}
+              >
+                <div className="chat-header mb-1">
+                  <time className="text-xs opacity-50 ml-1">
+                    {format(new Date(msg.timestamp), "h:mm a")}
+                  </time>
+                </div>
 
-{
-  /* Plus button for new chat */
-}
-{
-  /* <button
-          type="button"
-          className="btn  btn-circle bg-base-300 hover:bg-base-400"
-          onClick={handleNewChat} // Implement the new chat logic in this handler
-        >
-          <Plus size={20} className="text-700" />
-        </button> */
-}
+                <div className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]">
+                  {msg.message?.error ? ( // Directly show error messages
+                    <p className="text-red-500">{msg.message.error}</p>
+                  ) : parsedBoxMessage ? (
+                    <div className="flex flex-col gap-4">
+                      <table className="w-full text-sm">
+                        <thead></thead>
+                        <tbody>
+                          {Object.entries(parsedBoxMessage).map(
+                            ([key, value]) => (
+                              <tr key={key}>
+                                <td className="px-2 py-1">{key}</td>
+                                <td
+                                  className={`px-2 py-1 font-bold ${
+                                    value === "COMPLETED"
+                                      ? "text-green-500"
+                                      : value === "PENDING"
+                                      ? "text-red-500"
+                                      : ""
+                                  }`}
+                                >
+                                  {value}
+                                </td>
+                              </tr>
+                            )
+                          )}
+                        </tbody>
+                      </table>
 
-{
-  /* <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            ref={fileInputRef}
-            onChange={handleImageChange}
-          /> */
-}
+                      {msg.retry === "False" && (
+                        <div className="flex justify-center">
+                          <button
+                            className="btn btn-primary"
+                            onClick={handleRetryButton}
+                          >
+                            Retry
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : msg.Type === "text" ? (
+                    <div
+                      className="formatted-text"
+                      dangerouslySetInnerHTML={{
+                        __html: formatJobPosting(msg.message),
+                      }}
+                    />
+                  ) : msg.message ? (
+                    <p>{msg.message}</p>
+                  ) : msg.form ? (
+                    <div className="space-y-1">
+                      {Object.entries(msg.form).map(([key, value]) => (
+                        <p key={key}>
+                          <strong>{key}:</strong> {value}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No content</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })
+      )}
+    </>
+  );
+};
 
-{
-  /* <button
-            type="button"
-            className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <Paperclip size={20} />
-          </button> */
-}
-
-{
-  /* <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            ref={fileInputRef}
-            onChange={handleImageChange}
-          /> */
-}
-
-{
-  /* <button
-            type="button"
-            className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <Paperclip size={20} />
-          </button> */
-}
-
-
-  // useEffect(() => {
-  //   getMessages(selectedUser._id)
-  // }, [selectedUser._id, getMessages]);
-
-  // if (isMessagesLoading)
-  //   return (
-  //     <div className="flex-1 flex flex-col overflow-auto">
-  //       <ChatHeader />
-  //       <MessageSkeleton />
-  //       <MessageInput />
-  //     </div>
-  //   );
-
-
-      // <div className="flex-1 flex flex-col overflow-auto">
-    //   <ChatHeader />
-    //   {!hasChatHistory || newChatClicked ? (
-    //     <WelcomeChat />
-    //   ) : formButtonClicked ? (
-    //     formRenderContent()
-    //   ) : chatManuallyButtonClicked || !hasChatHistory (
-    //     <>
-    //       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-
-    //       </div>
-    //       <MessageInput />
-    //     </>
-    //   )}
-    // </div>
+export default FetchedBubbles;
