@@ -18,31 +18,88 @@ export const teamMap = {
   "Lead Generation": 5,
 };
 
+// export function formatJobPosting(text) {
+//   const lines = text.split("\n");
+//   let formattedText = "";
+//   let inList = false; // Track whether we are in a list
+
+//   // Regular expression to detect URLs
+//   const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+//   for (let line of lines) {
+//     line = line.trim();
+//     if (!line) continue;
+
+//     // Convert URLs into clickable links
+//     line = line.replace(urlRegex, (url) => `<a href="${url}" class="text-blue-500 underline" target="_blank">${url}</a>`);
+
+//     if (line.startsWith("**") && line.endsWith("**") && !line.includes(":")) {
+//       // Main heading
+//       const heading = line.replace(/\*\*/g, "");
+//       formattedText += `<h2 class="text-lg font-semibold mt-4">${heading}</h2>`;
+//     } else if (line.startsWith("*") && line.endsWith("*")) {
+//       // Subheading
+//       const subheading = line.replace(/\*/g, "");
+//       formattedText += `<h3 class="text-md font-medium mt-3">${subheading}</h3>`;
+//     } else if (line.startsWith("-")) {
+//       // Bullet points or key-value pairs
+//       line = line.substring(1).trim();
+//       line = line.replace(/\*\*/g, "");
+
+//       if (line.includes(":")) {
+//         const [key, value] = line.split(":").map((s) => s.trim());
+//         formattedText += `<p><strong>${key}:</strong> ${value}</p>`;
+//       } else {
+//         // Treat as a bullet point
+//         if (!inList) {
+//           formattedText += "<ul class='list-disc ml-5'>";
+//           inList = true;
+//         }
+//         formattedText += `<li>${line}</li>`;
+//       }
+//     } else {
+//       // Normal paragraph text
+//       if (inList) {
+//         formattedText += "</ul>"; // Close list if we were in one
+//         inList = false;
+//       }
+//       formattedText += `<p>${line}</p>`;
+//     }
+//   }
+
+//   if (inList) {
+//     formattedText += "</ul>"; // Ensure list is closed
+//   }
+
+//   return formattedText;
+// }
+
+
 export function formatJobPosting(text) {
+  if (typeof text !== "string") {
+    console.error("formatJobPosting received a non-string value:", text);
+    return ""; // Return an empty string if it's not a valid text
+  }
+
   const lines = text.split("\n");
   let formattedText = "";
-  let inList = false; // Track whether we are in a list
+  let inList = false;
 
-  // Regular expression to detect URLs
   const urlRegex = /(https?:\/\/[^\s]+)/g;
 
   for (let line of lines) {
     line = line.trim();
     if (!line) continue;
 
-    // Convert URLs into clickable links
     line = line.replace(urlRegex, (url) => `<a href="${url}" class="text-blue-500 underline" target="_blank">${url}</a>`);
 
     if (line.startsWith("**") && line.endsWith("**") && !line.includes(":")) {
-      // Main heading
       const heading = line.replace(/\*\*/g, "");
       formattedText += `<h2 class="text-lg font-semibold mt-4">${heading}</h2>`;
     } else if (line.startsWith("*") && line.endsWith("*")) {
-      // Subheading
       const subheading = line.replace(/\*/g, "");
       formattedText += `<h3 class="text-md font-medium mt-3">${subheading}</h3>`;
     } else if (line.startsWith("-")) {
-      // Bullet points or key-value pairs
       line = line.substring(1).trim();
       line = line.replace(/\*\*/g, "");
 
@@ -50,7 +107,6 @@ export function formatJobPosting(text) {
         const [key, value] = line.split(":").map((s) => s.trim());
         formattedText += `<p><strong>${key}:</strong> ${value}</p>`;
       } else {
-        // Treat as a bullet point
         if (!inList) {
           formattedText += "<ul class='list-disc ml-5'>";
           inList = true;
@@ -58,9 +114,8 @@ export function formatJobPosting(text) {
         formattedText += `<li>${line}</li>`;
       }
     } else {
-      // Normal paragraph text
       if (inList) {
-        formattedText += "</ul>"; // Close list if we were in one
+        formattedText += "</ul>";
         inList = false;
       }
       formattedText += `<p>${line}</p>`;
@@ -68,9 +123,10 @@ export function formatJobPosting(text) {
   }
 
   if (inList) {
-    formattedText += "</ul>"; // Ensure list is closed
+    formattedText += "</ul>";
   }
 
   return formattedText;
 }
+
 

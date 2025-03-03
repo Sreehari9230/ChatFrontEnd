@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import useWebSocketStore from "../store/useWebSocketStore";
 import { format } from "date-fns";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
-import { formatJobPosting, formatMessageTime } from "../lib/utils";
+import { formatJobPosting } from "../lib/utils";
 
 const FetchedBubbles = () => {
   const { chatId } = useChatStore();
@@ -15,11 +15,6 @@ const FetchedBubbles = () => {
   } = useWebSocketStore();
 
   let lastDate = null;
-
-  const handleRetryButton = () => {
-    let message = "retry";
-    sendMessage({ action: "retry", message });
-  };
 
   useEffect(() => {
     if (chatId) {
@@ -35,7 +30,13 @@ const FetchedBubbles = () => {
       return null;
     }
   };
+
+  const handleRetryButton = () => {
+    sendMessage({ action: "retry", message: "retry" });
+  };
+
   if (isFetchMessagesLoading) return <MessageSkeleton />;
+
   return (
     <>
       {fetchedMessages.length === 0 ? (
@@ -45,6 +46,7 @@ const FetchedBubbles = () => {
           const msgDate = format(new Date(msg.timestamp), "yyyy-MM-dd");
           const showDateSeparator = lastDate !== msgDate;
           lastDate = msgDate;
+
           const parsedBoxMessage =
             msg.Type === "box" ? parseBoxMessage(msg.message) : null;
 
@@ -57,7 +59,7 @@ const FetchedBubbles = () => {
                 </div>
               )}
 
-              {/* Chat Message */}
+              {/* Chat Bubble */}
               <div
                 className={`chat ${
                   msg.user === "AI" ? "chat-start" : "chat-end"
@@ -70,12 +72,45 @@ const FetchedBubbles = () => {
                 </div>
 
                 <div className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]">
-                  {msg.message?.error ? ( // Directly show error messages
+                  {msg.user === "user" ? (
+                    msg.message ? (
+                      <p>{msg.message}</p>
+                    ) : msg.form ? (
+                      <div className="space-y-1">
+                        {Object.entries(msg.form).map(([key, value]) => (
+                          <p key={key}>
+                            <strong>{key}:</strong> {value}
+                          </p>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500">No content</p>
+                    )
+                  ) : msg.message?.error ? (
                     <p className="text-red-500">{msg.message.error}</p>
-                  ) : parsedBoxMessage ? (
+                  ) : msg.Type === "text" ? (
+                    <div
+                      className="formatted-text"
+                      dangerouslySetInnerHTML={{
+                        __html: formatJobPosting(String(msg.message || "")),
+                      }}
+                    />
+                  ) : msg.Type === "brochure" ? (
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
+                      {msg.content && (
+                        <p className="mt-2 text-gray-600">{msg.content}</p>
+                      )}
+                    </>
+                  ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
+                  parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
                       <table className="w-full text-sm">
-                        <thead></thead>
                         <tbody>
                           {Object.entries(parsedBoxMessage).map(
                             ([key, value]) => (
@@ -97,7 +132,6 @@ const FetchedBubbles = () => {
                           )}
                         </tbody>
                       </table>
-
                       {msg.retry === "False" && (
                         <div className="flex justify-center">
                           <button
@@ -108,23 +142,6 @@ const FetchedBubbles = () => {
                           </button>
                         </div>
                       )}
-                    </div>
-                  ) : msg.Type === "text" ? (
-                    <div
-                      className="formatted-text"
-                      dangerouslySetInnerHTML={{
-                        __html: formatJobPosting(msg.message),
-                      }}
-                    />
-                  ) : msg.message ? (
-                    <p>{msg.message}</p>
-                  ) : msg.form ? (
-                    <div className="space-y-1">
-                      {Object.entries(msg.form).map(([key, value]) => (
-                        <p key={key}>
-                          <strong>{key}:</strong> {value}
-                        </p>
-                      ))}
                     </div>
                   ) : (
                     <p className="text-gray-500">No content</p>
