@@ -103,9 +103,34 @@ const FetchedBubbles = () => {
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
                       />
+                      {/* {msg.content && (
+                        <div
+                          className="formatted-text mt-2 text-gray-600"
+                          dangerouslySetInnerHTML={{ __html: formatJobPosting(String(msg.content || "")) }}
+                        />
+                      )} */}
+
                       {msg.content && (
-                        <p className="mt-2 text-gray-600">{msg.content}</p>
+                        <div
+                          className="border border-base-300 p-2 rounded-lg bg-secondary mt-2"
+                          dangerouslySetInnerHTML={{
+                            __html: formatJobPosting(String(msg.content || "")),
+                          }}
+                        />
+                        // </div>
                       )}
+
+                      {/* Copy Button */}
+                      {/* <button
+                        className="btn btn-xs btn-outline absolute top-2 right-2"
+                        onClick={() =>
+                          navigator.clipboard.writeText(
+                            msg.content || msg.message
+                          )
+                        }
+                      >
+                        Copy
+                      </button> */}
                     </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
