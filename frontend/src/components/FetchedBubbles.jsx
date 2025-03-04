@@ -73,11 +73,13 @@ const FetchedBubbles = () => {
 
                 <div className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]">
                   {/* Task Name Box - Top Right */}
-                  {msg.user === "AI" && msg.task_name && msg?.Type !== "box" && (
-                    <div className="bg-white text-xs font-medium text-gray-700 px-2 py-1 rounded-md border border-gray-300 shadow-sm mb-2 self-end">
-                      {msg.task_name}
-                    </div>
-                  )}
+                  {msg.user === "AI" &&
+                    // msg?.Type !== "box" &&
+                    msg.task_name && (
+                      <div className="bg-white text-xs font-medium text-gray-700 px-2 py-1 rounded-md border border-gray-300 shadow-sm mb-2 self-end">
+                        {msg.task_name}-{msg.Type}
+                      </div>
+                    )}
 
                   {msg.user === "user" ? (
                     msg.message ? (
@@ -119,12 +121,11 @@ const FetchedBubbles = () => {
 
                       {msg.content && (
                         <div
-                          className="border border-base-300 p-2 rounded-lg bg-secondary mt-2"
+                          className="p-4 border rounded-lg shadow-sm bg-white mt-2"
                           dangerouslySetInnerHTML={{
                             __html: formatJobPosting(String(msg.content || "")),
                           }}
                         />
-                        // </div>
                       )}
 
                       {/* Copy Button */}
