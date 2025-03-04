@@ -132,6 +132,35 @@ const FetchedBubbles = () => {
                         Copy
                       </button> */}
                     </>
+                  ) : msg.Type === "email templates" ? (
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
+                      {Array.isArray(msg.content) && msg.content.length > 0 && (
+                        <div className="mt-4 space-y-4">
+                          {msg.content.map((template, index) => (
+                            <div
+                              key={index}
+                              className="p-4 border rounded-lg shadow-sm bg-white"
+                            >
+                              <h3 className="text-lg font-semibold text-gray-900">
+                                {template.subject}
+                              </h3>
+                              <p className="mt-2 text-gray-700 whitespace-pre-line">
+                                {template.body}
+                              </p>
+                              <p className="mt-2 text-blue-600 font-medium">
+                                {template.call_to_action}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
