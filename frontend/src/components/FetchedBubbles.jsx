@@ -264,6 +264,45 @@ const FetchedBubbles = () => {
                         </div>
                       )}
                     </>
+                  ) : msg.Type === "posts" ? (
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
+
+                      {Array.isArray(msg.content) && msg.content.length > 0 && (
+                        <div className="mt-4 space-y-4">
+                          {msg.content.map((post, index) => (
+                            <div
+                              key={index}
+                              className="p-4 border rounded-lg shadow-sm bg-white"
+                            >
+                              <h3 className="text-lg font-semibold text-gray-900">
+                                {post.post_title}
+                              </h3>
+                              <p className="mt-2 text-gray-700">
+                                {post.caption}
+                              </p>
+
+                              {/* Hashtags Section */}
+                              {post.hashtags && post.hashtags.length > 0 && (
+                                <div className="mt-2 text-blue-600 font-medium">
+                                  {post.hashtags.join(" ")}
+                                </div>
+                              )}
+
+                              {/* Call to Action */}
+                              <p className="mt-2 text-green-600 font-semibold">
+                                {post.call_to_action}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
