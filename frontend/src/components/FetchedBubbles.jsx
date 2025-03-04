@@ -72,6 +72,13 @@ const FetchedBubbles = () => {
                 </div>
 
                 <div className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]">
+                  {/* Task Name Box - Top Right */}
+                  {msg.user === "AI" && msg.task_name && msg?.Type !== "box" && (
+                    <div className="bg-white text-xs font-medium text-gray-700 px-2 py-1 rounded-md border border-gray-300 shadow-sm mb-2 self-end">
+                      {msg.task_name}
+                    </div>
+                  )}
+
                   {msg.user === "user" ? (
                     msg.message ? (
                       <p>{msg.message}</p>
