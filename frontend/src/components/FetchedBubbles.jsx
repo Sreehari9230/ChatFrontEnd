@@ -76,7 +76,7 @@ const FetchedBubbles = () => {
                   {msg.user === "AI" &&
                     // msg?.Type !== "box" &&
                     msg.task_name && (
-                      <div className="bg-white text-xs font-medium text-gray-700 px-2 py-1 rounded-md border border-gray-300 shadow-sm mb-2 self-end">
+                      <div className="bg-white text-xs font-medium text-gray-700 px-2 py-1 rounded-md border border-gray-300 shadow-sm mb-2 self-start">
                         {msg.task_name}-{msg.Type}
                       </div>
                     )}
