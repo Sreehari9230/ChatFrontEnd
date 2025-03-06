@@ -392,6 +392,60 @@ const FetchedBubbles = () => {
                         </div>
                       )}
                     </>
+                  ) : msg.Type === "swot analysis" ? (
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
+
+                      {msg.content && (
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                          {/* SWOT Analysis Sections */}
+                          {[
+                            "strengths",
+                            "weaknesses",
+                            "opportunities",
+                            "threats",
+                          ].map(
+                            (category) =>
+                              msg.content[category] &&
+                              msg.content[category].length > 0 && (
+                                <div key={category} className="mt-3">
+                                  <h4 className="text-md font-semibold text-gray-800 capitalize">
+                                    {category}:
+                                  </h4>
+                                  <ul className="list-disc list-inside mt-1 text-gray-600">
+                                    {msg.content[category].map((item, i) => (
+                                      <li
+                                        key={i}
+                                        className="mb-2 p-2 border rounded bg-gray-100"
+                                      >
+                                        <strong>{item.name}:</strong>{" "}
+                                        {item.description}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )
+                          )}
+
+                          {/* Strategic Insights */}
+                          {msg.content.strategic_insights && (
+                            <div className="mt-3 p-4 border rounded-lg bg-gray-50">
+                              <h4 className="text-md font-semibold text-gray-800">
+                                Strategic Insights:
+                              </h4>
+                              <p className="mt-1 text-gray-700">
+                                {msg.content.strategic_insights}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
