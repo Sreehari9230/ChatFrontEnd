@@ -3,16 +3,16 @@ import { useChatStore } from "../../store/useChatStore";
 import useWebSocketStore from "../../store/useWebSocketStore";
 import { Loader2 } from "lucide-react";
 
-const SalesStrategyForm = () => {
+const CustomerRelationsForm = () => {
   const { sendMessage, formResponseIsLoading } = useWebSocketStore();
   const { formIsSubmitted } = useChatStore();
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
   const [formData, setFormData] = useState({
-    topic: "",
-    customer_segment: "",
-    interaction_history: "",
-    preferred_communication_channel: "",
-    business_goal: "",
+    company_product: "",
+    customer_type: "",
+    interaction_channel: "",
+    feedback_source: "",
+    purchase_history_depth: "",
   });
 
   const handleChange = (e) => {
@@ -36,11 +36,11 @@ const SalesStrategyForm = () => {
     if (isWaitingForResponse && !formResponseIsLoading) {
       formIsSubmitted();
       setFormData({
-        topic: "",
-        customer_segment: "",
-        interaction_history: "",
-        preferred_communication_channel: "",
-        business_goal: "",
+        company_product: "",
+        customer_type: "",
+        interaction_channel: "",
+        feedback_source: "",
+        purchase_history_depth: "",
       });
       setIsWaitingForResponse(false);
     }
@@ -58,12 +58,12 @@ const SalesStrategyForm = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="form-control md:col-span-2">
-            <label className="label-text">Topic</label>
+            <label className="label-text">Company Product</label>
             <input
               type="text"
-              name="topic"
-              placeholder="Enter Topic"
-              value={formData.topic}
+              name="company_product"
+              placeholder="Enter Company Product"
+              value={formData.company_product}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
               required
@@ -71,12 +71,12 @@ const SalesStrategyForm = () => {
           </div>
 
           <div className="form-control">
-            <label className="label-text">Customer Segment</label>
+            <label className="label-text">Customer Type</label>
             <input
               type="text"
-              name="customer_segment"
-              placeholder="Enter Customer Segment"
-              value={formData.customer_segment}
+              name="customer_type"
+              placeholder="Enter Customer Type"
+              value={formData.customer_type}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
               required
@@ -84,12 +84,12 @@ const SalesStrategyForm = () => {
           </div>
 
           <div className="form-control">
-            <label className="label-text">Interaction History</label>
+            <label className="label-text">Interaction Channel</label>
             <input
               type="text"
-              name="interaction_history"
-              placeholder="Enter Interaction History"
-              value={formData.interaction_history}
+              name="interaction_channel"
+              placeholder="Enter Interaction Channel"
+              value={formData.interaction_channel}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
               required
@@ -97,14 +97,12 @@ const SalesStrategyForm = () => {
           </div>
 
           <div className="form-control md:col-span-2">
-            <label className="label-text">
-              Preferred Communication Channel
-            </label>
+            <label className="label-text">Feedback Source</label>
             <input
               type="text"
-              name="preferred_communication_channel"
-              placeholder="Enter Communication Channel"
-              value={formData.preferred_communication_channel}
+              name="feedback_source"
+              placeholder="Enter Feedback Source"
+              value={formData.feedback_source}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
               required
@@ -112,12 +110,12 @@ const SalesStrategyForm = () => {
           </div>
 
           <div className="form-control md:col-span-2">
-            <label className="label-text">Business Goal</label>
+            <label className="label-text">Purchase History Depth</label>
             <input
               type="text"
-              name="business_goal"
-              placeholder="Enter Business Goal"
-              value={formData.business_goal}
+              name="purchase_history_depth"
+              placeholder="Enter Purchase History Depth"
+              value={formData.purchase_history_depth}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
               required
@@ -143,4 +141,4 @@ const SalesStrategyForm = () => {
   );
 };
 
-export default SalesStrategyForm;
+export default CustomerRelationsForm;
