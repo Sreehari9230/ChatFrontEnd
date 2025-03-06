@@ -57,7 +57,7 @@ const OnboardingForm = () => {
             <label className="label-text">Employee ID</label>
             <input
               type="text"
-              name="employeeId"
+              name="employee_id"
               placeholder="Enter Employee ID"
               value={formData.employee_id}
               onChange={handleChange}
@@ -71,7 +71,7 @@ const OnboardingForm = () => {
             <label className="label-text">Employee Name</label>
             <input
               type="text"
-              name="employeeName"
+              name="first_name"
               placeholder="Enter Employee Name"
               value={formData.first_name}
               onChange={handleChange}
