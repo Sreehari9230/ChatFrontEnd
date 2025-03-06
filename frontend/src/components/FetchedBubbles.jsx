@@ -686,6 +686,51 @@ const FetchedBubbles = () => {
                         </div>
                       )}
                     </>
+                  ) : msg.Type === "social media lead" ? (
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
+
+                      {msg.content && (
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                          {/* Leads from Social Media */}
+                          {Array.isArray(msg.content.leads_social_media) &&
+                            msg.content.leads_social_media.length > 0 && (
+                              <div className="mt-3">
+                                <h4 className="text-md font-semibold text-gray-800">
+                                  Leads from Social Media:
+                                </h4>
+                                <ul className="list-disc list-inside mt-1 text-gray-600">
+                                  {msg.content.leads_social_media.map(
+                                    (lead, i) => (
+                                      <li
+                                        key={i}
+                                        className="mb-2 p-2 border rounded bg-gray-100"
+                                      >
+                                        <strong>Platform:</strong>{" "}
+                                        {lead.platform} <br />
+                                        <strong>Profile URL:</strong>{" "}
+                                        <a
+                                          href={lead.profile_url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-blue-500 underline"
+                                        >
+                                          {lead.profile_url}
+                                        </a>
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            )}
+                        </div>
+                      )}
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
