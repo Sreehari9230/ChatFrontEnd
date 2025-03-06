@@ -595,6 +595,97 @@ const FetchedBubbles = () => {
                         </div>
                       )}
                     </>
+                  ) : msg.Type === "sales pitch" ? (
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
+
+                      {msg.content && (
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                          {/* Target Demographic */}
+                          {msg.content.target_demographic && (
+                            <div className="mt-3 p-4 border rounded-lg bg-gray-50">
+                              <h4 className="text-md font-semibold text-gray-800">
+                                Target Demographic:
+                              </h4>
+                              <p className="mt-1 text-gray-700">
+                                {msg.content.target_demographic}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Pitch Content */}
+                          {msg.content.pitch_content && (
+                            <div className="mt-3 p-4 border rounded-lg bg-gray-50">
+                              <h4 className="text-md font-semibold text-gray-800">
+                                Sales Pitch:
+                              </h4>
+                              <p className="mt-1 text-gray-700">
+                                {msg.content.pitch_content}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Key Persuasion Points */}
+                          {Array.isArray(msg.content.key_persuasion_points) &&
+                            msg.content.key_persuasion_points.length > 0 && (
+                              <div className="mt-3">
+                                <h4 className="text-md font-semibold text-gray-800">
+                                  Key Persuasion Points:
+                                </h4>
+                                <ul className="list-disc list-inside mt-1 text-gray-600">
+                                  {msg.content.key_persuasion_points.map(
+                                    (point, i) => (
+                                      <li
+                                        key={i}
+                                        className="mb-2 p-2 border rounded bg-gray-100"
+                                      >
+                                        <strong>Point:</strong> {point.point}{" "}
+                                        <br />
+                                        <strong>
+                                          Supporting Evidence:
+                                        </strong>{" "}
+                                        {point.supporting_evidence}
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            )}
+
+                          {/* Call to Action */}
+                          {msg.content.call_to_action && (
+                            <div className="mt-3 p-4 border rounded-lg bg-blue-50">
+                              <h4 className="text-md font-semibold text-gray-800">
+                                Call to Action:
+                              </h4>
+                              <p className="mt-1 text-gray-700">
+                                {msg.content.call_to_action}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Estimated Conversion Rate */}
+                          {msg.content.estimated_conversion_rate && (
+                            <div className="mt-3 p-4 border rounded-lg bg-green-50">
+                              <h4 className="text-md font-semibold text-gray-800">
+                                Estimated Conversion Rate:
+                              </h4>
+                              <p className="mt-1 text-gray-700">
+                                {(
+                                  msg.content.estimated_conversion_rate * 100
+                                ).toFixed(0)}
+                                %
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
