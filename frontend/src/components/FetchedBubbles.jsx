@@ -329,6 +329,69 @@ const FetchedBubbles = () => {
                         </div>
                       )}
                     </>
+                  ) : msg.Type === "Analysis report" ? (
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
+
+                      {msg.content && (
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                          {/* Industry Sector */}
+                          <h3 className="text-lg font-semibold text-gray-900">
+                            Industry Sector: {msg.content.industry_sector}
+                          </h3>
+
+                          {/* Trends Summary */}
+                          {Array.isArray(msg.content.trends_summary) &&
+                            msg.content.trends_summary.length > 0 && (
+                              <div className="mt-3">
+                                <h4 className="text-md font-semibold text-gray-800">
+                                  Trends Summary:
+                                </h4>
+                                <ul className="list-disc list-inside mt-1 text-gray-600">
+                                  {msg.content.trends_summary.map(
+                                    (trend, i) => (
+                                      <li
+                                        key={i}
+                                        className="mb-2 p-2 border rounded bg-gray-100"
+                                      >
+                                        <strong>Trend:</strong> {trend.trend}{" "}
+                                        <br />
+                                        <strong>Impact:</strong> {trend.impact}{" "}
+                                        <br />
+                                        <strong>Confidence Level:</strong>{" "}
+                                        {(trend.confidence_level * 100).toFixed(
+                                          0
+                                        )}
+                                        %
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            )}
+
+                          {/* Data Sources */}
+                          {Array.isArray(msg.content.data_sources) &&
+                            msg.content.data_sources.length > 0 && (
+                              <div className="mt-3">
+                                <h4 className="text-md font-semibold text-gray-800">
+                                  Data Sources:
+                                </h4>
+                                <ul className="list-disc list-inside mt-1 text-gray-600">
+                                  {msg.content.data_sources.map((source, i) => (
+                                    <li key={i}>{source}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                        </div>
+                      )}
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
