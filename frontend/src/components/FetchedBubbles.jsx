@@ -446,6 +446,81 @@ const FetchedBubbles = () => {
                         </div>
                       )}
                     </>
+                  ) : msg.Type === "competitor analyst" ? (
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
+
+                      {msg.content && (
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                          {/* Competitors Analysis */}
+                          {Array.isArray(msg.content.competitors) &&
+                            msg.content.competitors.length > 0 && (
+                              <div className="mt-3">
+                                <h4 className="text-md font-semibold text-gray-800">
+                                  Competitor Analysis:
+                                </h4>
+                                <ul className="list-disc list-inside mt-1 text-gray-600">
+                                  {msg.content.competitors.map(
+                                    (competitor, i) => (
+                                      <li
+                                        key={i}
+                                        className="mb-2 p-2 border rounded bg-gray-100"
+                                      >
+                                        <strong>Competitor:</strong>{" "}
+                                        {competitor.competitor_name} <br />
+                                        <strong>Strategy:</strong>{" "}
+                                        {competitor.differentiating_strategy}{" "}
+                                        <br />
+                                        <strong>
+                                          Market Positioning:
+                                        </strong>{" "}
+                                        {competitor.market_positioning}
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            )}
+
+                          {/* Recommendations */}
+                          {msg.content.recommendations && (
+                            <div className="mt-3 p-4 border rounded-lg bg-gray-50">
+                              <h4 className="text-md font-semibold text-gray-800">
+                                Recommendations:
+                              </h4>
+                              <p className="mt-1 text-gray-700">
+                                {msg.content.recommendations}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Risk Factors */}
+                          {Array.isArray(msg.content.risk_factors) &&
+                            msg.content.risk_factors.length > 0 && (
+                              <div className="mt-3">
+                                <h4 className="text-md font-semibold text-gray-800">
+                                  Risk Factors:
+                                </h4>
+                                <ul className="list-disc list-inside mt-1 text-gray-600">
+                                  {msg.content.risk_factors.map((risk, i) => (
+                                    <li
+                                      key={i}
+                                      className="mb-2 p-2 border rounded bg-red-100"
+                                    >
+                                      {risk}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                        </div>
+                      )}
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
