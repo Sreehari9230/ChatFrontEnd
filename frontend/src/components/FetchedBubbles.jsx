@@ -722,6 +722,24 @@ const FetchedBubbles = () => {
                                         >
                                           {lead.profile_url}
                                         </a>
+                                        {lead.engagement_score !== null && (
+                                          <>
+                                            <br />
+                                            <strong>
+                                              Engagement Score:
+                                            </strong>{" "}
+                                            {lead.engagement_score}
+                                          </>
+                                        )}
+                                        {lead.activity_summary !== null && (
+                                          <>
+                                            <br />
+                                            <strong>
+                                              Activity Summary:
+                                            </strong>{" "}
+                                            {lead.activity_summary}
+                                          </>
+                                        )}
                                       </li>
                                     )
                                   )}
