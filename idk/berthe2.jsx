@@ -1,5 +1,5 @@
 import React from "react";
-import  useWebSocketStore  from "../store/useWebSocketStore";
+import { useWebSocketStore } from "../store/useWebSocketStore";
 import { formatMessageTime, formatJobPosting } from "../lib/utils";
 import { motion } from "framer-motion";
 import "./styles/animations.css";
@@ -28,7 +28,7 @@ const CurrentBubbles = () => {
       ) : (
         <>
           {currentMessages.map((msg, index) => {
-            const isUserMessage = msg.message.user == undefined;
+            const isUserMessage = msg.user !== undefined;
             const parsedBoxMessage = msg.Type === "box" ? parseBoxMessage(msg.message) : null;
 
             return (
@@ -43,27 +43,27 @@ const CurrentBubbles = () => {
                   {/* Task Name Box */}
                   {!isUserMessage && msg.task_name && (
                     <div className="bg-white text-xs font-medium text-gray-700 px-2 py-1 rounded-md border border-gray-300 shadow-sm mb-2 self-start">
-                      {msg.message.task_name}-{msg.message.Type}
+                      {msg.task_name}-{msg.Type}
                     </div>
                   )}
 
                   {msg.message?.error ? (
                     <p className="text-red-500">{msg.message.error}</p>
-                  ) : msg.message.Type === "text" ? (
+                  ) : msg.Type === "text" ? (
                     <div
                       className="formatted-text"
                       dangerouslySetInnerHTML={{ __html: formatJobPosting(msg.message) }}
                     />
-                  ) : msg.message.Type === "brochure" ? (
+                  ) : msg.Type === "brochure" ? (
                     <>
                       <div
                         className="formatted-text"
-                        dangerouslySetInnerHTML={{ __html: formatJobPosting(msg.message.message) }}
+                        dangerouslySetInnerHTML={{ __html: formatJobPosting(msg.message) }}
                       />
-                      {msg.message.content && (
+                      {msg.content && (
                         <div
                           className="p-4 border rounded-lg shadow-sm bg-white mt-2"
-                          dangerouslySetInnerHTML={{ __html: formatJobPosting(msg.message.content) }}
+                          dangerouslySetInnerHTML={{ __html: formatJobPosting(msg.content) }}
                         />
                       )}
                     </>
@@ -94,7 +94,7 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </div>
-                  ) : msg.action === "form" && msg.form ? (
+                  ) : msg.Type === "form" && msg.form ? (
                     <div className="space-y-1">
                       {Object.entries(msg.form).map(([key, value]) => (
                         <p key={key}>
