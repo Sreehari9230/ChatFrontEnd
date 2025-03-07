@@ -750,55 +750,67 @@ const FetchedBubbles = () => {
                       )}
                     </>
                   ) : msg.Type === "survey out" ? (
-<>
-  <div
-    className="formatted-text"
-    dangerouslySetInnerHTML={{
-      __html: formatJobPosting(String(msg.message || "")),
-    }}
-  />
+                    <>
+                      <div
+                        className="formatted-text"
+                        dangerouslySetInnerHTML={{
+                          __html: formatJobPosting(String(msg.message || "")),
+                        }}
+                      />
 
-  {msg.content && (
-    <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
-      {/* Survey Title */}
-      <h3 className="text-lg font-semibold text-gray-900">
-        {msg.content.survey_title}
-      </h3>
+                      {msg.content && (
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                          {/* Survey Title */}
+                          <h3 className="text-lg font-semibold text-gray-900">
+                            {msg.content.survey_title}
+                          </h3>
 
-      {/* Topic */}
-      <p className="mt-2 text-gray-700">
-        <strong>Topic:</strong> {msg.content.topic}
-      </p>
+                          {/* Topic */}
+                          <p className="mt-2 text-gray-700">
+                            <strong>Topic:</strong> {msg.content.topic}
+                          </p>
 
-      {/* Target Audience */}
-      <p className="mt-2 text-gray-700">
-        <strong>Target Audience:</strong> {msg.content.target_audience}
-      </p>
+                          {/* Target Audience */}
+                          <p className="mt-2 text-gray-700">
+                            <strong>Target Audience:</strong>{" "}
+                            {msg.content.target_audience}
+                          </p>
 
-      {/* Survey Questions */}
-      {Array.isArray(msg.content.questions) && msg.content.questions.length > 0 && (
-        <div className="mt-3">
-          <h4 className="text-md font-semibold text-gray-800">Survey Questions:</h4>
-          <ul className="list-disc list-inside mt-1 text-gray-600">
-            {msg.content.questions.map((question, i) => (
-              <li key={i} className="mb-2 p-2 border rounded bg-gray-100">
-                <strong>Question:</strong> {question.question} <br />
-                <strong>Type:</strong> {question.question_type}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+                          {/* Survey Questions */}
+                          {Array.isArray(msg.content.questions) &&
+                            msg.content.questions.length > 0 && (
+                              <div className="mt-3">
+                                <h4 className="text-md font-semibold text-gray-800">
+                                  Survey Questions:
+                                </h4>
+                                <ul className="list-disc list-inside mt-1 text-gray-600">
+                                  {msg.content.questions.map((question, i) => (
+                                    <li
+                                      key={i}
+                                      className="mb-2 p-2 border rounded bg-gray-100"
+                                    >
+                                      <strong>Question:</strong>{" "}
+                                      {question.question} <br />
+                                      <strong>Type:</strong>{" "}
+                                      {question.question_type}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
 
-      {/* Deployment Plan */}
-      <div className="mt-3">
-        <h4 className="text-md font-semibold text-gray-800">Deployment Plan:</h4>
-        <p className="mt-1 text-gray-600">{msg.content.deployment_plan}</p>
-      </div>
-    </div>
-  )}
-</>
-
+                          {/* Deployment Plan */}
+                          <div className="mt-3">
+                            <h4 className="text-md font-semibold text-gray-800">
+                              Deployment Plan:
+                            </h4>
+                            <p className="mt-1 text-gray-600">
+                              {msg.content.deployment_plan}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
