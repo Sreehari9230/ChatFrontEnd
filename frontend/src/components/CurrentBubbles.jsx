@@ -39,15 +39,19 @@ const CurrentBubbles = () => {
               >
                 <div className="chat-header mb-1">
                   <time className="text-xs opacity-50 ml-1">
-                    {formatMessageTime(msg.timestamp)}
+                    {msg.message.user
+                      ? formatMessageTime(msg.message.timestamp)
+                      : formatMessageTime(msg.timestamp)}
                   </time>
+
+                  {"  "}
                   <span className="font-semibold">
                     {msg.message.user === "AI" ? "AI Assistant" : "You"}
                   </span>
                 </div>
 
                 <div className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]">
-                {msg.message.user === "AI" &&
+                  {msg.message.user === "AI" &&
                     // msg?.Type !== "box" &&
                     msg.message.task_name && (
                       <div className="bg-white text-xs font-medium text-gray-700 px-2 py-1 rounded-md border border-gray-300 shadow-sm mb-2 self-start">
@@ -61,7 +65,7 @@ const CurrentBubbles = () => {
                     <div
                       className="formatted-text"
                       dangerouslySetInnerHTML={{
-                        __html: formatJobPosting(msg.message),
+                        __html: formatJobPosting(msg.message.message),
                       }}
                     />
                   ) : msg.message.Type === "brochure" ? (

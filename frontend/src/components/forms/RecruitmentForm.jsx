@@ -3,7 +3,7 @@ import { useChatStore } from "../../store/useChatStore";
 import useWebSocketStore from "../../store/useWebSocketStore";
 import { Loader2 } from "lucide-react";
 
-const RecruitmentForm = () => {
+const RecruitmentForm = () => { 
   const { chatId, formIsSubmitted } = useChatStore();
   const { sendMessage, formResponseIsLoading } = useWebSocketStore();
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);

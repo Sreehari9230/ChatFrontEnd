@@ -18,7 +18,7 @@ const useWebSocketStore = create((set, get) => ({
     }
 
     // Close existing connection if any
-    const existingWs = get().ws;
+    const existingWs = get().ws; 
     if (existingWs) {
       existingWs.close();
     }
