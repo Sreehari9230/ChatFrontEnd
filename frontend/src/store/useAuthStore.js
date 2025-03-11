@@ -123,7 +123,7 @@ export const useAuthStore = create((set) => ({
                     Authorization: `Bearer ${accessToken}`
                 },
             })
-            console.log('fetchhome over')
+            console.log('fetchhome over', res)
             // console.log("Home Data:", res, data);
             // Handle the fetched data here, such as updating state or rendering content
         } catch (error) {
