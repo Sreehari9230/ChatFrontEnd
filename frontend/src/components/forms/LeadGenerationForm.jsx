@@ -13,31 +13,17 @@ const LeadGenerationForm = () => {
     geographic_focus: "",
     lead_source_channels: "",
   });
-
-  const [errors, setErrors] = useState({});
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error on valid input
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      if (!value.trim()) {
-        newErrors[key] = "This field is required";
-      }
-    });
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
-
+    if (Object.values(formData).some((val) => !val.trim())) return;
+    
     const payload = {
       action: "form",
       form: formData,
@@ -70,32 +56,57 @@ const LeadGenerationForm = () => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {Object.keys(formData).map((field) => (
-            <div
-              key={field}
-              className={`form-control ${
-                field === "target_industry" || field === "lead_source_channels"
-                  ? "md:col-span-2"
-                  : ""
-              }`}
-            >
-              <label className="label-text">{field.replace(/_/g, " ")}</label>
-              <input
-                type="text"
-                name={field}
-                placeholder={`Enter ${field.replace(/_/g, " ")}`}
-                value={formData[field]}
-                onChange={handleChange}
-                className={`input input-sm input-bordered w-full ${
-                  errors[field] ? "border-red-500" : ""
-                }`}
-                // required
-              />
-              {errors[field] && (
-                <p className="text-red-500 text-xs mt-1">{errors[field]}</p>
-              )}
-            </div>
-          ))}
+          <div className="form-control md:col-span-2">
+            <label className="label-text">Target Industry</label>
+            <input
+              type="text"
+              name="target_industry"
+              placeholder="Enter Target Industry"
+              value={formData.target_industry}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label-text">Company Size Range</label>
+            <input
+              type="text"
+              name="company_size_range"
+              placeholder="Enter Company Size Range"
+              value={formData.company_size_range}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label-text">Geographic Focus</label>
+            <input
+              type="text"
+              name="geographic_focus"
+              placeholder="Enter Geographic Focus"
+              value={formData.geographic_focus}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="form-control md:col-span-2">
+            <label className="label-text">Lead Source Channels</label>
+            <input
+              type="text"
+              name="lead_source_channels"
+              placeholder="Enter Lead Source Channels"
+              value={formData.lead_source_channels}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
         </div>
 
         <div className="mt-4">

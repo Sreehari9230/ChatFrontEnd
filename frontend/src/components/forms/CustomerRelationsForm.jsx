@@ -15,29 +15,14 @@ const CustomerRelationsForm = () => {
     purchase_history_depth: "",
   });
 
-  const [errors, setErrors] = useState({});
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error when field is updated
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      if (!value.trim()) {
-        newErrors[key] = "This field is required";
-      }
-    });
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
+    if (Object.values(formData).some((val) => !val.trim())) return;
 
     const payload = {
       action: "form",
@@ -72,32 +57,70 @@ const CustomerRelationsForm = () => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {Object.keys(formData).map((field) => (
-            <div
-              key={field}
-              className={`form-control ${
-                ["company_product", "feedback_source", "purchase_history_depth"].includes(field)
-                  ? "md:col-span-2"
-                  : ""
-              }`}
-            >
-              <label className="label-text">{field.replace(/_/g, " ")}</label>
-              <input
-                type="text"
-                name={field}
-                placeholder={`Enter ${field.replace(/_/g, " ")}`}
-                value={formData[field]}
-                onChange={handleChange}
-                className={`input input-sm input-bordered w-full ${
-                  errors[field] ? "border-red-500" : ""
-                }`}
-                // required
-              />
-              {errors[field] && (
-                <p className="text-red-500 text-xs mt-1">{errors[field]}</p>
-              )}
-            </div>
-          ))}
+          <div className="form-control md:col-span-2">
+            <label className="label-text">Company Product</label>
+            <input
+              type="text"
+              name="company_product"
+              placeholder="Enter Company Product"
+              value={formData.company_product}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label-text">Customer Type</label>
+            <input
+              type="text"
+              name="customer_type"
+              placeholder="Enter Customer Type"
+              value={formData.customer_type}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label-text">Interaction Channel</label>
+            <input
+              type="text"
+              name="interaction_channel"
+              placeholder="Enter Interaction Channel"
+              value={formData.interaction_channel}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="form-control md:col-span-2">
+            <label className="label-text">Feedback Source</label>
+            <input
+              type="text"
+              name="feedback_source"
+              placeholder="Enter Feedback Source"
+              value={formData.feedback_source}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="form-control md:col-span-2">
+            <label className="label-text">Purchase History Depth</label>
+            <input
+              type="text"
+              name="purchase_history_depth"
+              placeholder="Enter Purchase History Depth"
+              value={formData.purchase_history_depth}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+              required
+            />
+          </div>
         </div>
 
         <div className="mt-4">
