@@ -30,7 +30,7 @@ const CurrentBubbles = () => {
           {currentMessages.map((msg, index) => {
             const isUserMessage = msg.message.user == undefined;
             const parsedBoxMessage =
-              msg.Type === "box" ? parseBoxMessage(msg.message) : null;
+              msg.message.Type === "box" ? parseBoxMessage(msg.message.message) : null;
 
             return (
               <div
@@ -801,7 +801,7 @@ const CurrentBubbles = () => {
                           )}
                         </tbody>
                       </table>
-                      {msg.retry === "False" && (
+                      {msg.message.retry === "False" && (
                         <div className="flex justify-center">
                           <button
                             className="btn btn-primary"
