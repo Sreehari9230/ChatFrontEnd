@@ -54,7 +54,7 @@ const App = () => {
 
 
 
-        {/* <Route path="*" element={<NotFoundPage />} /> */}
+        <Route path="*" element={<NotFoundPage />} />
 {/* fallback route or just redirecting to home page */}
         {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
 
