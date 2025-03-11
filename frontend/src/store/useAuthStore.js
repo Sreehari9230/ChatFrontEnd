@@ -119,9 +119,9 @@ export const useAuthStore = create((set) => ({
         try {
             console.log('inside fetchHome')
             const res = await axiosInstance.get("/organization/home/", {
-                // headers: {
-                //     Authorization: `Bearer ${accessToken}`
-                // },
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                },
             })
             console.log('fetchhome over')
             // console.log("Home Data:", res, data);
