@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Group } from "lucide-react";
 import { teamMap } from "../lib/utils";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
   const { setDepartmentSelected, setTeamSelected, getChatHistory } =
     useChatStore();
+
+  const { DepartmentsTeams } = useAuthStore();
 
   const [selectedTeam, setSelectedTeamState] = useState(null);
 
@@ -18,7 +21,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="h-full w-72 border-r border-base-300 flex flex-col p-4">
+    <aside className="h-full w-75 border-r border-base-300 flex flex-col p-4">
       <div className="border-b border-base-300 w-full pb-4 mb-2">
         <div className="flex items-center gap-2">
           <Group className="size-6" />
@@ -27,25 +30,7 @@ const Sidebar = () => {
       </div>
 
       <div className="overflow-y-auto w-full">
-        {[
-          {
-            department: "HR Department",
-            teams: ["Recruitment Team", "Onboarding Team"],
-          },
-          {
-            department: "Marketing Department",
-            teams: ["SEO Team", "Marketing Research Team", "Social Media Team"],
-          },
-          {
-            department: "Sales Department",
-            teams: [
-              "Content Creation",
-              "Customer Relations",
-              "Sales Strategy",
-              "Lead Generation",
-            ],
-          },
-        ].map(({ department, teams }, index) => (
+        {Object.entries(DepartmentsTeams).map(([department, teams]) => (
           <div
             key={department}
             className="collapse collapse-arrow bg-base-200 mb-2"

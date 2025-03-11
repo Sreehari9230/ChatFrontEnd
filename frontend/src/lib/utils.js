@@ -13,7 +13,7 @@ export const teamMap = {
   "Marketing Research Team": 4,
   "Social Media Team": 7,
   "Content Creation": 6,
-  "Customer Relations": 8,
+  "Customer Relationship Management": 8,
   "Sales Strategy": 9,
   "Lead Generation": 5,
 };

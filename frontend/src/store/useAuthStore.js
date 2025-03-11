@@ -17,6 +17,8 @@ export const useAuthStore = create((set) => ({
 
     userAuth: false,
 
+    DepartmentsTeams: [],
+
     checkAuth: () => {
         try {
             const token = localStorage.getItem("token");
@@ -117,15 +119,17 @@ export const useAuthStore = create((set) => ({
 
     fetchHome: async (accessToken) => {
         try {
+            // res.data.package.features
             console.log('inside fetchHome')
             const res = await axiosInstance.get("/organization/home/", {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 },
             })
-            console.log('fetchhome over', res)
+            console.log('fetchhome over', res.data)
             // console.log("Home Data:", res, data);
             // Handle the fetched data here, such as updating state or rendering content
+            set({ DepartmentsTeams: res.data.package.features });
         } catch (error) {
             // console.log('fetch home catch')
             console.error("Error fetching home data:", error);
