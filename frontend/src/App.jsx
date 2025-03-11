@@ -11,6 +11,7 @@ import { useThemeStore } from "./store/useThemeStore";
 import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import RaiseATicketModal from "./components/RaiseATicketModal";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -50,6 +51,13 @@ const App = () => {
         <Route path="/settings" element={<SettingsPage />} />
 
         <Route path="/profile" element={<ProfilePage />} />
+
+
+
+        {/* <Route path="*" element={<NotFoundPage />} /> */}
+{/* fallback route or just redirecting to home page */}
+        {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+
       </Routes>
 
       <Toaster />
