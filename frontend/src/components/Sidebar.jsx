@@ -5,12 +5,11 @@ import { teamMap } from "../lib/utils";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
-  const { setDepartmentSelected, setTeamSelected, getChatHistory } =
-    useChatStore();
-
+  const { setTeamSelected, getChatHistory } = useChatStore();
   const { DepartmentsTeams } = useAuthStore();
 
   const [selectedTeam, setSelectedTeamState] = useState(null);
+  const [openDepartment, setOpenDepartment] = useState(null);
 
   const handleTeamSelection = (team) => {
     setSelectedTeamState(team);
@@ -18,6 +17,10 @@ const Sidebar = () => {
     if (teamMap[team]) {
       getChatHistory(teamMap[team]);
     }
+  };
+
+  const handleToggle = (department) => {
+    setOpenDepartment((prev) => (prev === department ? null : department));
   };
 
   return (
@@ -31,12 +34,17 @@ const Sidebar = () => {
 
       <div className="overflow-y-auto w-full">
         {Object.entries(DepartmentsTeams).map(([department, teams]) => (
-          <div
-            key={department}
-            className="collapse collapse-arrow bg-base-200 mb-2"
-          >
-            <input type="radio" name="sidebar-accordion" />
-            <div className="collapse-title text-lg font-medium">
+          <div key={department} className="collapse collapse-arrow bg-base-200 mb-2">
+            <input
+              type="checkbox"
+              checked={openDepartment === department}
+              onChange={() => handleToggle(department)}
+              className="hidden"
+            />
+            <div
+              className="collapse-title text-lg font-medium cursor-pointer"
+              onClick={() => handleToggle(department)}
+            >
               {department}
             </div>
             <div className="collapse-content">
