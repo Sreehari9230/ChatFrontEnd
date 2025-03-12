@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import { axiosInstance } from '../lib/axios'
 import { HistoryIcon } from "lucide-react";
 import useWebSocketStore from "./useWebSocketStore";
+import { teamMap } from "../lib/utils";
 
 
 export const useChatStore = create((set, get) => ({
@@ -164,6 +165,53 @@ export const useChatStore = create((set, get) => ({
     //     }
     // },
 
+    // getChatHistory: async (teamSelected) => {
+    //     set({ isChatHistoryLoading: true });
+    //     try {
+    //         console.log('Fetching chat history...');
+    //         const accessToken = localStorage.getItem('access_token');
+    //         if (!accessToken) {
+    //             throw new Error('Access token is missing. Please log in again.');
+    //         }
+
+    //         // Commenting out the real API request
+    //         const res = await axiosInstance.get(`/organization/agent/${teamSelected}/chat-sessions/`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${accessToken}`,
+    //             },
+    //         });
+
+    //         // Using mock data instead
+    //         // const res = {
+    //         //     data: [
+    //         //         { id: 24, created_at: "2025-01-25T14:01:20.375896Z" },
+    //         //         { id: 25, created_at: "2025-01-25T14:03:47.737136Z" },
+    //         //         { id: 26, created_at: "2025-01-25T14:04:11.003386Z" },
+    //         //         { id: 27, created_at: "2025-01-25T14:11:01.846740Z" },
+    //         //     ],
+    //         // };
+
+    //         set((state) => {
+    //             console.log('Updated chat history:', res.data);
+    //             const chatHistory = res.data;
+
+    //             // If chat history is not empty, update the chatId with the last chat session ID
+    //             const lastChatId = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1].id : null;
+
+    //             return {
+    //                 chatHistory,
+    //                 chatId: lastChatId, // Update chatId state
+    //                 hasChatHistory: chatHistory.length > 0, // Set hasChatHistory to true if chatHistory is not empty
+    //             };
+    //         });
+    //     } catch (error) {
+    //         toast.error(error.message);
+    //         console.error("Error fetching chat history:", error);
+    //     } finally {
+    //         set({ isChatHistoryLoading: false });
+    //     }
+    // },
+
     getChatHistory: async (teamSelected) => {
         set({ isChatHistoryLoading: true });
         try {
@@ -179,6 +227,7 @@ export const useChatStore = create((set, get) => ({
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
+            console.log(res, 'hahaha')
 
             // Using mock data instead
             // const res = {
@@ -203,6 +252,12 @@ export const useChatStore = create((set, get) => ({
                     hasChatHistory: chatHistory.length > 0, // Set hasChatHistory to true if chatHistory is not empty
                 };
             });
+
+            // Call getNewChat if chatHistory is empty
+            if (res.data.length === 0) {
+                const { getNewChat, teamSelected: selectedTeam } = get(); // Get both getNewChat and teamSelected
+                getNewChat(teamMap[selectedTeam]); // Use the latest teamSelected state
+            }
         } catch (error) {
             toast.error(error.message);
             console.error("Error fetching chat history:", error);
@@ -210,6 +265,7 @@ export const useChatStore = create((set, get) => ({
             set({ isChatHistoryLoading: false });
         }
     },
+
 
     postTicket: async (message) => {
         try {

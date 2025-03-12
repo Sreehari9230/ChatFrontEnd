@@ -24,7 +24,7 @@ const CurrentBubbles = () => {
   return (
     <>
       {currentMessages.length === 0 ? (
-        <p className="text-center text-gray-500">No current chat</p>
+        <p className="text-center text-gray-500"></p>
       ) : (
         <>
           {currentMessages.map((msg, index) => {
