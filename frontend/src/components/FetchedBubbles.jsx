@@ -40,7 +40,7 @@ const FetchedBubbles = () => {
   return (
     <>
       {fetchedMessages.length === 0 ? (
-        <p className="text-center text-gray-500">No previous chat</p>
+        <p className="text-center text-gray-500"></p>
       ) : (
         fetchedMessages.map((msg, index) => {
           const msgDate = format(new Date(msg.timestamp), "yyyy-MM-dd");
