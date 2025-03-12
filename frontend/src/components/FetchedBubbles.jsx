@@ -798,6 +798,13 @@ const FetchedBubbles = () => {
                         </div>
                       )}
                     </>
+                  ) : msg.Type === "Unknown agent type." ? (
+                    <>
+                      <div className=" text-red-700">
+                        I can’t handle this task yet, but we’re working on
+                        improving my capabilities for the future!
+                      </div>
+                    </>
                   ) : // other types are in the sidebarJSX in the idk folder should put it just after closing bracket in the next like before parsedBox
                   parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
