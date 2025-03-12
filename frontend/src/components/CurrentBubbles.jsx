@@ -779,6 +779,13 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </>
+                  ) : msg.message.Type === "Unknown agent type." ? (
+                    <>
+                      <div className=" text-red-700">
+                        I can’t handle this task yet, but we’re working on
+                        improving my capabilities for the future!
+                      </div>
+                    </>
                   ) : parsedBoxMessage ? (
                     <div className="flex flex-col gap-4">
                       <table className="w-full text-sm">
