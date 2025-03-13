@@ -28,6 +28,10 @@ const MessageInput = () => {
   };
 
   const handleNewChatButton = () => {
+
+    // handleemtychat
+    // setsendbuttoninwelcomechat
+
     setNewChatButtonClicked();
     getNewChat(teamMap[teamSelected]);
   };

@@ -25,6 +25,9 @@ const WelcomeChat = () => {
   );
 
   const handleSendMessage = (e) => {
+
+// setsendbuttoninwelcomechat
+
     e.preventDefault();
     if (message.trim()) {
       sendMessage({ action: "chat_manually", message });

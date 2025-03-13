@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import toast from 'react-hot-toast'
 import { axiosInstance } from '../lib/axios'
-import { HistoryIcon } from "lucide-react";
 import useWebSocketStore from "./useWebSocketStore";
 import { teamMap } from "../lib/utils";
 
@@ -20,7 +19,6 @@ export const useChatStore = create((set, get) => ({
     isHistoryModalOpen: false,
 
     newChatClicked: false,
-    // newChatId: null,
     chatId: null,
 
     formButtonClicked: false,
@@ -28,6 +26,11 @@ export const useChatStore = create((set, get) => ({
     chatManuallyButtonClicked: false,
 
     newChatButtonClicked: false,
+
+    // sendbuttoninwelcomechat: false
+
+    // setsendbuttoninwelcomechat function
+
 
     formIsSubmitted: () => {
         console.log("Form submitted, showing chat bubbles & input");
