@@ -833,7 +833,7 @@ const FetchedBubbles = () => {
                       {msg.retry === "False" && (
                         <div className="flex justify-center">
                           <button
-                            className="btn btn-primary"
+                            className="btn btn-secondary"
                             onClick={handleRetryButton}
                           >
                             Retry
