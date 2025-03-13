@@ -4,13 +4,20 @@ import { Plus, Send, Wifi, WifiOff } from "lucide-react";
 import useWebSocketStore from "../store/useWebSocketStore";
 import { SuggestionsMap } from "../lib/suggestions";
 import { teamMap } from "../lib/utils";
+import PrevChatEmptyModal from "./PrevChatEmptyModal";
 
 const MessageInput = () => {
   const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } =
     useChatStore();
   const [message, setMessage] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const { sendMessage, isConnected, responseIsThinking } = useWebSocketStore();
+  const {
+    sendMessage,
+    isConnected,
+    responseIsThinking,
+    currentMessages,
+    fetchedMessages,
+  } = useWebSocketStore();
 
   const allSuggestions = SuggestionsMap[teamSelected] || [];
 
@@ -26,11 +33,13 @@ const MessageInput = () => {
       setShowSuggestions(false);
     }
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNewChatButton = () => {
-
-    // handleemtychat
-    // setsendbuttoninwelcomechat
+    if (currentMessages.length === 0 && fetchedMessages.length === 0) {
+      setIsModalOpen(true);
+      return;
+    }
 
     setNewChatButtonClicked();
     getNewChat(teamMap[teamSelected]);
@@ -38,6 +47,10 @@ const MessageInput = () => {
 
   return (
     <div className="p-4 w-full relative">
+      <PrevChatEmptyModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
       <form className="flex items-center gap-2" onSubmit={handleSendMessage}>
         <button
           onClick={handleNewChatButton}
