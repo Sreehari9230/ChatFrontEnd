@@ -12,16 +12,15 @@ import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import RaiseATicketModal from "./components/RaiseATicketModal";
 import NotFoundPage from "./pages/NotFoundPage";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
   const { theme } = useThemeStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  // useEffect(() => {
+  //   checkAuth();
+  // }, [checkAuth]);
 
   // console.log({ authUser });
 
@@ -44,26 +43,21 @@ const App = () => {
         {/* <Route path="/signup" element={<SignUpPage />} /> */}
 
         {/* <Route path="/" element={authUser ? <HomePage /> : <Navigate to='/login' />} /> */}
-        {/* <Route path="/" element={<HomePage />} /> */}
+        <Route path="/" element={<HomePage />} />
 
         {/* <Route path="/login" element={<LoginPage />} /> */}
-        {/* <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
 
-        {/* <Route path="/settings" element={<SettingsPage />} /> */}
+        <Route path="/settings" element={<SettingsPage />} />
 
-        {/* <Route path="/profile" element={<ProfilePage />} /> */}
+        <Route path="/profile" element={<ProfilePage />} />
 
-        {/* <Route path="*" element={<NotFoundPage />} /> */}
-        {/* fallback route or just redirecting to home page */}
+
+
+        <Route path="*" element={<NotFoundPage />} />
+{/* fallback route or just redirecting to home page */}
         {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
 
-        <Route path="/login" element={<LoginPage />} />
-  
-  <Route path="/" element={<ProtectedRoute element={<HomePage />} />} />
-  <Route path="/settings" element={<ProtectedRoute element={<SettingsPage />} />} />
-  <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
-
-  <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       <Toaster />
