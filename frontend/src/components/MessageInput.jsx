@@ -36,6 +36,8 @@ const MessageInput = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNewChatButton = () => {
+
+     // setsendbuttoninwelcomechat
     if (currentMessages.length === 0 && fetchedMessages.length === 0) {
       setIsModalOpen(true);
       return;
