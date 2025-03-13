@@ -50,7 +50,7 @@ const App = () => {
 
         <Route path="/settings" element={<SettingsPage />} />
 
-        <Route path="/profile" element={<ProfilePage />} />
+        {/* <Route path="/profile" element={<ProfilePage />} /> */}
 
 
 
