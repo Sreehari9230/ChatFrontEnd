@@ -4,9 +4,11 @@ import toast from 'react-hot-toast'
 
 export const useAuthStore = create((set) => ({
     authUser: null,
+    isSigningUp: false,
     isLoggingIn: false,
+    isUpdatingProfile: false,
 
-    isCheckingAuth: false,
+    isCheckingAuth: true,
 
     accessToken: null,
     refreshToken: null,
@@ -17,47 +19,57 @@ export const useAuthStore = create((set) => ({
 
     DepartmentsTeams: JSON.parse(localStorage.getItem('DepartmentsTeams')) || [],
 
-
-    checkAuth: async () => {
+    checkAuth: () => {
         try {
-            set({ isCheckingAuth: true });
-            const token = localStorage.getItem("access_token");
+            const token = localStorage.getItem("token");
 
-            if (!token) {
-                set({ authUser: null, userAuth: false, isCheckingAuth: false });
-                return;
-            }
-
-            const res = await axiosInstance.get("/auth/check", {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-
-            if (res.data) {
-                set({ authUser: res.data.user, userAuth: true });
+            if (token) {
+                set({ userAuth: true });
             } else {
-                set({ authUser: null, userAuth: false });
-                localStorage.removeItem("access_token"); // Clear token if invalid
+                set({ userAuth: false });
             }
         } catch (error) {
-            console.error("Error in checkAuth:", error);
-            set({ authUser: null, userAuth: false });
-            localStorage.removeItem("access_token");
+            toast.error("Error checking authentication");
+            set({ userAuth: false });
         } finally {
             set({ isCheckingAuth: false });
         }
     },
 
+    // function to check auth when reloading the page the page will be checking if the user is authenticated
+    // checkAuth: async () => {
+    //     try {
+    //         const res = await axiosInstance.get("/auth/check") //baseUrl will fill the first
+    //         set({ authUser: res.data })
+    //     } catch (error) {
+    //         console.log('error in checkAuth:', error);
+
+    //         set({ authUser: null })
+    //     } finally {
+    //         set({ isCheckingAuth: false })
+    //     }
+    // },
+
+    // logout: async () => {
+    //     try {
+    //         await axiosInstance.post("/auth/logout");
+    //         set({ authUser: null });
+    //         toast.success("Logged out successfully")
+    //     } catch (error) {
+    //         toast.error(error.response.data.message)
+    //     }
+    // },
 
     login: async (data) => {
         set({ isLoggingIn: true });
         try {
-            const res = await axiosInstance.post('/organization/login/', data);
+            const res = await axiosInstance.post('/organization/login/', data); 
             console.log('response:', res.data)
             const { access_token, refresh_token, user_id, role } = res.data;
             // Set auth-related details in the state
-
+            
             set({
-                authUser: data.email,
+                authUser: data.email, 
                 accessToken: access_token,
                 refreshToken: refresh_token,
                 userRole: role,
