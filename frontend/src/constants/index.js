@@ -27,7 +27,7 @@ export const THEMES = [
   // "lemonade",
   "night",
   "coffee",
-  // "winter",
+  "winter",
   // "dim",
   // "nord",
   // "sunset",
