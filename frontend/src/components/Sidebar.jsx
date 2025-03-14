@@ -6,7 +6,9 @@ import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
   const { setTeamSelected, getChatHistory } = useChatStore();
-  const { DepartmentsTeams } = useAuthStore();
+  const { DepartmentsTeams, CompanyData } = useAuthStore();
+
+  const DepartmentsTeams2 = CompanyData.package.features
 
   const [selectedTeam, setSelectedTeamState] = useState(null);
   const [openDepartment, setOpenDepartment] = useState(null);
@@ -33,7 +35,7 @@ const Sidebar = () => {
       </div>
 
       <div className="overflow-y-auto w-full">
-        {Object.entries(DepartmentsTeams).map(([department, teams]) => (
+        {Object.entries(DepartmentsTeams2).map(([department, teams]) => (
           <div key={department} className="collapse collapse-arrow bg-base-200 mb-2">
             <input
               type="checkbox"

@@ -17,7 +17,8 @@ export const useAuthStore = create((set) => ({
 
     userAuth: false,
 
-    DepartmentsTeams: JSON.parse(localStorage.getItem('DepartmentsTeams')) || [],
+    // DepartmentsTeams: JSON.parse(localStorage.getItem('DepartmentsTeams')) || [],
+    CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || null,
 
     checkAuth: () => {
         try {
@@ -104,11 +105,17 @@ export const useAuthStore = create((set) => ({
             });
             console.log('fetchHome over', res.data);
 
-            const newDepartmentsTeams = res.data.package.features;
-            set({ DepartmentsTeams: newDepartmentsTeams });
+            // const newDepartmentsTeams = res.data.package.features;
+            // set({ DepartmentsTeams: newDepartmentsTeams });
 
             // Store the new data in localStorage
-            localStorage.setItem('DepartmentsTeams', JSON.stringify(newDepartmentsTeams));
+            // localStorage.setItem('DepartmentsTeams', JSON.stringify(newDepartmentsTeams));
+
+            const Company = res.data;
+            set({ CompanyData: Company });
+
+            // Store the new data in localStorage
+            localStorage.setItem("CompanyData", JSON.stringify(Company));
         } catch (error) {
             console.error("Error fetching home data:", error);
         }
@@ -124,7 +131,8 @@ export const useAuthStore = create((set) => ({
             userRole: null,
             userId: null,
             userAuth: false,
-            DepartmentsTeams: [],
+            // DepartmentsTeams: [],
+            CompanyData: null
         });
 
         toast.success("Logged out successfully");
