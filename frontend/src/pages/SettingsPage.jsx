@@ -47,7 +47,7 @@ const SettingsPage = () => {
               <span className="font-medium">Package Name:</span> {userData.package.name}
             </li>
             <li>
-              <span className="font-medium">Price:</span> ₹{userData.package.price}
+              <span className="font-medium">Price:</span> ${userData.package.price}
             </li>
             <li>
               <span className="font-medium">Max AI Teams:</span> {userData.package.max_ai_teams}
