@@ -63,13 +63,13 @@ export const useAuthStore = create((set) => ({
     login: async (data) => {
         set({ isLoggingIn: true });
         try {
-            const res = await axiosInstance.post('/organization/login/', data); 
+            const res = await axiosInstance.post('/organization/login/', data);
             console.log('response:', res.data)
             const { access_token, refresh_token, user_id, role } = res.data;
             // Set auth-related details in the state
-            
+
             set({
-                authUser: data.email, 
+                authUser: data.email,
                 accessToken: access_token,
                 refreshToken: refresh_token,
                 userRole: role,
@@ -112,5 +112,21 @@ export const useAuthStore = create((set) => ({
         } catch (error) {
             console.error("Error fetching home data:", error);
         }
+    },
+
+    logout: () => {
+        localStorage.clear(); // Clears all stored data
+
+        set({
+            authUser: null,
+            accessToken: null,
+            refreshToken: null,
+            userRole: null,
+            userId: null,
+            userAuth: false,
+            DepartmentsTeams: [],
+        });
+
+        toast.success("Logged out successfully");
     },
 }))
