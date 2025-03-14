@@ -1,6 +1,7 @@
 import React from "react";
 import { THEMES } from "../constants/index";
 import { useThemeStore } from "../store/useThemeStore";
+import { useAuthStore } from "../store/useAuthStore";
 import { LogOut } from "lucide-react";
 
 const userData = {
@@ -19,10 +20,12 @@ const userData = {
 
 const SettingsPage = () => {
   const { theme, setTheme } = useThemeStore();
+  const { logout } = useAuthStore();
 
   const handleLogout = () => {
     // Logout logic here
     console.log("Logging out...");
+    logout();
   };
 
   return (
@@ -31,11 +34,16 @@ const SettingsPage = () => {
       <div className="card bg-base-200 shadow-lg rounded-xl p-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">User Information</h2>
-          <button className="btn btn-error btn-sm flex items-center gap-2" onClick={handleLogout}>
+          <button
+            className="btn btn-error btn-sm flex items-center gap-2"
+            onClick={handleLogout}
+          >
             <LogOut size={16} /> Logout
           </button>
         </div>
-        <p className="text-sm text-base-content/70">Manage your account details</p>
+        <p className="text-sm text-base-content/70">
+          Manage your account details
+        </p>
         <div className="divider"></div>
         <div className="space-y-2 text-sm">
           <p>
@@ -44,19 +52,24 @@ const SettingsPage = () => {
           <h3 className="font-semibold mt-3">Package Details</h3>
           <ul className="list-disc list-inside space-y-1">
             <li>
-              <span className="font-medium">Package Name:</span> {userData.package.name}
+              <span className="font-medium">Package Name:</span>{" "}
+              {userData.package.name}
             </li>
             <li>
-              <span className="font-medium">Price:</span> ${userData.package.price}
+              <span className="font-medium">Price:</span> $
+              {userData.package.price}
             </li>
             <li>
-              <span className="font-medium">Max AI Teams:</span> {userData.package.max_ai_teams}
+              <span className="font-medium">Max AI Teams:</span>{" "}
+              {userData.package.max_ai_teams}
             </li>
             <li>
-              <span className="font-medium">Max IVAs:</span> {userData.package.max_ivas}
+              <span className="font-medium">Max IVAs:</span>{" "}
+              {userData.package.max_ivas}
             </li>
             <li>
-              <span className="font-medium">Max Agents:</span> {userData.package.max_agents}
+              <span className="font-medium">Max Agents:</span>{" "}
+              {userData.package.max_agents}
             </li>
           </ul>
         </div>
@@ -65,7 +78,9 @@ const SettingsPage = () => {
       {/* Theme Selection */}
       <div className="card bg-base-200 shadow-lg rounded-xl p-6">
         <h2 className="text-xl font-semibold">Theme</h2>
-        <p className="text-sm text-base-content/70">Choose a theme for your chat interface</p>
+        <p className="text-sm text-base-content/70">
+          Choose a theme for your chat interface
+        </p>
         <div className="divider"></div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
@@ -76,7 +91,10 @@ const SettingsPage = () => {
               ${theme === t ? "bg-primary text-white" : "hover:bg-base-300"}`}
               onClick={() => setTheme(t)}
             >
-              <div className="relative h-10 w-full rounded-md overflow-hidden" data-theme={t}>
+              <div
+                className="relative h-10 w-full rounded-md overflow-hidden"
+                data-theme={t}
+              >
                 <div className="absolute inset-0 grid grid-cols-4 gap-px p-1">
                   <div className="rounded bg-primary"></div>
                   <div className="rounded bg-secondary"></div>
