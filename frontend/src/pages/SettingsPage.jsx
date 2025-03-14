@@ -4,23 +4,12 @@ import { useThemeStore } from "../store/useThemeStore";
 import { useAuthStore } from "../store/useAuthStore";
 import { LogOut } from "lucide-react";
 
-const userData = {
-  id: "96733e68-4241-4892-8028-2ccc820d2659",
-  name: "nypus",
-  package: {
-    id: "592e137f-df57-4162-bd0d-29ed63a27579",
-    name: "Tier 1",
-    description: "Premium package with advanced features",
-    price: "500.00",
-    max_ai_teams: 1,
-    max_ivas: 2,
-    max_agents: 5,
-  },
-};
 
 const SettingsPage = () => {
   const { theme, setTheme } = useThemeStore();
-  const { logout } = useAuthStore();
+  const { logout, CompanyData } = useAuthStore();
+
+  const userData = CompanyData
 
   const handleLogout = () => {
     // Logout logic here
@@ -33,7 +22,7 @@ const SettingsPage = () => {
       {/* User Info Card */}
       <div className="card bg-base-200 shadow-lg rounded-xl p-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">User Information</h2>
+          <h2 className="text-xl font-semibold"> Profile?</h2>
           <button
             className="btn btn-error btn-sm flex items-center gap-2"
             onClick={handleLogout}
