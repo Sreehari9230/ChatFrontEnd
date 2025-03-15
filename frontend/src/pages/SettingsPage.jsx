@@ -45,7 +45,7 @@ const SettingsPage = () => {
               {userData.package.name}
             </li>
             <li>
-              <span className="font-medium">Price:</span> $
+              <span className="font-medium">Price:</span>₹
               {userData.package.price}
             </li>
             <li>
