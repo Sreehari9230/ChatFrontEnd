@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { X } from "lucide-react";
+import ChatHistorySkeleton from "./skeletons/ChatHistorySkeleton";
 
 const ChatHistoryModal = ({ chats, onClose }) => {
   const { chatHistory, isChatHistoryLoading, updateChatId } = useChatStore();
@@ -9,11 +10,13 @@ const ChatHistoryModal = ({ chats, onClose }) => {
     console.log(chatHistory, "inside chat history modal");
   }, [chatHistory]);
 
-  return (
+  return isChatHistoryLoading ? (
+    <ChatHistorySkeleton />
+  ) : (
     <div className="modal modal-open">
       <div className="modal-box w-96 relative">
         {/* Fixed Header */}
-        <div className="sticky top-0 bg-base-100 z-10 p-4  flex justify-between items-center">
+        <div className="sticky top-0 bg-base-100 z-10 p-4 flex justify-between items-center">
           <h3 className="font-bold text-lg text-center flex-1">Chat History</h3>
           <button
             onClick={onClose}
@@ -25,9 +28,7 @@ const ChatHistoryModal = ({ chats, onClose }) => {
 
         {/* Scrollable List */}
         <ul className="space-y-2 mt-2 max-h-60 overflow-y-auto">
-          {isChatHistoryLoading ? (
-            <p className="text-sm text-gray-500">Loading chat history...</p>
-          ) : chatHistory.length > 0 ? (
+          {chatHistory.length > 0 ? (
             chatHistory
               .slice()
               .reverse()
