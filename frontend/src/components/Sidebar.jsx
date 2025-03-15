@@ -8,7 +8,7 @@ const Sidebar = () => {
   const { setTeamSelected, getChatHistory } = useChatStore();
   const { DepartmentsTeams, CompanyData } = useAuthStore();
 
-  const DepartmentsTeams2 = CompanyData.package.features
+  const DepartmentsTeams2 = CompanyData.package.features;
 
   const [selectedTeam, setSelectedTeamState] = useState(null);
   const [openDepartment, setOpenDepartment] = useState(null);
@@ -36,7 +36,10 @@ const Sidebar = () => {
 
       <div className="overflow-y-auto w-full">
         {Object.entries(DepartmentsTeams2).map(([department, teams]) => (
-          <div key={department} className="collapse collapse-arrow bg-base-200 mb-2">
+          <div
+            key={department}
+            className="collapse collapse-arrow bg-base-200 mb-2"
+          >
             <input
               type="checkbox"
               checked={openDepartment === department}
