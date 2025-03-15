@@ -18,6 +18,7 @@ export const useAuthStore = create((set) => ({
     userAuth: false,
 
     // DepartmentsTeams: JSON.parse(localStorage.getItem('DepartmentsTeams')) || [],
+    // CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || null,
     CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || {
         "id": "96733e68-4241-4892-8028-2ccc820d2659",
         "name": "nypus",
@@ -47,9 +48,7 @@ export const useAuthStore = create((set) => ({
                 ]
             }
         }
-    }
-
-    ,
+    },
 
     checkAuth: () => {
         try {
