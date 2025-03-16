@@ -82,6 +82,27 @@ export const useAuthStore = create((set) => ({
     //     }
     // },
 
+    // checkAuth: () => {
+    //     set({ isCheckingAuth: true });
+    
+    //     try {
+    //         const accessToken = localStorage.getItem("access_token");
+    //         const refreshToken = localStorage.getItem("refresh_token");
+    
+    //         if (accessToken && refreshToken) {
+    //             set({ userAuth: true });
+    //         } else {
+    //             set({ userAuth: false });
+    //         }
+    //     } catch (error) {
+    //         toast.error("Error checking authentication");
+    //         set({ userAuth: false });
+    //     } finally {
+    //         set({ isCheckingAuth: false });
+    //     }
+    // },
+    
+
     login: async (data) => {
         set({ isLoggingIn: true });
         try {
