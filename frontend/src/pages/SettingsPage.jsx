@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { THEMES } from "../constants/index";
 import { useThemeStore } from "../store/useThemeStore";
 import { useAuthStore } from "../store/useAuthStore";
@@ -15,36 +15,17 @@ import {
   BarChart2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useSettingsStore } from "../store/useSettingsStore";
 
 const SettingsPage = () => {
   const { theme, setTheme } = useThemeStore();
   const { logout, CompanyData } = useAuthStore();
-
+  const { FetchSettingsData, SettingsData } = useSettingsStore();
   const navigate = useNavigate();
-  const userData = {
-    linkedin_api: {
-      id: "90731f13-edc4-4fe1-aed0-667748bec3a3",
-      access_token: "new_updated_token",
-      created_at: "2025-03-16T06:23:12.399243Z",
-      updated_at: "2025-03-16T06:44:28.472764Z",
-    },
-    smtp_config: {
-      id: "27f417e9-bb4e-4afa-abae-e90d49b3d9f4",
-      smtp_host: "smtp.mailtrap.io",
-      smtp_port: 2525,
-      password: null,
-      sender_email: "new@example.com",
-      created_at: "2025-03-16T06:23:12.407272Z",
-      updated_at: "2025-03-16T06:44:28.472764Z",
-    },
-    eod_config: {
-      id: "ad2c18d5-1c07-433c-bdb4-5f6a212c29e3",
-      email_address: "new_reports@example.com",
-      enable: false,
-      created_at: "2025-03-16T06:23:12.415805Z",
-      updated_at: "2025-03-16T06:44:28.480776Z",
-    },
-  };
+
+  useEffect(() => {
+    FetchSettingsData(); 
+  }, []);
 
   function capitalizeFirstLetter(str) {
     if (!str) return "";
@@ -226,62 +207,15 @@ const SettingsPage = () => {
         <div className="bg-base-100 p-6 rounded-lg shadow-inner">
           <div className="form-control w-full mb-4">
             <label className="label">
-              <span className="label-text font-medium">API ID</span>
-            </label>
-            <input
-              type="text"
-              className="input input-bordered w-full"
-              value={userData.linkedin_api?.id || ""}
-              disabled
-            />
-          </div>
-
-          <div className="form-control w-full mb-4">
-            <label className="label">
               <span className="label-text font-medium">Access Token</span>
-              <span className="label-text-alt text-info">Editable</span>
             </label>
             <div className="flex gap-2">
               <input
-                type="password"
+                type="text"
                 className="input input-bordered w-full"
-                defaultValue={userData.linkedin_api?.access_token || ""}
+                defaultValue={SettingsData.linkedin_api?.access_token || ""}
               />
               <button className="btn btn-primary">Update</button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Created At</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                value={
-                  new Date(
-                    userData.linkedin_api?.created_at
-                  ).toLocaleString() || ""
-                }
-                disabled
-              />
-            </div>
-
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Updated At</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                value={
-                  new Date(
-                    userData.linkedin_api?.updated_at
-                  ).toLocaleString() || ""
-                }
-                disabled
-              />
             </div>
           </div>
         </div>
@@ -298,40 +232,26 @@ const SettingsPage = () => {
         <div className="divider"></div>
 
         <div className="bg-base-100 p-6 rounded-lg shadow-inner">
-          <div className="form-control w-full mb-4">
-            <label className="label">
-              <span className="label-text font-medium">SMTP ID</span>
-            </label>
-            <input
-              type="text"
-              className="input input-bordered w-full"
-              value={userData.smtp_config?.id || ""}
-              disabled
-            />
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text font-medium">SMTP Host</span>
-                <span className="label-text-alt text-info">Editable</span>
               </label>
               <input
                 type="text"
                 className="input input-bordered w-full"
-                defaultValue={userData.smtp_config?.smtp_host || ""}
+                defaultValue={SettingsData.smtp_config?.smtp_host || ""}
               />
             </div>
 
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text font-medium">SMTP Port</span>
-                <span className="label-text-alt text-info">Editable</span>
               </label>
               <input
                 type="number"
                 className="input input-bordered w-full"
-                defaultValue={userData.smtp_config?.smtp_port || ""}
+                defaultValue={SettingsData.smtp_config?.smtp_port || ""}
               />
             </div>
           </div>
@@ -340,12 +260,11 @@ const SettingsPage = () => {
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text font-medium">Password</span>
-                <span className="label-text-alt text-info">Editable</span>
               </label>
               <input
                 type="password"
                 className="input input-bordered w-full"
-                defaultValue={userData.smtp_config?.password || ""}
+                defaultValue={SettingsData.smtp_config?.password || ""}
                 placeholder="Enter password"
               />
             </div>
@@ -353,12 +272,11 @@ const SettingsPage = () => {
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text font-medium">Sender Email</span>
-                <span className="label-text-alt text-info">Editable</span>
               </label>
               <input
                 type="email"
                 className="input input-bordered w-full"
-                defaultValue={userData.smtp_config?.sender_email || ""}
+                defaultValue={SettingsData.smtp_config?.sender_email || ""}
               />
             </div>
           </div>
@@ -366,38 +284,6 @@ const SettingsPage = () => {
           <button className="btn btn-primary w-full mt-2">
             Save SMTP Settings
           </button>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Created At</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                value={
-                  new Date(userData.smtp_config?.created_at).toLocaleString() ||
-                  ""
-                }
-                disabled
-              />
-            </div>
-
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Updated At</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                value={
-                  new Date(userData.smtp_config?.updated_at).toLocaleString() ||
-                  ""
-                }
-                disabled
-              />
-            </div>
-          </div>
         </div>
       </div>
 
@@ -414,25 +300,12 @@ const SettingsPage = () => {
         <div className="bg-base-100 p-6 rounded-lg shadow-inner">
           <div className="form-control w-full mb-4">
             <label className="label">
-              <span className="label-text font-medium">EOD Config ID</span>
-            </label>
-            <input
-              type="text"
-              className="input input-bordered w-full"
-              value={userData.eod_config?.id || ""}
-              disabled
-            />
-          </div>
-
-          <div className="form-control w-full mb-4">
-            <label className="label">
               <span className="label-text font-medium">Email Address</span>
-              <span className="label-text-alt text-info">Editable</span>
             </label>
             <input
               type="email"
               className="input input-bordered w-full"
-              defaultValue={userData.eod_config?.email_address || ""}
+              defaultValue={SettingsData.eod_config?.email_address || ""}
             />
           </div>
 
@@ -442,44 +315,12 @@ const SettingsPage = () => {
               <input
                 type="checkbox"
                 className="toggle toggle-primary toggle-lg"
-                defaultChecked={userData.eod_config?.enable || false}
+                defaultChecked={SettingsData.eod_config?.enable || false}
               />
             </label>
           </div>
 
           <button className="btn btn-primary w-full">Save EOD Settings</button>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Created At</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                value={
-                  new Date(userData.eod_config?.created_at).toLocaleString() ||
-                  ""
-                }
-                disabled
-              />
-            </div>
-
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Updated At</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                value={
-                  new Date(userData.eod_config?.updated_at).toLocaleString() ||
-                  ""
-                }
-                disabled
-              />
-            </div>
-          </div>
         </div>
       </div>
 
