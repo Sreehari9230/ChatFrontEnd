@@ -19,36 +19,37 @@ export const useAuthStore = create((set) => ({
 
     // DepartmentsTeams: JSON.parse(localStorage.getItem('DepartmentsTeams')) || [],
     // CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || null,
-    CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || {
-        "id": "96733e68-4241-4892-8028-2ccc820d2659",
-        "name": "nypus",
-        "package": {
-            "id": "592e137f-df57-4162-bd0d-29ed63a27579",
-            "name": "tier1",
-            "description": "",
-            "price": "500.00",
-            "max_ai_teams": 1,
-            "max_ivas": 2,
-            "max_agents": 5,
-            "features": {
-                "HR Department": [
-                    "Recruitment Team",
-                    "Onboarding Team"
-                ],
-                "Sales Department": [
-                    "Content Creation",
-                    "Customer Relationship Management",
-                    "Sales Strategy",
-                    "Lead Generation"
-                ],
-                "Marketing Department": [
-                    "SEO Team",
-                    "Marketing Research Team",
-                    "Social Media Team"
-                ]
-            }
-        }
-    },
+    CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || [],
+    // {
+    //     "id": "96733e68-4241-4892-8028-2ccc820d2659",
+    //     "name": "nypus",
+    //     "package": {
+    //         "id": "592e137f-df57-4162-bd0d-29ed63a27579",
+    //         "name": "tier1",
+    //         "description": "",
+    //         "price": "500.00",
+    //         "max_ai_teams": 1,
+    //         "max_ivas": 2,
+    //         "max_agents": 5,
+    //         "features": {
+    //             "HR Department": [
+    //                 "Recruitment Team",
+    //                 "Onboarding Team"
+    //             ],
+    //             "Sales Department": [
+    //                 "Content Creation",
+    //                 "Customer Relationship Management",
+    //                 "Sales Strategy",
+    //                 "Lead Generation"
+    //             ],
+    //             "Marketing Department": [
+    //                 "SEO Team",
+    //                 "Marketing Research Team",
+    //                 "Social Media Team"
+    //             ]
+    //         }
+    //     }
+    // },
 
     checkAuth: () => {
         try {
