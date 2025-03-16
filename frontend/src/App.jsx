@@ -30,8 +30,12 @@ const App = () => {
   //   </div>
   // )
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
   return (
-    <div data-theme={theme}>
+    <div data-theme={theme} >
       <Navbar onOpenTicket={() => setIsModalOpen(true)} />
       <RaiseATicketModal
         isOpen={isModalOpen}
