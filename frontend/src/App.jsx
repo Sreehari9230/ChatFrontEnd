@@ -35,7 +35,7 @@ const App = () => {
     <div data-theme={theme}>
       <Navbar onOpenTicket={() => setIsModalOpen(true)} />
       <RaiseATicketModal
-        isOpen={isModalOpen} 
+        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
       <Routes>
