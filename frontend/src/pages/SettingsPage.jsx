@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { THEMES } from "../constants/index";
 import { useThemeStore } from "../store/useThemeStore";
 import { useAuthStore } from "../store/useAuthStore";
@@ -20,9 +20,20 @@ import { useSettingsStore } from "../store/useSettingsStore";
 const SettingsPage = () => {
   const { theme, setTheme } = useThemeStore();
   const { logout, CompanyData } = useAuthStore();
-  const { FetchSettingsData, SettingsData, isSettingsDataLoading } =
-    useSettingsStore();
+  const {
+    FetchSettingsData,
+    SettingsData,
+    isSettingsDataLoading,
+    EditSettingsData,
+  } = useSettingsStore();
   const navigate = useNavigate();
+
+  // Local state for form inputs
+  const [formData, setFormData] = useState({
+    linkedin_api: { access_token: "" },
+    smtp_config: { smtp_host: "", smtp_port: "", sender_email: "" },
+    eod_config: { email_address: "", enable: false },
+  });
 
   useEffect(() => {
     FetchSettingsData();
@@ -37,6 +48,41 @@ const SettingsPage = () => {
     console.log("Logging out...");
     logout();
     navigate("/login"); // Redirect user to login page
+  };
+
+  useEffect(() => {
+    if (SettingsData) {
+      setFormData({
+        linkedin_api: {
+          access_token: SettingsData.linkedin_api?.access_token || "",
+        },
+        smtp_config: {
+          smtp_host: SettingsData.smtp_config?.smtp_host || "",
+          smtp_port: SettingsData.smtp_config?.smtp_port || "",
+          sender_email: SettingsData.smtp_config?.sender_email || "",
+        },
+        eod_config: {
+          email_address: SettingsData.eod_config?.email_address || "",
+          enable: SettingsData.eod_config?.enable || false,
+        },
+      });
+    }
+  }, [SettingsData]);
+
+  // Handle input change
+  const handleChange = (section, key, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [key]: value,
+      },
+    }));
+  };
+
+  // Handle update button click
+  const handleUpdate = (section) => {
+    EditSettingsData({ [section]: formData[section] });
   };
 
   return (
@@ -204,7 +250,6 @@ const SettingsPage = () => {
           Manage your LinkedIn API integration settings
         </p>
         <div className="divider"></div>
-
         <div className="bg-base-100 p-6 rounded-lg shadow-inner flex justify-center items-center min-h-[100px]">
           {isSettingsDataLoading ? (
             <span className="loading loading-spinner loading-lg"></span>
@@ -217,9 +262,17 @@ const SettingsPage = () => {
                 <input
                   type="text"
                   className="input input-bordered w-full"
-                  defaultValue={SettingsData.linkedin_api?.access_token || ""}
+                  value={formData.linkedin_api.access_token}
+                  onChange={(e) =>
+                    handleChange("linkedin_api", "access_token", e.target.value)
+                  }
                 />
-                <button className="btn btn-primary">Update</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleUpdate("linkedin_api")}
+                >
+                  Update
+                </button>
               </div>
             </div>
           )}
@@ -235,8 +288,7 @@ const SettingsPage = () => {
           Configure your email server settings
         </p>
         <div className="divider"></div>
-
-        <div className="bg-base-100 p-6 rounded-lg shadow-inner min-h-[200px] flex justify-center items-center transition-all duration-300">
+        <div className="bg-base-100 p-6 rounded-lg shadow-inner min-h-[200px] flex justify-center items-center">
           {isSettingsDataLoading ? (
             <span className="loading loading-spinner loading-lg"></span>
           ) : (
@@ -249,7 +301,10 @@ const SettingsPage = () => {
                   <input
                     type="text"
                     className="input input-bordered w-full"
-                    defaultValue={SettingsData.smtp_config?.smtp_host || ""}
+                    value={formData.smtp_config.smtp_host}
+                    onChange={(e) =>
+                      handleChange("smtp_config", "smtp_host", e.target.value)
+                    }
                   />
                 </div>
 
@@ -260,37 +315,32 @@ const SettingsPage = () => {
                   <input
                     type="text"
                     className="input input-bordered w-full"
-                    defaultValue={SettingsData.smtp_config?.smtp_port || ""}
+                    value={formData.smtp_config.smtp_port}
+                    onChange={(e) =>
+                      handleChange("smtp_config", "smtp_port", e.target.value)
+                    }
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div className="form-control w-full">
-                  <label className="label">
-                    <span className="label-text font-medium">Password</span>
-                  </label>
-                  <input
-                    type="password"
-                    className="input input-bordered w-full"
-                    defaultValue={SettingsData.smtp_config?.password || ""}
-                    placeholder="Enter password"
-                  />
-                </div>
-
-                <div className="form-control w-full">
-                  <label className="label">
-                    <span className="label-text font-medium">Sender Email</span>
-                  </label>
-                  <input
-                    type="email"
-                    className="input input-bordered w-full"
-                    defaultValue={SettingsData.smtp_config?.sender_email || ""}
-                  />
-                </div>
+              <div className="form-control w-full mb-4">
+                <label className="label">
+                  <span className="label-text font-medium">Sender Email</span>
+                </label>
+                <input
+                  type="email"
+                  className="input input-bordered w-full"
+                  value={formData.smtp_config.sender_email}
+                  onChange={(e) =>
+                    handleChange("smtp_config", "sender_email", e.target.value)
+                  }
+                />
               </div>
 
-              <button className="btn btn-primary w-full mt-2">
+              <button
+                className="btn btn-primary w-full"
+                onClick={() => handleUpdate("smtp_config")}
+              >
                 Save SMTP Settings
               </button>
             </div>
@@ -299,7 +349,7 @@ const SettingsPage = () => {
       </div>
 
       {/* EOD Configuration */}
-      <div className="card bg-base-200 shadow-lg rounded-xl p-6 mt-6 mb-6">
+      <div className="card bg-base-200 shadow-lg rounded-xl p-6 mt-6">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <BarChart2 size={20} /> EOD Reports Configuration
         </h2>
@@ -307,8 +357,7 @@ const SettingsPage = () => {
           Configure end-of-day reporting settings
         </p>
         <div className="divider"></div>
-
-        <div className="bg-base-100 p-6 rounded-lg shadow-inner min-h-[150px] flex justify-center items-center transition-all duration-300">
+        <div className="bg-base-100 p-6 rounded-lg shadow-inner min-h-[150px] flex justify-center items-center">
           {isSettingsDataLoading ? (
             <span className="loading loading-spinner loading-lg"></span>
           ) : (
@@ -320,7 +369,10 @@ const SettingsPage = () => {
                 <input
                   type="email"
                   className="input input-bordered w-full"
-                  defaultValue={SettingsData.eod_config?.email_address || ""}
+                  value={formData.eod_config.email_address}
+                  onChange={(e) =>
+                    handleChange("eod_config", "email_address", e.target.value)
+                  }
                 />
               </div>
 
@@ -332,12 +384,18 @@ const SettingsPage = () => {
                   <input
                     type="checkbox"
                     className="toggle toggle-primary toggle-lg"
-                    defaultChecked={SettingsData.eod_config?.enable || false}
+                    checked={formData.eod_config.enable}
+                    onChange={(e) =>
+                      handleChange("eod_config", "enable", e.target.checked)
+                    }
                   />
                 </label>
               </div>
 
-              <button className="btn btn-primary w-full">
+              <button
+                className="btn btn-primary w-full"
+                onClick={() => handleUpdate("eod_config")}
+              >
                 Save EOD Settings
               </button>
             </div>
