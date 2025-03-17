@@ -55,13 +55,26 @@ export const useSettingsStore = create((set) => ({
         }
     },
 
-    EditSettingsData: async () => {
+    EditSettingsData: async (data) => {
         try {
-            
-        } catch (error) {
-            
-        }finally{
+            console.log('Inside EditSettingsData Function')
+            set({ isSettingsDataLoading: true })
+            const accessToken = localStorage.getItem("access_token");
+            console.log("Access Token:", accessToken);
 
+            const res = await axiosInstance.put("/organization/settings/", data, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+
+            console.log("Updated Settings Data:", res.data);
+            set({ SettingsData: res.data });
+
+        } catch (error) {
+            toast.error(`Error In FetchSettingsData: ${error.message}`);
+            console.error("Error In FetchSettingsData:", error);
+        } finally {
+            console.log('FetchSettingsData Function Over')
+            set({ isSettingsDataLoading: false })
         }
     }
 }));
