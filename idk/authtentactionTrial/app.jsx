@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import SettingsPage from "./pages/SettingsPage";
-import ProfilePage from "./pages/ProfilePage";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import NotFoundPage from "./pages/NotFoundPage";
 import { useAuthStore } from "./store/useAuthStore";
 import { useThemeStore } from "./store/useThemeStore";
-import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
-import RaiseATicketModal from "./components/RaiseATicketModal";
-import NotFoundPage from "./pages/NotFoundPage";
+import RaiseATicketModal from "../../frontend/src/components/RaiseATicketModal";
 
 const App = () => {
   const { userAuth, checkAuth, isCheckingAuth } = useAuthStore();
