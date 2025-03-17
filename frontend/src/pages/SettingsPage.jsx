@@ -236,59 +236,65 @@ const SettingsPage = () => {
         </p>
         <div className="divider"></div>
 
-        <div className="bg-base-100 p-6 rounded-lg shadow-inner">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">SMTP Host</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                defaultValue={SettingsData.smtp_config?.smtp_host || ""}
-              />
-            </div>
+        <div className="bg-base-100 p-6 rounded-lg shadow-inner min-h-[200px] flex justify-center items-center transition-all duration-300">
+          {isSettingsDataLoading ? (
+            <span className="loading loading-spinner loading-lg"></span>
+          ) : (
+            <div className="w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text font-medium">SMTP Host</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    defaultValue={SettingsData.smtp_config?.smtp_host || ""}
+                  />
+                </div>
 
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">SMTP Port</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                defaultValue={SettingsData.smtp_config?.smtp_port || ""}
-              />
-            </div>
-          </div>
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text font-medium">SMTP Port</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    defaultValue={SettingsData.smtp_config?.smtp_port || ""}
+                  />
+                </div>
+              </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Password</span>
-              </label>
-              <input
-                type="password"
-                className="input input-bordered w-full"
-                defaultValue={SettingsData.smtp_config?.password || ""}
-                placeholder="Enter password"
-              />
-            </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text font-medium">Password</span>
+                  </label>
+                  <input
+                    type="password"
+                    className="input input-bordered w-full"
+                    defaultValue={SettingsData.smtp_config?.password || ""}
+                    placeholder="Enter password"
+                  />
+                </div>
 
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Sender Email</span>
-              </label>
-              <input
-                type="email"
-                className="input input-bordered w-full"
-                defaultValue={SettingsData.smtp_config?.sender_email || ""}
-              />
-            </div>
-          </div>
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text font-medium">Sender Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    className="input input-bordered w-full"
+                    defaultValue={SettingsData.smtp_config?.sender_email || ""}
+                  />
+                </div>
+              </div>
 
-          <button className="btn btn-primary w-full mt-2">
-            Save SMTP Settings
-          </button>
+              <button className="btn btn-primary w-full mt-2">
+                Save SMTP Settings
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
