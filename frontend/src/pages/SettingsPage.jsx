@@ -249,7 +249,7 @@ const SettingsPage = () => {
                 <span className="label-text font-medium">SMTP Port</span>
               </label>
               <input
-                type="number"
+                type="text"
                 className="input input-bordered w-full"
                 defaultValue={SettingsData.smtp_config?.smtp_port || ""}
               />
