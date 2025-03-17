@@ -308,30 +308,40 @@ const SettingsPage = () => {
         </p>
         <div className="divider"></div>
 
-        <div className="bg-base-100 p-6 rounded-lg shadow-inner">
-          <div className="form-control w-full mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Email Address</span>
-            </label>
-            <input
-              type="email"
-              className="input input-bordered w-full"
-              defaultValue={SettingsData.eod_config?.email_address || ""}
-            />
-          </div>
+        <div className="bg-base-100 p-6 rounded-lg shadow-inner min-h-[150px] flex justify-center items-center transition-all duration-300">
+          {isSettingsDataLoading ? (
+            <span className="loading loading-spinner loading-lg"></span>
+          ) : (
+            <div className="w-full">
+              <div className="form-control w-full mb-4">
+                <label className="label">
+                  <span className="label-text font-medium">Email Address</span>
+                </label>
+                <input
+                  type="email"
+                  className="input input-bordered w-full"
+                  defaultValue={SettingsData.eod_config?.email_address || ""}
+                />
+              </div>
 
-          <div className="form-control mb-4">
-            <label className="label cursor-pointer justify-start gap-4">
-              <span className="label-text font-medium">Enable EOD Reports</span>
-              <input
-                type="checkbox"
-                className="toggle toggle-primary toggle-lg"
-                defaultChecked={SettingsData.eod_config?.enable || false}
-              />
-            </label>
-          </div>
+              <div className="form-control mb-4">
+                <label className="label cursor-pointer justify-start gap-4">
+                  <span className="label-text font-medium">
+                    Enable EOD Reports
+                  </span>
+                  <input
+                    type="checkbox"
+                    className="toggle toggle-primary toggle-lg"
+                    defaultChecked={SettingsData.eod_config?.enable || false}
+                  />
+                </label>
+              </div>
 
-          <button className="btn btn-primary w-full">Save EOD Settings</button>
+              <button className="btn btn-primary w-full">
+                Save EOD Settings
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

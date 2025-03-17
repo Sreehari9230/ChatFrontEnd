@@ -6,6 +6,7 @@ import { useAuthStore } from "./useAuthStore";
 export const useSettingsStore = create((set) => ({
 
     isSettingsDataLoading: false,
+    isSettingsDataEditing: false,
     SettingsData: {},
     // {
     //     "linkedin_api": {
@@ -53,4 +54,14 @@ export const useSettingsStore = create((set) => ({
             set({ isSettingsDataLoading: false })
         }
     },
+
+    EditSettingsData: async () => {
+        try {
+            
+        } catch (error) {
+            
+        }finally{
+
+        }
+    }
 }));
