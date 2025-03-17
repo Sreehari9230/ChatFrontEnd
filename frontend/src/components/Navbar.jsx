@@ -1,5 +1,5 @@
 import React from "react";
-import { Settings } from "lucide-react";
+import { Settings, Stamp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
@@ -25,6 +25,14 @@ const Navbar = ({ onOpenTicket }) => {
           <div className="flex items-center gap-2">
             {userAuth && (
               <>
+                <Link
+                  to="/graphs"
+                  className="btn btn-sm gap-2 transition-colors"
+                >
+                  <Stamp className="w-4 h-4" />
+                  <span className="hidden sm:inline">Usage</span>
+                </Link>
+
                 <Link
                   to="/settings"
                   className="btn btn-sm gap-2 transition-colors"

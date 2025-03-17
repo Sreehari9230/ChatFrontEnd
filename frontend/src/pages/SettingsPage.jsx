@@ -31,7 +31,12 @@ const SettingsPage = () => {
   // Local state for form inputs
   const [formData, setFormData] = useState({
     linkedin_api: { access_token: "" },
-    smtp_config: { smtp_host: "", smtp_port: "", sender_email: "" },
+    smtp_config: {
+      smtp_host: "",
+      smtp_port: "",
+      sender_email: "",
+      password: "",
+    },
     eod_config: { email_address: "", enable: false },
   });
 
@@ -60,6 +65,7 @@ const SettingsPage = () => {
           smtp_host: SettingsData.smtp_config?.smtp_host || "",
           smtp_port: SettingsData.smtp_config?.smtp_port || "",
           sender_email: SettingsData.smtp_config?.sender_email || "",
+          password: SettingsData.smtp_config?.password || "",
         },
         eod_config: {
           email_address: SettingsData.eod_config?.email_address || "",
@@ -321,6 +327,22 @@ const SettingsPage = () => {
                     }
                   />
                 </div>
+              </div>
+
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-medium">Password</span>
+                </label>
+                <input
+                  // type="password"
+                  type="text"
+                  className="input input-bordered w-full"
+                  value={formData.smtp_config.password}
+                  placeholder="Type Password"
+                  onChange={(e) =>
+                    handleChange("smtp_config", "password", e.target.value)
+                  }
+                />
               </div>
 
               <div className="form-control w-full mb-4">
