@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { useAuthStore } from "./useAuthStore";
 
 export const useSettingsStore = create((set) => ({
+
+    isSettingsDataLoading: false,
     SettingsData: {},
     // {
     //     "linkedin_api": {
@@ -31,6 +33,8 @@ export const useSettingsStore = create((set) => ({
     // }
     FetchSettingsData: async () => {
         try {
+            console.log('Inside FetchSettingsData Function')
+            set({ isSettingsDataLoading: true })
             const accessToken = localStorage.getItem("access_token");
             console.log("Access Token:", accessToken);
 
@@ -44,6 +48,9 @@ export const useSettingsStore = create((set) => ({
         } catch (error) {
             toast.error(`Error In FetchSettingsData: ${error.message}`);
             console.error("Error In FetchSettingsData:", error);
+        } finally {
+            console.log('FetchSettingsData Function Over')
+            set({ isSettingsDataLoading: false })
         }
     },
 }));
