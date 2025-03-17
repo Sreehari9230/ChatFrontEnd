@@ -20,11 +20,12 @@ import { useSettingsStore } from "../store/useSettingsStore";
 const SettingsPage = () => {
   const { theme, setTheme } = useThemeStore();
   const { logout, CompanyData } = useAuthStore();
-  const { FetchSettingsData, SettingsData } = useSettingsStore();
+  const { FetchSettingsData, SettingsData, isSettingsDataLoading } =
+    useSettingsStore();
   const navigate = useNavigate();
 
   useEffect(() => {
-    FetchSettingsData(); 
+    FetchSettingsData();
   }, []);
 
   function capitalizeFirstLetter(str) {
@@ -204,20 +205,24 @@ const SettingsPage = () => {
         </p>
         <div className="divider"></div>
 
-        <div className="bg-base-100 p-6 rounded-lg shadow-inner">
-          <div className="form-control w-full mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Access Token</span>
-            </label>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                defaultValue={SettingsData.linkedin_api?.access_token || ""}
-              />
-              <button className="btn btn-primary">Update</button>
+        <div className="bg-base-100 p-6 rounded-lg shadow-inner flex justify-center items-center min-h-[100px]">
+          {isSettingsDataLoading ? (
+            <span className="loading loading-spinner loading-lg"></span>
+          ) : (
+            <div className="form-control w-full mb-4">
+              <label className="label">
+                <span className="label-text font-medium">Access Token</span>
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  className="input input-bordered w-full"
+                  defaultValue={SettingsData.linkedin_api?.access_token || ""}
+                />
+                <button className="btn btn-primary">Update</button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
