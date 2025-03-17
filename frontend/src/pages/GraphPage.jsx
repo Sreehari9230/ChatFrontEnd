@@ -19,7 +19,8 @@ const GraphPage = () => {
     { name: "Jun", value: 80 },
   ];
   return (
-    <div className="w-full h-[400px] flex justify-center items-center">
+    // w-full h-screen flex flex-col items-center pt-20
+    <div className="w-full h-[400px] flex flex-col items-center pt-20">
       <ResponsiveContainer width="80%" height="100%">
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
