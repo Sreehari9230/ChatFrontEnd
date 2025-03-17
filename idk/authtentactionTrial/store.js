@@ -17,39 +17,7 @@ export const useAuthStore = create((set) => ({
 
     userAuth: false,
 
-    // DepartmentsTeams: JSON.parse(localStorage.getItem('DepartmentsTeams')) || [],
-    // CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || null,
     CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || [],
-    // {
-    //     "id": "96733e68-4241-4892-8028-2ccc820d2659",
-    //     "name": "nypus",
-    //     "package": {
-    //         "id": "592e137f-df57-4162-bd0d-29ed63a27579",
-    //         "name": "tier1",
-    //         "description": "",
-    //         "price": "500.00",
-    //         "max_ai_teams": 1,
-    //         "max_ivas": 2,
-    //         "max_agents": 5,
-    //         "features": {
-    //             "HR Department": [
-    //                 "Recruitment Team",
-    //                 "Onboarding Team"
-    //             ],
-    //             "Sales Department": [
-    //                 "Content Creation",
-    //                 "Customer Relationship Management",
-    //                 "Sales Strategy",
-    //                 "Lead Generation"
-    //             ],
-    //             "Marketing Department": [
-    //                 "SEO Team",
-    //                 "Marketing Research Team",
-    //                 "Social Media Team"
-    //             ]
-    //         }
-    //     }
-    // },
 
     checkAuth: () => {
         const token = localStorage.getItem("access_token");
@@ -61,22 +29,7 @@ export const useAuthStore = create((set) => ({
         }
         set({ isCheckingAuth: false });
     },
-
-    // function to check auth when reloading the page the page will be checking if the user is authenticated
-    // checkAuth: async () => {
-    //     try {
-    //         const res = await axiosInstance.get("/auth/check") //baseUrl will fill the first
-    //         set({ authUser: res.data })
-    //     } catch (error) {
-    //         console.log('error in checkAuth:', error);
-
-    //         set({ authUser: null })
-    //     } finally {
-    //         set({ isCheckingAuth: false })
-    //     }
-    // },
     
-
     login: async (data) => {
         set({ isLoggingIn: true });
         try {
