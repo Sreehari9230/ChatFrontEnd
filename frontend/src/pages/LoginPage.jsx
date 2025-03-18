@@ -6,26 +6,38 @@ import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const { login, isLogginIn, fetchHome } = useAuthStore();
+  const { login, fetchHome } = useAuthStore();
 
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for valid email format
-    if (!formData.email.trim()) return toast.error("Email is required");
-    if (!emailRegex.test(formData.email))
+    if (!formData.email.trim()) {
+      setIsLoggingIn(false);
+      return toast.error("Email is required");
+    }
+    if (!emailRegex.test(formData.email)) {
+      setIsLoggingIn(false);
       return toast.error("Please enter a valid email address");
-    if (!formData.password.trim()) return toast.error("Password is required");
-    if (formData.password.length < 1)
-      return toast.error("Password must be at least 6 characters");
+    }
+    if (!formData.password.trim()) {
+      setIsLoggingIn(false);
+      return toast.error("Password is required");
+    }
+    // if (formData.password.length < 6) {
+    //   setIsLoggingIn(false);
+    //   return toast.error("Password must be at least 6 characters");
+    // }
     console.log("Form submitted successfully:", formData);
     return true;
   };
 
   const handleSubmit = async (e) => {
+    setIsLoggingIn(true);
     e.preventDefault();
     const success = validateForm();
     if (success) {
@@ -51,6 +63,7 @@ const LoginPage = () => {
         console.error("Token missing after login");
       }
     }
+    setIsLoggingIn(false);
   };
 
   return (
@@ -129,7 +142,11 @@ const LoginPage = () => {
                 type="submit"
                 className="btn btn-primary w-full rounded-full"
               >
-                Log In
+                {isLoggingIn ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Log In"
+                )}
               </button>
 
               <p className="text-center mt-4 text-sm">
