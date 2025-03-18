@@ -7,9 +7,6 @@ import toast from "react-hot-toast";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isResettingPassword, setIsResettingPassword] = useState(false);
-  const [resetEmail, setResetEmail] = useState("");
-  const [showForgotModal, setShowForgotModal] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -67,38 +64,6 @@ const LoginPage = () => {
       }
     }
     setIsLoggingIn(false);
-  };
-
-  const handleResetPassword = async (e) => {
-    e.preventDefault();
-
-    // Validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!resetEmail.trim()) {
-      return toast.error("Email is required");
-    }
-    if (!emailRegex.test(resetEmail)) {
-      return toast.error("Please enter a valid email address");
-    }
-
-    setIsResettingPassword(true);
-
-    try {
-      // Here you would call your API to send a reset password email
-      // const response = await sendPasswordResetEmail(resetEmail);
-
-      // For now, we'll just simulate a successful response
-      setTimeout(() => {
-        toast.success("Password reset link sent to your email");
-        setShowForgotModal(false);
-        setIsResettingPassword(false);
-        setResetEmail("");
-      }, 1500);
-    } catch (error) {
-      console.error("Error sending reset email:", error);
-      toast.error("Failed to send reset email. Please try again.");
-      setIsResettingPassword(false);
-    }
   };
 
   return (
@@ -184,25 +149,15 @@ const LoginPage = () => {
                 )}
               </button>
 
-              <div className="text-center mt-4 text-sm flex justify-between items-center">
-                <span>
-                  
-                  <Link
-                    to={"/help"}
-                    className="text-secondary font-medium hover:underline"
-                  >
-                    Need help?{" "}
-                    {/* Click here  */}
-                  </Link>
-                </span>
-                <button
-                  type="button"
+              <p className="text-center mt-4 text-sm">
+                Need help?{" "}
+                <Link
+                  to={"/help"}
                   className="text-secondary font-medium hover:underline"
-                  onClick={() => setShowForgotModal(true)}
                 >
-                  Forgot password?
-                </button>
-              </div>
+                  Click here
+                </Link>
+              </p>
             </form>
           </div>
 
@@ -216,59 +171,6 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Forgot Password Modal */}
-      <dialog
-        id="forgot_password_modal"
-        className={`modal ${showForgotModal ? "modal-open" : ""}`}
-      >
-        <div className="modal-box">
-          <h3 className="font-bold text-lg mb-4">Reset Password</h3>
-          <p className="mb-4">
-            Enter your email address and we'll send you a link to reset your
-            password.
-          </p>
-          <form onSubmit={handleResetPassword}>
-            <div className="form-control mb-4">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="size-5 text-base-content/40" />
-                </div>
-                <input
-                  type="email"
-                  className="input input-bordered w-full pl-10"
-                  placeholder="Enter your email"
-                  value={resetEmail}
-                  onChange={(e) => setResetEmail(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="modal-action">
-              <button
-                type="button"
-                className="btn btn-ghost"
-                onClick={() => setShowForgotModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={isResettingPassword}
-              >
-                {isResettingPassword ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  "Reset Password"
-                )}
-              </button>
-            </div>
-          </form>
-        </div>
-        <form method="dialog" className="modal-backdrop">
-          <button onClick={() => setShowForgotModal(false)}>close</button>
-        </form>
-      </dialog>
     </div>
   );
 };
