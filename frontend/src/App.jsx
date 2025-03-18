@@ -35,13 +35,17 @@ const App = () => {
 
   return (
     <div data-theme={theme}>
-      <Navbar onOpenTicket={() => setIsModalOpen(true)} />
+      {/* Hide Navbar on the login page */}
+      {location.pathname !== "/login" && (
+        <Navbar onOpenTicket={() => setIsModalOpen(true)} />
+      )}
+      
       <RaiseATicketModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+
       <Routes>
-        {/* Redirect to login if user is not authenticated */}
         {!userAuth ? (
           <>
             <Route path="/login" element={<LoginPage />} />
@@ -54,8 +58,7 @@ const App = () => {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/graphs" element={<GraphPage />} />
             <Route path="*" element={<NotFoundPage />} />
-            <Route path="/login" element={<Navigate to="/" />} />{" "}
-            {/* Redirect logged-in users away from login */}
+            <Route path="/login" element={<Navigate to="/" />} />
           </>
         )}
       </Routes>

@@ -106,6 +106,10 @@ const LoginPage = () => {
       className="min-h-screen flex flex-col justify-center items-center p-6 sm:p-12 bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('/AiBots.jpg')" }}
     >
+      {/* Top Right Logo */}
+      <div className="absolute top-4 left-4 size-10 rounded-lg bg-primary/10 flex items-center justify-center z-10 shadow-lg">
+        <img src="/SmartTeams.jpg" alt="Logo" className="w-10 h-10" />
+      </div>
       {/* Improved overlay that works better with both light and dark themes */}
       <div className="absolute inset-0 bg-black/50 dark:bg-black/30 backdrop-blur-sm"></div>
 
@@ -125,13 +129,13 @@ const LoginPage = () => {
               />
             </div>
             <h1 className="text-2xl font-bold mt-2 text-white drop-shadow-md">
-              Log In
+              Smart Teams
             </h1>
           </div>
         </div>
 
         {/* Form with improved background for better readability in both themes */}
-        <div className="bg-white/95 dark:bg-gray-800/95 p-6 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700">
+        <div className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div className="form-control">
