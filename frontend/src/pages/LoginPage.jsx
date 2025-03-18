@@ -135,7 +135,7 @@ const LoginPage = () => {
         </div>
 
         {/* Form with improved background for better readability in both themes */}
-        <div className="p-6">
+        <div className="bg-white/95 dark:bg-gray-800/95 p-6 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div className="form-control">
