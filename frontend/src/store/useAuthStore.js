@@ -17,6 +17,8 @@ export const useAuthStore = create((set) => ({
 
     userAuth: false,
 
+
+
     // DepartmentsTeams: JSON.parse(localStorage.getItem('DepartmentsTeams')) || [],
     // CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || null,
     CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || [],
@@ -61,21 +63,6 @@ export const useAuthStore = create((set) => ({
         }
         set({ isCheckingAuth: false });
     },
-
-    // function to check auth when reloading the page the page will be checking if the user is authenticated
-    // checkAuth: async () => {
-    //     try {
-    //         const res = await axiosInstance.get("/auth/check") //baseUrl will fill the first
-    //         set({ authUser: res.data })
-    //     } catch (error) {
-    //         console.log('error in checkAuth:', error);
-
-    //         set({ authUser: null })
-    //     } finally {
-    //         set({ isCheckingAuth: false })
-    //     }
-    // },
-
 
     login: async (data) => {
         set({ isLoggingIn: true });
@@ -153,4 +140,15 @@ export const useAuthStore = create((set) => ({
 
         toast.success("Logged out successfully");
     },
+
+    ForgotPassword: async (data) => {
+        try {
+            console.log('inside ForgotPassword Fn');
+            const res = await axiosInstance.get("/auth/forgot-password/", data);
+            console.log(res.data);
+
+        } catch (error) {
+            
+        }
+    }
 }))

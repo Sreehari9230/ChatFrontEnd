@@ -7,9 +7,12 @@ import toast from "react-hot-toast";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isResettingPassword, setIsResettingPassword] = useState(false);
-  const [resetEmail, setResetEmail] = useState("");
-  const [showForgotModal, setShowForgotModal] = useState(false);
+
+    const [isResettingPassword, setIsResettingPassword] = useState(false);
+    const [resetEmail, setResetEmail] = useState("");
+    const [showForgotModal, setShowForgotModal] = useState(false);
+
+    
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -186,13 +189,11 @@ const LoginPage = () => {
 
               <div className="text-center mt-4 text-sm flex justify-between items-center">
                 <span>
-                  
                   <Link
                     to={"/help"}
                     className="text-secondary font-medium hover:underline"
                   >
-                    Need help?{" "}
-                    {/* Click here  */}
+                    Need help? {/* Click here  */}
                   </Link>
                 </span>
                 <button
