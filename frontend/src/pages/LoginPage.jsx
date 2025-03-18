@@ -234,7 +234,9 @@ const LoginPage = () => {
             Enter your email address and we'll send you a link to reset your
             password.
           </p>
-          <form>
+          <form
+          // onSubmit={handleResetPassword}
+          >
             <div className="form-control mb-4">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -261,7 +263,7 @@ const LoginPage = () => {
                 type="submit"
                 className="btn btn-primary"
                 disabled={isResettingPassword}
-                onClick={handleResetPassword}
+                // onClick={handleResetPassword}
               >
                 {isResettingPassword ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
