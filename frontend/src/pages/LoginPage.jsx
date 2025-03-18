@@ -258,7 +258,7 @@ const LoginPage = () => {
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary" 
                 disabled={isResettingPassword}
               >
                 {isResettingPassword ? (
