@@ -13,6 +13,7 @@ import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import RaiseATicketModal from "./components/RaiseATicketModal";
 import NotFoundPage from "./pages/NotFoundPage";
+import HelpPage from "./pages/HelpPage";
 
 const App = () => {
   const { userAuth, checkAuth, isCheckingAuth } = useAuthStore();
@@ -44,6 +45,7 @@ const App = () => {
         {!userAuth ? (
           <>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/help" element={<HelpPage />} />
             <Route path="*" element={<Navigate to="/login" />} />
           </>
         ) : (
