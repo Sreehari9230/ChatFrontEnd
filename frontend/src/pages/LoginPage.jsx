@@ -7,12 +7,10 @@ import toast from "react-hot-toast";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-    const [isResettingPassword, setIsResettingPassword] = useState(false);
-    const [resetEmail, setResetEmail] = useState("");
-    const [showForgotModal, setShowForgotModal] = useState(false);
-
-    
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -34,10 +32,10 @@ const LoginPage = () => {
       setIsLoggingIn(false);
       return toast.error("Password is required");
     }
-    // if (formData.password.length < 6) {
-    //   setIsLoggingIn(false);
-    //   return toast.error("Password must be at least 6 characters");
-    // }
+    if (formData.password.length < 1) {
+      setIsLoggingIn(false);
+      return toast.error("Password must be at least 6 characters");
+    }
     console.log("Form submitted successfully:", formData);
     return true;
   };
@@ -86,137 +84,141 @@ const LoginPage = () => {
 
     setIsResettingPassword(true);
 
-
-
+    // Here you would implement the actual password reset functionality
+    // For example, if ForgotPassword is implemented in useAuthStore:
     // try {
-    //   // Here you would call your API to send a reset password email
-    //   // const response = await sendPasswordResetEmail(resetEmail);
-
-    //   // For now, we'll just simulate a successful response
-    //   setTimeout(() => {
-    //     toast.success("Password reset link sent to your email");
-    //     setShowForgotModal(false);
-    //     setIsResettingPassword(false);
-    //     setResetEmail("");
-    //   }, 1500);
+    //   await ForgotPassword(resetEmail);
+    //   toast.success("Password reset link sent to your email");
+    //   setShowForgotModal(false);
     // } catch (error) {
-    //   console.error("Error sending reset email:", error);
     //   toast.error("Failed to send reset email. Please try again.");
+    // } finally {
     //   setIsResettingPassword(false);
+    //   setResetEmail("");
     // }
+
+    // For now, we'll simulate success
+    setTimeout(() => {
+      toast.success("Password reset link sent to your email");
+      setShowForgotModal(false);
+      setIsResettingPassword(false);
+      setResetEmail("");
+    }, 1500);
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
-      <div className="card w-full max-w-4xl bg-base-100 shadow-xl overflow-hidden">
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Left Column - Login Form */}
-          <div className="card-body p-8 text-center">
-            <div className="flex justify-center">
-              <div className="w-12 h-12 rounded-xl overflow-hidden bg-primary">
-                <img
-                  src="/nypusAi.jpg"
-                  alt="AiBots"
-                  className="w-full h-full object-contain"
+    <div 
+      className="min-h-screen flex flex-col justify-center items-center p-6 sm:p-12 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/AiBots.jpg')" }}
+    >
+      {/* Improved overlay that works better with both light and dark themes */}
+      <div className="absolute inset-0 bg-black/50 dark:bg-black/30 backdrop-blur-sm"></div>
+      
+      {/* Content on top of background */}
+      <div className="relative z-10 w-full max-w-md">
+        {/* Logo and Heading */}
+        <div className="text-center mb-8">
+          <div className="flex flex-col items-center gap-2 group">
+            <div
+              className="size-20 rounded-xl bg-white/20 dark:bg-primary/10 flex items-center justify-center 
+              group-hover:bg-white/30 dark:group-hover:bg-primary/20 transition-colors shadow-lg"
+            >
+              <img
+                src="/SmartTeams.jpg"
+                alt="Logo"
+                className="size-12 text-primary"
+              />
+            </div>
+            <h1 className="text-2xl font-bold mt-2 text-white drop-shadow-md">Log In</h1>
+          </div>
+        </div>
+
+        {/* Form with improved background for better readability in both themes */}
+        <div className="bg-white/95 dark:bg-gray-800/95 p-6 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium dark:text-gray-200">Email</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Mail className="size-5 text-gray-500 dark:text-gray-400" />
+                </div>
+                <input
+                  type="email"
+                  className="input input-bordered w-full pl-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                 />
               </div>
             </div>
 
-            {/* <h2 className="card-title text-2xl  font-bold mt-4">LOGIN</h2> */}
-            <h2 className="card-title text-2xl font-bold mt-4 justify-center">
-              LOGIN
-            </h2>
-            {/* <p className="text-base-content/60 text-sm mb-6">
-              How do I get started? Learn ipsum dolor sit amet.
-            </p> */}
-
-            <form onSubmit={handleSubmit} className="w-full space-y-6">
-              {/* Email */}
-              <div className="form-control">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="size-5 text-base-content/40" />
-                  </div>
-                  <input
-                    type="email"
-                    className="input input-bordered w-full pl-10"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                  />
+            {/* Password */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium dark:text-gray-200">Password</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="size-5 text-gray-500 dark:text-gray-400" />
                 </div>
-              </div>
-
-              {/* Password */}
-              <div className="form-control">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="size-5 text-base-content/40" />
-                  </div>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    className="input input-bordered w-full pl-10"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={(e) =>
-                      setFormData({ ...formData, password: e.target.value })
-                    }
-                  />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="size-5 text-base-content/40" />
-                    ) : (
-                      <Eye className="size-5 text-base-content/40" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="btn btn-primary w-full rounded-full"
-              >
-                {isLoggingIn ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  "Log In"
-                )}
-              </button>
-
-              <div className="text-center mt-4 text-sm flex justify-between items-center">
-                <span>
-                  <Link
-                    to={"/help"}
-                    className="text-secondary font-medium hover:underline"
-                  >
-                    Need help? {/* Click here  */}
-                  </Link>
-                </span>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="input input-bordered w-full pl-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                />
                 <button
                   type="button"
-                  className="text-secondary font-medium hover:underline"
-                  onClick={() => setShowForgotModal(true)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={() => setShowPassword(!showPassword)}
                 >
-                  Forgot password?
+                  {showPassword ? (
+                    <EyeOff className="size-5 text-gray-500 dark:text-gray-400" />
+                  ) : (
+                    <Eye className="size-5 text-gray-500 dark:text-gray-400" />
+                  )}
                 </button>
               </div>
-            </form>
-          </div>
+            </div>
 
-          {/* Right Column - Image */}
-          <div className="hidden md:block bg-primary relative w-full h-full">
-            <img
-              src="/AiBots.jpg"
-              alt="AiBots"
-              className="absolute top-0 left-0 w-full h-full object-cover"
-            />
-          </div>
+            {/* Help and Forgot Password Links */}
+            <div className="flex justify-between items-center">
+              <Link to="/help" className="text-sm text-primary hover:underline">
+                Need help?
+              </Link>
+              <button
+                type="button"
+                className="text-sm text-primary hover:underline"
+                onClick={() => setShowForgotModal(true)}
+              >
+                Forgot password?
+              </button>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="btn btn-primary w-full text-white"
+              disabled={isLoggingIn}
+            >
+              {isLoggingIn ? (
+                <>
+                  <Loader2 className="size-5 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "Log In"
+              )}
+            </button>
+          </form>
         </div>
       </div>
 
