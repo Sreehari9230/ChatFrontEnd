@@ -18,7 +18,7 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-  const { login, fetchHome } = useAuthStore();
+  const { login, fetchHome, ForgotPassword } = useAuthStore();
 
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for valid email format
@@ -74,7 +74,7 @@ const LoginPage = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-
+    
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!resetEmail.trim()) {
@@ -86,22 +86,24 @@ const LoginPage = () => {
 
     setIsResettingPassword(true);
 
-    try {
-      // Here you would call your API to send a reset password email
-      // const response = await sendPasswordResetEmail(resetEmail);
 
-      // For now, we'll just simulate a successful response
-      setTimeout(() => {
-        toast.success("Password reset link sent to your email");
-        setShowForgotModal(false);
-        setIsResettingPassword(false);
-        setResetEmail("");
-      }, 1500);
-    } catch (error) {
-      console.error("Error sending reset email:", error);
-      toast.error("Failed to send reset email. Please try again.");
-      setIsResettingPassword(false);
-    }
+
+    // try {
+    //   // Here you would call your API to send a reset password email
+    //   // const response = await sendPasswordResetEmail(resetEmail);
+
+    //   // For now, we'll just simulate a successful response
+    //   setTimeout(() => {
+    //     toast.success("Password reset link sent to your email");
+    //     setShowForgotModal(false);
+    //     setIsResettingPassword(false);
+    //     setResetEmail("");
+    //   }, 1500);
+    // } catch (error) {
+    //   console.error("Error sending reset email:", error);
+    //   toast.error("Failed to send reset email. Please try again.");
+    //   setIsResettingPassword(false);
+    // }
   };
 
   return (
