@@ -143,12 +143,26 @@ export const useAuthStore = create((set) => ({
 
     ForgotPassword: async (data) => {
         try {
-            console.log('inside ForgotPassword Fn');
-            const res = await axiosInstance.get("/auth/forgot-password/", data);
+            console.log("Inside ForgotPassword Fn");
+
+            // Use POST instead of GET and send data in the request body
+            const res = await axiosInstance.post("/auth/forgot-password/", data);
+
             console.log(res.data);
 
+            // Check if the response indicates success
+            if (res.data.success) {
+                return { success: true, message: "A reset email has been sent!" };
+            } else {
+                return { success: false, message: res.data.message || "Email doesn't exist!" };
+            }
+
         } catch (error) {
-            
+            console.error("Error in ForgotPassword:", error);
+
+            // Return failure response with error message
+            return { success: false, message: error.response?.data?.message || "Email doesn't exist!" };
         }
     }
+
 }))

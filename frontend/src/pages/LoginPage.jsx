@@ -10,7 +10,7 @@ const LoginPage = () => {
   const [isResettingPassword, setIsResettingPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [showForgotModal, setShowForgotModal] = useState(false);
-  
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -71,8 +71,10 @@ const LoginPage = () => {
   };
 
   const handleResetPassword = async (e) => {
-    e.preventDefault();
-    
+    e.preventDefault(); // Prevent form submission
+
+    console.log("Inside handleResetPassword function in login page");
+
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!resetEmail.trim()) {
@@ -82,38 +84,31 @@ const LoginPage = () => {
       return toast.error("Please enter a valid email address");
     }
 
-    setIsResettingPassword(true);
+    setIsResettingPassword(true); // Start loading state
 
-    // Here you would implement the actual password reset functionality
-    // For example, if ForgotPassword is implemented in useAuthStore:
-    // try {
-    //   await ForgotPassword(resetEmail);
-    //   toast.success("Password reset link sent to your email");
-    //   setShowForgotModal(false);
-    // } catch (error) {
-    //   toast.error("Failed to send reset email. Please try again.");
-    // } finally {
-    //   setIsResettingPassword(false);
-    //   setResetEmail("");
-    // }
+    const data = { email: resetEmail };
 
-    // For now, we'll simulate success
-    setTimeout(() => {
-      toast.success("Password reset link sent to your email");
-      setShowForgotModal(false);
-      setIsResettingPassword(false);
-      setResetEmail("");
-    }, 1500);
+    // Call ForgotPassword and handle response
+    const response = await ForgotPassword(data);
+
+    if (response.success) {
+      toast.success(response.message);
+      setShowForgotModal(false); // Close modal on success
+    } else {
+      toast.error(response.message);
+    }
+
+    setIsResettingPassword(false); // Stop loading spinner
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen flex flex-col justify-center items-center p-6 sm:p-12 bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('/AiBots.jpg')" }}
     >
       {/* Improved overlay that works better with both light and dark themes */}
       <div className="absolute inset-0 bg-black/50 dark:bg-black/30 backdrop-blur-sm"></div>
-      
+
       {/* Content on top of background */}
       <div className="relative z-10 w-full max-w-md">
         {/* Logo and Heading */}
@@ -129,7 +124,9 @@ const LoginPage = () => {
                 className="size-12 text-primary"
               />
             </div>
-            <h1 className="text-2xl font-bold mt-2 text-white drop-shadow-md">Log In</h1>
+            <h1 className="text-2xl font-bold mt-2 text-white drop-shadow-md">
+              Log In
+            </h1>
           </div>
         </div>
 
@@ -139,7 +136,9 @@ const LoginPage = () => {
             {/* Email */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium dark:text-gray-200">Email</span>
+                <span className="label-text font-medium dark:text-gray-200">
+                  Email
+                </span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -160,7 +159,9 @@ const LoginPage = () => {
             {/* Password */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium dark:text-gray-200">Password</span>
+                <span className="label-text font-medium dark:text-gray-200">
+                  Password
+                </span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -233,7 +234,7 @@ const LoginPage = () => {
             Enter your email address and we'll send you a link to reset your
             password.
           </p>
-          <form onSubmit={handleResetPassword}>
+          <form>
             <div className="form-control mb-4">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -258,8 +259,9 @@ const LoginPage = () => {
               </button>
               <button
                 type="submit"
-                className="btn btn-primary" 
+                className="btn btn-primary"
                 disabled={isResettingPassword}
+                onClick={handleResetPassword}
               >
                 {isResettingPassword ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
