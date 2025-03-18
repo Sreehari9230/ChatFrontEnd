@@ -54,138 +54,106 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center p-6 sm:p-12">
-      {/* Logo and Heading */}
-      <div className="text-center mb-8">
-        <div className="flex flex-col items-center gap-2 group">
-          <div
-            className="size-20 rounded-xl bg-primary/10 flex items-center justify-center 
-          group-hover:bg-primary/20 transition-colors"
-          >
-            {/* <MessageSquare className="size-6 text-primary" /> */}
+    <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
+      <div className="card w-full max-w-4xl bg-base-100 shadow-xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Left Column - Login Form */}
+          <div className="card-body p-8 text-center">
+            <div className="flex justify-center">
+              <div className="w-12 h-12 rounded-xl overflow-hidden bg-primary">
+                <img
+                  src="/nypusAi.jpg"
+                  alt="AiBots"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+
+            {/* <h2 className="card-title text-2xl  font-bold mt-4">LOGIN</h2> */}
+            <h2 className="card-title text-2xl font-bold mt-4 justify-center">
+              LOGIN
+            </h2>
+            {/* <p className="text-base-content/60 text-sm mb-6">
+              How do I get started? Learn ipsum dolor sit amet.
+            </p> */}
+
+            <form onSubmit={handleSubmit} className="w-full space-y-6">
+              {/* Email */}
+              <div className="form-control">
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Mail className="size-5 text-base-content/40" />
+                  </div>
+                  <input
+                    type="email"
+                    className="input input-bordered w-full pl-10"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+
+              {/* Password */}
+              <div className="form-control">
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="size-5 text-base-content/40" />
+                  </div>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="input input-bordered w-full pl-10"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="size-5 text-base-content/40" />
+                    ) : (
+                      <Eye className="size-5 text-base-content/40" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="btn btn-primary w-full rounded-full"
+              >
+                Log In
+              </button>
+
+              <p className="text-center mt-4 text-sm">
+                Need help?{" "}
+                <Link
+                  to={"/help"}
+                  className="text-secondary font-medium hover:underline"
+                >
+                  Click here
+                </Link>
+              </p>
+            </form>
+          </div>
+
+          {/* Right Column - Image */}
+          <div className="hidden md:block bg-primary relative w-full h-full">
             <img
-              src="/SmartTeams.jpg"
-              alt="Logo"
-              className="size-12 text-primary"
+              src="/AiBots.jpg"
+              alt="AiBots"
+              className="absolute top-0 left-0 w-full h-full object-cover"
             />
           </div>
-          <h1 className="text-2xl font-bold mt-2">Log In</h1>
         </div>
       </div>
-
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6">
-        {/* Email */}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text font-medium">Email</span>
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Mail className="size-5 text-base-content/40" />
-            </div>
-            <input
-              type="email"
-              className={`input input-bordered w-full pl-10`}
-              placeholder="you@example.com"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
-          </div>
-        </div>
-
-        {/* Password */}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text font-medium">Password</span>
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Lock className="size-5 text-base-content/40" />
-            </div>
-            <input
-              type={showPassword ? "text" : "password"}
-              className={`input input-bordered w-full pl-10`}
-              placeholder="Password"
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-            />
-            <button
-              type="button"
-              className="absolute inset-y-0 right-0 pr-3 flex items-center"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <EyeOff className="size-5 text-base-content/40" />
-              ) : (
-                <Eye className="size-5 text-base-content/40" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="btn btn-primary w-full"
-          disabled={isLogginIn}
-        >
-          {isLogginIn ? (
-            <>
-              <Loader2 className="size-5 animate-spin" />
-              Loading...
-            </>
-          ) : (
-            "Log In"
-          )}
-        </button>
-
-
-        <div className="drawer drawer-end">
-          <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
-            {/* Page content here */}
-            <label
-              htmlFor="my-drawer-4"
-              className="drawer-button btn btn-primary"
-            >
-              Open drawer
-            </label>
-          </div>
-          <div className="drawer-side">
-            <label
-              htmlFor="my-drawer-4"
-              aria-label="close sidebar"
-              className="drawer-overlay"
-            ></label>
-            <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-              {/* Sidebar content here */}
-              <li>
-                <a>Sidebar Item 1</a>
-              </li>
-              <li>
-                <a>Sidebar Item 2</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-
-      </form>
-
-      {/* Login Prompt */}
-      {/* <div className="text-center mt-4">
-        <p className="text-base-content/60">
-          Don&apos;t have an account?{" "}
-          <Link to="/signup" className="link link-primary">
-            Create Account
-          </Link>
-        </p>
-      </div> */}
     </div>
   );
 };
