@@ -13,6 +13,8 @@ import {
   Linkedin,
   Mail,
   BarChart2,
+  EyeOff,
+  Eye,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSettingsStore } from "../store/useSettingsStore";
@@ -28,6 +30,7 @@ const SettingsPage = () => {
   } = useSettingsStore();
   const navigate = useNavigate();
 
+  const [showPassword, setShowPassword] = useState(false);
   // Local state for form inputs
   const [formData, setFormData] = useState({
     linkedin_api: { access_token: "" },
@@ -329,20 +332,32 @@ const SettingsPage = () => {
                 </div>
               </div>
 
-              <div className="form-control w-full">
+              <div className="form-control w-full relative">
                 <label className="label">
                   <span className="label-text font-medium">Password</span>
                 </label>
-                <input
-                  // type="password"
-                  type="text"
-                  className="input input-bordered w-full"
-                  value={formData.smtp_config.password}
-                  placeholder="Type Password"
-                  onChange={(e) =>
-                    handleChange("smtp_config", "password", e.target.value)
-                  }
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="input input-bordered w-full pr-10"
+                    value={formData.smtp_config.password}
+                    placeholder="Type Password"
+                    onChange={(e) =>
+                      handleChange("smtp_config", "password", e.target.value)
+                    }
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                    ) : (
+                      <Eye className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div className="form-control w-full mb-4">
