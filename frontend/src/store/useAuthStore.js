@@ -151,10 +151,10 @@ export const useAuthStore = create((set) => ({
             console.log(res.data);
 
             // Check if the response indicates success
-            if (res.data.success) {
-                return { success: true, message: "A reset email has been sent!" };
+            if (res.data.success == false) {
+                return { success: false, message: res.data.message };
             } else {
-                return { success: false, message: res.data.message || "Email doesn't exist!" };
+                return { success: true, message: res.data.message };
             }
 
         } catch (error) {
