@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import useWebSocketStore from "../store/useWebSocketStore";
-import { teamMap } from "../lib/utils";
+import { teamMap, FormButtonText } from "../lib/utils";
 import { Plus, Send, Wifi, WifiOff } from "lucide-react";
 import { SuggestionsMap } from "../lib/suggestions";
 
@@ -67,7 +67,7 @@ const WelcomeChat = () => {
           onClick={handleNewForm}
           className="btn btn-outline btn-primary btn-xs py-0 h-8 min-h-0 w-48"
         >
-          New {teamSelected}
+          {FormButtonText[teamSelected] || "New Task"}
         </button>
       </div>
 
