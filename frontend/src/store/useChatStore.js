@@ -27,9 +27,21 @@ export const useChatStore = create((set, get) => ({
 
     newChatButtonClicked: false,
 
-    // sendbuttoninwelcomechat: false
+    // haha
 
-    // setsendbuttoninwelcomechat function
+    SendButtonInWelcomeChat: false,
+
+    SetSendButtonInWelcomeChat: () => {
+        console.log('inside SetSendButtonInWelcomeChat function')
+        set({ SendButtonInWelcomeChat: true })
+    },
+
+    UnSetSendButtonInWelcomeChat: () => {
+        console.log('inside UnSetSendButtonInWelcomeChat function')
+        set({ SendButtonInWelcomeChat: false })
+    },
+
+    //    haha 
 
 
     formIsSubmitted: () => {
