@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -8,34 +8,19 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useGraphStore } from "../store/useGraphStore";
 
 const GraphPage = () => {
-  const data = [
-    { name: "Jan", value: 40 },
-    { name: "Feb", value: 55 },
-    { name: "Mar", value: 30 },
-    { name: "Apr", value: 70 },
-    { name: "May", value: 60 },
-    { name: "Jun", value: 80 },
-  ];
+  const { GraphData, GetGraphData } = useGraphStore();
+
+  useEffect(() => {
+    GetGraphData();
+  }, []);
+
   return (
-    // w-full h-screen flex flex-col items-center pt-20
-    <div className="w-full h-[400px] flex flex-col items-center pt-20">
-      <ResponsiveContainer width="80%" height="100%">
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke="#8884d8"
-            strokeWidth={2}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    <>
+      <div></div>
+    </>
   );
 };
 
