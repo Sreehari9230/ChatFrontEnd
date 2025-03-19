@@ -29,6 +29,7 @@ const ChatContainer = () => {
     chatManuallyButtonClicked,
     chatId,
     isChatHistoryLoading,
+    SendButtonInWelcomeChat
   } = useChatStore();
   // console.log(teamSelected, "hehe");
   const { authUser } = useAuthStore();
@@ -73,6 +74,26 @@ const ChatContainer = () => {
     // form should be shown if the form button in the newUi is clicked
     // newUi should be shpwn if the user gets in and he has no prevous chat in the team or he has clicked the newChat button
 
+    // <div className="flex-1 flex flex-col overflow-auto">
+    //   <ChatHeader /> {/* Always Visible */}
+    //   {formButtonClicked ? (
+    //     formRenderContent() // Show form when form button is clicked
+    //   ) : !hasChatHistory || newChatButtonClicked ? (
+    //     isFetchMessagesLoading ? (
+    //       <MessageSkeleton />
+    //     ) : (
+    //       <WelcomeChat />
+    //     )
+    //   ) : (
+    //     <>
+    //       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    //         <ChatBubbles /> {/* Show chat messages if form is not shown */}
+    //       </div>
+    //       <MessageInput /> {/* Always keep input with chat */}
+    //     </>
+    //   )}
+    // </div>
+
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader /> {/* Always Visible */}
       {formButtonClicked ? (
@@ -80,15 +101,22 @@ const ChatContainer = () => {
       ) : !hasChatHistory || newChatButtonClicked ? (
         isFetchMessagesLoading ? (
           <MessageSkeleton />
+        ) : SendButtonInWelcomeChat ? ( // Add this condition
+          <>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <ChatBubbles />
+            </div>
+            <MessageInput />
+          </>
         ) : (
           <WelcomeChat />
         )
       ) : (
         <>
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            <ChatBubbles /> {/* Show chat messages if form is not shown */}
+            <ChatBubbles />
           </div>
-          <MessageInput /> {/* Always keep input with chat */}
+          <MessageInput />
         </>
       )}
     </div>

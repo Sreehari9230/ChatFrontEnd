@@ -145,12 +145,10 @@ export const useAuthStore = create((set) => ({
         try {
             console.log("Inside ForgotPassword Fn");
 
-            // Use POST instead of GET and send data in the request body
             const res = await axiosInstance.post("/auth/forgot-password/", data);
 
             console.log(res.data);
 
-            // Check if the response indicates success
             if (res.data.success == false) {
                 return { success: false, message: res.data.message };
             } else {
@@ -159,8 +157,6 @@ export const useAuthStore = create((set) => ({
 
         } catch (error) {
             console.error("Error in ForgotPassword:", error);
-
-            // Return failure response with error message
             return { success: false, message: error.response?.data?.message || "Email doesn't exist!" };
         }
     }

@@ -13,6 +13,7 @@ const WelcomeChat = () => {
     getNewChat,
     setFormButtonClicked,
     setChatManuallyButtonClicked,
+    SetSendButtonInWelcomeChat,
   } = useChatStore();
   const { sendMessage, isConnected, responseIsThinking } = useWebSocketStore();
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -24,15 +25,17 @@ const WelcomeChat = () => {
     suggestion.toLowerCase().includes(message.toLowerCase())
   );
 
+  const handleSentInWelcomeChat = () => {
+    SetSendButtonInWelcomeChat();
+  };
+
   const handleSendMessage = (e) => {
-
-// setsendbuttoninwelcomechat
-
     e.preventDefault();
     if (message.trim()) {
       sendMessage({ action: "chat_manually", message });
       setMessage("");
       setShowSuggestions(false);
+      // SetSendButtonInWelcomeChat();
     }
   };
 
@@ -71,7 +74,14 @@ const WelcomeChat = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4"></div>
       {/* MessageInput Start */}
       <div className="p-4 w-full relative">
-        <form className="flex items-center gap-2" onSubmit={handleSendMessage}>
+        <form
+          className="flex items-center gap-2"
+          onSubmit={(e) => {
+            e.preventDefault(); // Prevent default form submission
+            handleSendMessage(e); // Pass event to handleSendMessage
+            handleSentInWelcomeChat(); // Call the second function
+          }}
+        >
           <div className="flex-1 flex gap-2 relative">
             {showSuggestions && filteredSuggestions.length > 0 && (
               <ul className="absolute bottom-full left-0 w-full bg-base-100 border border-base-300 rounded-lg shadow-lg z-10 max-h-40 overflow-y-auto">

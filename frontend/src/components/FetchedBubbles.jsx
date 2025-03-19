@@ -16,11 +16,11 @@ const FetchedBubbles = () => {
 
   let lastDate = null;
 
-  useEffect(() => {
-    if (chatId) {
-      fetchChatMessages(chatId);
-    }
-  }, [chatId, fetchChatMessages]);
+  // useEffect(() => {
+  //   if (chatId) {
+  //     fetchChatMessages(chatId);
+  //   }
+  // }, [chatId, fetchChatMessages]);
 
   const parseBoxMessage = (message) => {
     try {

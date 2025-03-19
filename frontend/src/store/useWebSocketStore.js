@@ -110,40 +110,6 @@ const useWebSocketStore = create((set, get) => ({
     set({ ws });
   },
 
-  // sendMessage: (message) => {
-  //   const ws = get().ws;
-  //   if (ws && ws.readyState === WebSocket.OPEN) {
-  //     const messageWithTimestamp = {
-  //       ...message,
-  //       timestamp: new Date().toISOString(),
-  //       ...(message.action === "form" && { Type: "form" }), // Add Type field if action is "form"
-  //     };
-
-  //     ws.send(JSON.stringify(messageWithTimestamp));
-  //     console.log("📤 Message sent:", messageWithTimestamp);
-
-  //     // Push sent message to currentMessages ONLY if it's NOT a "form" action
-  //     if (message.action !== "form") {
-  //       set((state) => ({
-  //         currentMessages: [...state.currentMessages, messageWithTimestamp],
-  //       }));
-  //     }
-
-  //     // Set responseIsThinking to true only for "chat_manually" or "form" actions
-  //     if (message.action === "chat_manually" || message.action === "form") {
-  //       set({ responseIsThinking: true });
-  //     }
-
-  //     // Set formResponseIsLoading to true for "form" action
-  //     if (message.action === "form") {
-  //       set({ formResponseIsLoading: true });
-  //     }
-
-  //   } else {
-  //     console.error("❌ WebSocket is not open.");
-  //   }
-  // },
-
   sendMessage: (message) => {
     const ws = get().ws;
     if (ws && ws.readyState === WebSocket.OPEN) {

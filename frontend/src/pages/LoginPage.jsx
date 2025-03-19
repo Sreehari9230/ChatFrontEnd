@@ -95,13 +95,10 @@ const LoginPage = () => {
       setIsResettingPassword(false); // Start loading state
       toast.success(response.message);
       setShowForgotModal(false); // Close modal on success
-      
     } else {
       setIsResettingPassword(false); // Start loading state
       toast.error(response.message);
     }
-
-    // setIsResettingPassword(false); // Stop loading spinner
   };
 
   return (
@@ -199,12 +196,15 @@ const LoginPage = () => {
 
             {/* Help and Forgot Password Links */}
             <div className="flex justify-between items-center">
-              <Link to="/help" className="text-sm text-primary hover:underline">
+              <Link
+                to="/help"
+                className="text-sm text-[#F5BD02] hover:underline"
+              >
                 Need help?
               </Link>
               <button
                 type="button"
-                className="text-sm text-primary hover:underline"
+                className="text-sm text-[#F5BD02] hover:underline"
                 onClick={() => setShowForgotModal(true)}
               >
                 Forgot password?
@@ -214,13 +214,12 @@ const LoginPage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="btn btn-primary w-full text-white"
+              className="w-full text-white bg-[#F5BD02] hover:bg-[#e6a818] px-4 py-2 rounded-lg transition disabled:opacity-50"
               disabled={isLoggingIn}
             >
               {isLoggingIn ? (
                 <>
                   <Loader2 className="size-5 animate-spin" />
-                  Loading...
                 </>
               ) : (
                 "Log In"

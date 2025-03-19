@@ -7,8 +7,13 @@ import { teamMap } from "../lib/utils";
 import PrevChatEmptyModal from "./PrevChatEmptyModal";
 
 const MessageInput = () => {
-  const { teamSelected, setNewChatButtonClicked, chatId, getNewChat } =
-    useChatStore();
+  const {
+    teamSelected,
+    setNewChatButtonClicked,
+    chatId,
+    getNewChat,
+    UnSetSendButtonInWelcomeChat,
+  } = useChatStore();
   const [message, setMessage] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const {
@@ -27,6 +32,8 @@ const MessageInput = () => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
+    UnSetSendButtonInWelcomeChat();
+
     if (message.trim()) {
       sendMessage({ action: "chat_manually", message });
       setMessage("");
@@ -36,8 +43,8 @@ const MessageInput = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNewChatButton = () => {
+    // UnSetSendButtonInWelcomeChat();
 
-     // setsendbuttoninwelcomechat
     if (currentMessages.length === 0 && fetchedMessages.length === 0) {
       setIsModalOpen(true);
       return;
