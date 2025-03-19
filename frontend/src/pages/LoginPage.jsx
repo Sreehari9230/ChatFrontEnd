@@ -135,7 +135,7 @@ const LoginPage = () => {
         </div>
 
         {/* Form with improved background for better readability in both themes */}
-        <div className="bg-white/95 dark:bg-gray-800/95 p-6 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700">
+        <div className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div className="form-control">
@@ -214,12 +214,12 @@ const LoginPage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full text-white bg-[#F5BD02] hover:bg-[#e6a818] px-4 py-2 rounded-lg transition disabled:opacity-50"
+              className="w-full flex items-center justify-center text-white bg-[#F5BD02] hover:bg-[#e6a818] px-4 py-2 rounded-lg transition disabled:opacity-50 "
               disabled={isLoggingIn}
             >
               {isLoggingIn ? (
                 <>
-                  <Loader2 className="size-5 animate-spin" />
+                  <Loader2 className="size-5 animate-spin  " />
                 </>
               ) : (
                 "Log In"

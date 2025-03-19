@@ -32,7 +32,7 @@ const MessageInput = () => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    UnSetSendButtonInWelcomeChat();
+    // UnSetSendButtonInWelcomeChat();
 
     if (message.trim()) {
       sendMessage({ action: "chat_manually", message });
@@ -43,7 +43,7 @@ const MessageInput = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNewChatButton = () => {
-    // UnSetSendButtonInWelcomeChat();
+    UnSetSendButtonInWelcomeChat();
 
     if (currentMessages.length === 0 && fetchedMessages.length === 0) {
       setIsModalOpen(true);
