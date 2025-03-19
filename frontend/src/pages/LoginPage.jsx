@@ -90,15 +90,18 @@ const LoginPage = () => {
 
     // Call ForgotPassword and handle response
     const response = await ForgotPassword(data);
-
+    console.log(response);
     if (response.success) {
+      setIsResettingPassword(false); // Start loading state
       toast.success(response.message);
       setShowForgotModal(false); // Close modal on success
+      
     } else {
+      setIsResettingPassword(false); // Start loading state
       toast.error(response.message);
     }
 
-    setIsResettingPassword(false); // Stop loading spinner
+    // setIsResettingPassword(false); // Stop loading spinner
   };
 
   return (
@@ -238,9 +241,7 @@ const LoginPage = () => {
             Enter your email address and we'll send you a link to reset your
             password.
           </p>
-          <form
-          // onSubmit={handleResetPassword}
-          >
+          <form onSubmit={handleResetPassword}>
             <div className="form-control mb-4">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
