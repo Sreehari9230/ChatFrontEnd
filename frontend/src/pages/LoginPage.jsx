@@ -198,13 +198,13 @@ const LoginPage = () => {
             <div className="flex justify-between items-center">
               <Link
                 to="/help"
-                className="text-sm text-[#F5BD02] hover:underline"
+                className="text-sm text-white hover:underline"
               >
                 Need help?
               </Link>
               <button
                 type="button"
-                className="text-sm text-[#F5BD02] hover:underline"
+                className="text-sm text-white hover:underline"
                 onClick={() => setShowForgotModal(true)}
               >
                 Forgot password?
