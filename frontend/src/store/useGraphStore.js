@@ -7,8 +7,8 @@ export const useGraphStore = create((set) => ({
     GraphData: [
         {
             "date": "2025-03-19",
-            "total_logins": 11,
-            "total_chat_sessions": 56,
+            "total_logins": 13,
+            "total_chat_sessions": 57,
             "total_messages": 39,
             "total_agents_used": 3,
             "agent_usage": {
