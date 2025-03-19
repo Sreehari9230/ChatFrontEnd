@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { Eye, EyeOff, Loader2, Mail, MessageSquare, Lock } from "lucide-react";
+import { Eye, EyeOff, Loader2, Mail, MessageSquare, Lock, ChartColumnBig } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -225,6 +225,11 @@ const LoginPage = () => {
                 "Log In"
               )}
             </button>
+
+            <Link to="/graphs" className="btn btn-sm gap-2 transition-colors">
+              <ChartColumnBig className="w-4 h-4" />
+              <span className="hidden sm:inline">Usage</span>
+            </Link>
           </form>
         </div>
       </div>
