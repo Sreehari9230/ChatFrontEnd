@@ -29,21 +29,29 @@ import { useGraphStore } from "../store/useGraphStore";
 const GraphPage = () => {
   const { GraphData, GetGraphData, GraphDataLoading } = useGraphStore();
 
-  // console.log(GraphData,'insidegraphdata')
-  // useEffect(() => {
-  //   GetGraphData();
-  // }, []);
+  console.log(GraphData, "insidegraphdata");
+  useEffect(() => {
+    GetGraphData();
+  }, []);
 
   // Check if data is available
   const hasData = GraphData && GraphData.length > 0;
 
   // Set initial selected date (if data is available)
   const initialDate = hasData ? GraphData[0].date : "";
-  const [selectedDate, setSelectedDate] = useState(initialDate);
+  console.log(initialDate, "initialdate");
+  const [selectedDate, setSelectedDate] = useState("");
+  console.log(selectedDate, "selctedDtaa1");
+  useEffect(() => {
+    if (hasData) {
+      setSelectedDate(GraphData[0].date);
+    }
+  }, [GraphData]); // Runs whenever GraphData changes
+  console.log(selectedDate, "selctedDtaa2");
 
   // Set active tab
   const [activeTab, setActiveTab] = useState("overall");
-  
+
   // Set period filter
   const [activePeriod, setActivePeriod] = useState("daily");
 
@@ -60,10 +68,10 @@ const GraphPage = () => {
   // Function to get the start date for a specific period
   const getStartDateForPeriod = (period, endDate) => {
     if (!endDate) return null;
-    
+
     const end = new Date(endDate);
     let start = new Date(end);
-    
+
     switch (period) {
       case "daily":
         // Same day
@@ -86,22 +94,22 @@ const GraphPage = () => {
   // Prepare data for charts based on the selected period
   const prepareChartData = () => {
     if (!hasData) return [];
-    
+
     let filteredData = [...GraphData];
-    
+
     // If not viewing "all" data, filter based on the period
     if (activePeriod !== "all") {
       const startDate = getStartDateForPeriod(activePeriod, selectedDate);
       if (startDate) {
-        const startDateStr = startDate.toISOString().split('T')[0];
-        filteredData = filteredData.filter(item => {
+        const startDateStr = startDate.toISOString().split("T")[0];
+        filteredData = filteredData.filter((item) => {
           const itemDate = new Date(item.date);
-          const itemDateStr = itemDate.toISOString().split('T')[0];
+          const itemDateStr = itemDate.toISOString().split("T")[0];
           return itemDateStr >= startDateStr && itemDateStr <= selectedDate;
         });
       }
     }
-    
+
     return filteredData.reverse().map((report) => ({
       ...report,
       date: formatDate(report.date),
@@ -116,19 +124,19 @@ const GraphPage = () => {
     if (activePeriod === "daily" || chartData.length === 0) {
       return chartData; // No aggregation needed for daily view
     }
-    
+
     // For weekly, we'll aggregate by week
     if (activePeriod === "weekly") {
       const weeklyData = [];
       // Group by week and sum metrics
       const weeks = {};
-      
-      chartData.forEach(item => {
+
+      chartData.forEach((item) => {
         const date = new Date(item.rawDate);
         const weekStart = new Date(date);
         weekStart.setDate(date.getDate() - date.getDay()); // Start of week (Sunday)
-        const weekKey = weekStart.toISOString().split('T')[0];
-        
+        const weekKey = weekStart.toISOString().split("T")[0];
+
         if (!weeks[weekKey]) {
           weeks[weekKey] = {
             date: `Week of ${formatDate(weekStart.toISOString())}`,
@@ -137,102 +145,118 @@ const GraphPage = () => {
             total_chat_sessions: 0,
             total_messages: 0,
             total_agents_used: 0,
-            agent_usage: {}
+            agent_usage: {},
           };
         }
-        
+
         // Sum metrics
         weeks[weekKey].total_logins += item.total_logins;
         weeks[weekKey].total_chat_sessions += item.total_chat_sessions;
         weeks[weekKey].total_messages += item.total_messages;
-        weeks[weekKey].total_agents_used = Math.max(weeks[weekKey].total_agents_used, item.total_agents_used);
-        
+        weeks[weekKey].total_agents_used = Math.max(
+          weeks[weekKey].total_agents_used,
+          item.total_agents_used
+        );
+
         // Aggregate agent usage
         Object.entries(item.agent_usage || {}).forEach(([agent, usage]) => {
-          weeks[weekKey].agent_usage[agent] = (weeks[weekKey].agent_usage[agent] || 0) + usage;
+          weeks[weekKey].agent_usage[agent] =
+            (weeks[weekKey].agent_usage[agent] || 0) + usage;
         });
       });
-      
+
       // Convert to array
-      Object.values(weeks).forEach(week => {
+      Object.values(weeks).forEach((week) => {
         weeklyData.push(week);
       });
-      
-      return weeklyData.sort((a, b) => new Date(a.rawDate) - new Date(b.rawDate));
+
+      return weeklyData.sort(
+        (a, b) => new Date(a.rawDate) - new Date(b.rawDate)
+      );
     }
-    
+
     // For monthly, we'll aggregate by month
     if (activePeriod === "monthly") {
       const monthlyData = [];
       // Group by month and sum metrics
       const months = {};
-      
-      chartData.forEach(item => {
+
+      chartData.forEach((item) => {
         const date = new Date(item.rawDate);
         const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
-        const monthKey = monthStart.toISOString().split('T')[0];
-        
+        const monthKey = monthStart.toISOString().split("T")[0];
+
         if (!months[monthKey]) {
           months[monthKey] = {
-            date: monthStart.toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+            date: monthStart.toLocaleDateString("en-US", {
+              month: "long",
+              year: "numeric",
+            }),
             rawDate: monthStart.toISOString(),
             total_logins: 0,
             total_chat_sessions: 0,
             total_messages: 0,
             total_agents_used: 0,
-            agent_usage: {}
+            agent_usage: {},
           };
         }
-        
+
         // Sum metrics
         months[monthKey].total_logins += item.total_logins;
         months[monthKey].total_chat_sessions += item.total_chat_sessions;
         months[monthKey].total_messages += item.total_messages;
-        months[monthKey].total_agents_used = Math.max(months[monthKey].total_agents_used, item.total_agents_used);
-        
+        months[monthKey].total_agents_used = Math.max(
+          months[monthKey].total_agents_used,
+          item.total_agents_used
+        );
+
         // Aggregate agent usage
         Object.entries(item.agent_usage || {}).forEach(([agent, usage]) => {
-          months[monthKey].agent_usage[agent] = (months[monthKey].agent_usage[agent] || 0) + usage;
+          months[monthKey].agent_usage[agent] =
+            (months[monthKey].agent_usage[agent] || 0) + usage;
         });
       });
-      
+
       // Convert to array
-      Object.values(months).forEach(month => {
+      Object.values(months).forEach((month) => {
         monthlyData.push(month);
       });
-      
-      return monthlyData.sort((a, b) => new Date(a.rawDate) - new Date(b.rawDate));
+
+      return monthlyData.sort(
+        (a, b) => new Date(a.rawDate) - new Date(b.rawDate)
+      );
     }
-    
+
     return chartData; // Default fallback
   };
-  
+
   const aggregatedChartData = aggregateDataByPeriod();
 
   // Prepare data for agent usage pie chart
   const prepareAgentUsageData = () => {
     if (!hasData) return [];
-    
+
     // For daily view, use the selected date
     if (activePeriod === "daily") {
       const report = GraphData.find((r) => r.date === selectedDate);
       if (!report) return [];
-      
+
       return Object.entries(report.agent_usage).map(([name, value]) => ({
         name,
         value,
       }));
     }
-    
+
     // For other periods, aggregate agent usage from the filtered data
     const aggregatedAgentUsage = {};
-    
-    chartData.forEach(item => {
+
+    chartData.forEach((item) => {
       Object.entries(item.agent_usage || {}).forEach(([agent, usage]) => {
-        aggregatedAgentUsage[agent] = (aggregatedAgentUsage[agent] || 0) + usage;
+        aggregatedAgentUsage[agent] =
+          (aggregatedAgentUsage[agent] || 0) + usage;
       });
     });
-    
+
     return Object.entries(aggregatedAgentUsage).map(([name, value]) => ({
       name,
       value,
@@ -257,30 +281,30 @@ const GraphPage = () => {
   // Function to get summary data for the selected period
   const getSummaryDataForPeriod = () => {
     if (!hasData) return null;
-    
+
     // For daily view, just return the selected date's data
     if (activePeriod === "daily") {
       return GraphData.find((r) => r.date === selectedDate);
     }
-    
+
     // For other periods, calculate summary metrics from the filtered data
     let totalLogins = 0;
     let totalChatSessions = 0;
     let totalMessages = 0;
     let maxAgentsUsed = 0;
-    
-    chartData.forEach(item => {
+
+    chartData.forEach((item) => {
       totalLogins += item.total_logins;
       totalChatSessions += item.total_chat_sessions;
       totalMessages += item.total_messages;
       maxAgentsUsed = Math.max(maxAgentsUsed, item.total_agents_used);
     });
-    
+
     return {
       total_logins: totalLogins,
       total_chat_sessions: totalChatSessions,
       total_messages: totalMessages,
-      total_agents_used: maxAgentsUsed
+      total_agents_used: maxAgentsUsed,
     };
   };
 
@@ -295,10 +319,15 @@ const GraphPage = () => {
         const endDate = new Date(selectedDate);
         const startDate = new Date(endDate);
         startDate.setDate(endDate.getDate() - 6);
-        return `for Week of ${formatDate(startDate.toISOString())} - ${formatDate(endDate.toISOString())}`;
+        return `for Week of ${formatDate(
+          startDate.toISOString()
+        )} - ${formatDate(endDate.toISOString())}`;
       case "monthly":
         const date = new Date(selectedDate);
-        return `for ${date.toLocaleDateString("en-US", { month: "long", year: "numeric" })}`;
+        return `for ${date.toLocaleDateString("en-US", {
+          month: "long",
+          year: "numeric",
+        })}`;
       case "all":
         return "for All Time";
       default:
@@ -339,7 +368,7 @@ const GraphPage = () => {
     <div className="flex flex-col gap-6 p-4 pt-20 bg-base-200 min-h-screen">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <h1 className="text-2xl font-bold">Analytics Dashboard</h1>
-        
+
         <div className="flex items-center gap-2">
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn m-1">
@@ -359,28 +388,36 @@ const GraphPage = () => {
               ))}
             </ul>
           </div>
-          
+
           <div className="join">
-            <button 
-              className={`btn join-item ${activePeriod === "daily" ? "btn-active" : ""}`}
+            <button
+              className={`btn join-item ${
+                activePeriod === "daily" ? "btn-active" : ""
+              }`}
               onClick={() => setActivePeriod("daily")}
             >
               Daily
             </button>
-            <button 
-              className={`btn join-item ${activePeriod === "weekly" ? "btn-active" : ""}`}
+            <button
+              className={`btn join-item ${
+                activePeriod === "weekly" ? "btn-active" : ""
+              }`}
               onClick={() => setActivePeriod("weekly")}
             >
               Weekly
             </button>
-            <button 
-              className={`btn join-item ${activePeriod === "monthly" ? "btn-active" : ""}`}
+            <button
+              className={`btn join-item ${
+                activePeriod === "monthly" ? "btn-active" : ""
+              }`}
               onClick={() => setActivePeriod("monthly")}
             >
               Monthly
             </button>
-            <button 
-              className={`btn join-item ${activePeriod === "all" ? "btn-active" : ""}`}
+            <button
+              className={`btn join-item ${
+                activePeriod === "all" ? "btn-active" : ""
+              }`}
               onClick={() => setActivePeriod("all")}
             >
               All
@@ -398,10 +435,10 @@ const GraphPage = () => {
                   <Users className="w-8 h-8" />
                 </div>
                 <div className="stat-title text-black">Total Logins</div>
-                <div className="stat-value">
-                  {summaryData.total_logins}
+                <div className="stat-value">{summaryData.total_logins}</div>
+                <div className="stat-desc text-black">
+                  {activePeriod !== "daily" ? getPeriodTitle() : ""}
                 </div>
-                <div className="stat-desc text-black">{activePeriod !== "daily" ? getPeriodTitle() : ""}</div>
               </div>
             </div>
 
@@ -414,7 +451,9 @@ const GraphPage = () => {
                 <div className="stat-value">
                   {summaryData.total_chat_sessions}
                 </div>
-                <div className="stat-desc text-black">{activePeriod !== "daily" ? getPeriodTitle() : ""}</div>
+                <div className="stat-desc text-black">
+                  {activePeriod !== "daily" ? getPeriodTitle() : ""}
+                </div>
               </div>
             </div>
 
@@ -424,10 +463,10 @@ const GraphPage = () => {
                   <BarChart2 className="w-8 h-8" />
                 </div>
                 <div className="stat-title text-black">Messages</div>
-                <div className="stat-value">
-                  {summaryData.total_messages}
+                <div className="stat-value">{summaryData.total_messages}</div>
+                <div className="stat-desc text-black">
+                  {activePeriod !== "daily" ? getPeriodTitle() : ""}
                 </div>
-                <div className="stat-desc text-black">{activePeriod !== "daily" ? getPeriodTitle() : ""}</div>
               </div>
             </div>
 
@@ -440,7 +479,9 @@ const GraphPage = () => {
                 <div className="stat-value">
                   {summaryData.total_agents_used}
                 </div>
-                <div className="stat-desc text-black">{activePeriod !== "daily" ? getPeriodTitle() : ""}</div>
+                <div className="stat-desc text-black">
+                  {activePeriod !== "daily" ? getPeriodTitle() : ""}
+                </div>
               </div>
             </div>
           </>
