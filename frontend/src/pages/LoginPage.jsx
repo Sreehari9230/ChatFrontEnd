@@ -226,10 +226,10 @@ const LoginPage = () => {
               )}
             </button>
 
-            <Link to="/graphs" className="btn btn-sm gap-2 transition-colors">
+            {/* <Link to="/graphs" className="btn btn-sm gap-2 transition-colors">
               <ChartColumnBig className="w-4 h-4" />
               <span className="hidden sm:inline">Usage</span>
-            </Link>
+            </Link> */}
           </form>
         </div>
       </div>

@@ -125,7 +125,12 @@ export const useAuthStore = create((set) => ({
     },
 
     logout: () => {
-        localStorage.clear(); // Clears all stored data
+        // Get the current theme before clearing storage
+        const theme = localStorage.getItem("chat-theme");
+
+        // Clear everything except theme
+        localStorage.clear();
+        localStorage.setItem("chat-theme", theme); // Restore theme
 
         set({
             authUser: null,
