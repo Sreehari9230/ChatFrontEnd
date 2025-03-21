@@ -39,7 +39,7 @@ const App = () => {
       {location.pathname !== "/login" && (
         <Navbar onOpenTicket={() => setIsModalOpen(true)} />
       )}
-      
+
       <RaiseATicketModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -52,10 +52,11 @@ const App = () => {
             <Route path="/help" element={<HelpPage />} />
             <Route path="*" element={<Navigate to="/login" />} />
             {/* <Route path="/graphs" element={<GraphPage />} /> */}
-
           </>
         ) : (
           <>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/help" element={<HelpPage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/graphs" element={<GraphPage />} />
