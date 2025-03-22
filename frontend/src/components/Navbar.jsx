@@ -43,12 +43,12 @@ const Navbar = ({ onOpenTicket }) => {
                   <span className="hidden sm:inline">Settings</span>
                 </Link>
 
-                {/* <button
+                <button
                   className="btn btn-sm gap-2 transition-colors"
                   onClick={onOpenTicket}
                 >
                   <span className="hidden sm:inline">Raise A Ticket</span>
-                </button> */}
+                </button>
               </>
             )}
 
