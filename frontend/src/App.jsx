@@ -51,12 +51,9 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/help" element={<HelpPage />} />
             <Route path="*" element={<Navigate to="/login" />} />
-            {/* <Route path="/graphs" element={<GraphPage />} /> */}
           </>
         ) : (
           <>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/help" element={<HelpPage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/graphs" element={<GraphPage />} />

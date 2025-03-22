@@ -3,6 +3,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { Eye, EyeOff, Loader2, Mail, MessageSquare, Lock, ChartColumnBig } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import SmartTeams from '../assets/SmartTeams.jpg'
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -108,7 +109,7 @@ const LoginPage = () => {
     >
       {/* Top Right Logo */}
       <div className="absolute top-4 left-4 size-10 rounded-lg bg-primary/10 flex items-center justify-center z-10 shadow-lg">
-        <img src="/SmartTeams.jpg" alt="Logo" className="w-10 h-10" />
+        <img src={SmartTeams} alt="Logo" className="w-10 h-10" />
       </div>
       {/* Improved overlay that works better with both light and dark themes */}
       <div className="absolute inset-0 bg-black/50 dark:bg-black/30 backdrop-blur-sm"></div>
@@ -123,7 +124,7 @@ const LoginPage = () => {
               group-hover:bg-white/30 dark:group-hover:bg-primary/20 transition-colors shadow-lg"
             >
               <img
-                src="/SmartTeams.jpg"
+                src={SmartTeams}
                 alt="Logo"
                 className="size-12 text-primary"
               />
