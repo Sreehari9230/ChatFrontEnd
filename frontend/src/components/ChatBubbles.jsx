@@ -14,7 +14,7 @@ const ChatBubbles = () => {
 
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-      {fetchedMessages.length === 0 && currentMessages.length === 0 && <NoChatBubbles />}
+      {/* {fetchedMessages.length === 0 && currentMessages.length === 0 && <NoChatBubbles />} */}
       <FetchedBubbles />
       <CurrentBubbles />
       {/* Empty div for auto scroll */}
