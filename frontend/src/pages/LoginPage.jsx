@@ -4,6 +4,7 @@ import { Eye, EyeOff, Loader2, Mail, MessageSquare, Lock, ChartColumnBig } from 
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import SmartTeams from '../assets/SmartTeams.jpg'
+import AiBots from "../assets/AiBots.jpg";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -102,10 +103,11 @@ const LoginPage = () => {
     }
   };
 
+
   return (
     <div
       className="min-h-screen flex flex-col justify-center items-center p-6 sm:p-12 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/AiBots.jpg')" }}
+      style={{ backgroundImage: `url(${AiBots})` }}
     >
       {/* Top Right Logo */}
       <div className="absolute top-4 left-4 size-10 rounded-lg bg-primary/10 flex items-center justify-center z-10 shadow-lg">
