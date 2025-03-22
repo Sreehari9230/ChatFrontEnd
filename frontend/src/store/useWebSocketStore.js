@@ -26,7 +26,7 @@ const useWebSocketStore = create((set, get) => ({
     // Clear messages before reconnecting
     set({ currentMessages: [], fetchedMessages: [] });
 
-    const ws = new WebSocket(`ws://16.170.140.163/ws/messages/${chatId}/`);
+    const ws = new WebSocket(`wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/${chatId}/`);
 
     ws.onopen = () => {
       console.log("✅ WebSocket Connected");

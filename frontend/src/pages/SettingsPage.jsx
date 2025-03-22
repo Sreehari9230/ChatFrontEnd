@@ -15,6 +15,7 @@ import {
   BarChart2,
   EyeOff,
   Eye,
+  AlertCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSettingsStore } from "../store/useSettingsStore";
@@ -41,6 +42,18 @@ const SettingsPage = () => {
       password: "",
     },
     eod_config: { email_address: "", enable: false },
+  });
+
+  // Validation state
+  const [errors, setErrors] = useState({
+    linkedin_api: { access_token: "" },
+    smtp_config: {
+      smtp_host: "",
+      smtp_port: "",
+      sender_email: "",
+      password: "",
+    },
+    eod_config: { email_address: "" },
   });
 
   useEffect(() => {
@@ -78,6 +91,78 @@ const SettingsPage = () => {
     }
   }, [SettingsData]);
 
+  // Validate email format
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Validate form section
+  const validateSection = (section) => {
+    const newErrors = { ...errors };
+    let isValid = true;
+
+    if (section === "linkedin_api") {
+      if (!formData.linkedin_api.access_token.trim()) {
+        newErrors.linkedin_api.access_token = "Access token cannot be empty";
+        isValid = false;
+      } else {
+        newErrors.linkedin_api.access_token = "";
+      }
+    }
+
+    if (section === "smtp_config") {
+      if (!formData.smtp_config.smtp_host.trim()) {
+        newErrors.smtp_config.smtp_host = "SMTP host cannot be empty";
+        isValid = false;
+      } else {
+        newErrors.smtp_config.smtp_host = "";
+      }
+
+      if (!formData.smtp_config.smtp_port.trim()) {
+        newErrors.smtp_config.smtp_port = "SMTP port cannot be empty";
+        isValid = false;
+      } else {
+        newErrors.smtp_config.smtp_port = "";
+      }
+
+      if (!formData.smtp_config.sender_email.trim()) {
+        newErrors.smtp_config.sender_email = "Sender email cannot be empty";
+        isValid = false;
+      } else if (!isValidEmail(formData.smtp_config.sender_email)) {
+        newErrors.smtp_config.sender_email = "Please enter a valid email";
+        isValid = false;
+      } else {
+        newErrors.smtp_config.sender_email = "";
+      }
+
+      if (!formData.smtp_config.password.trim()) {
+        newErrors.smtp_config.password = "Password cannot be empty";
+        isValid = false;
+      } else {
+        newErrors.smtp_config.password = "";
+      }
+    }
+
+    if (section === "eod_config") {
+      if (formData.eod_config.enable && !formData.eod_config.email_address.trim()) {
+        newErrors.eod_config.email_address = "Email address cannot be empty when EOD is enabled";
+        isValid = false;
+      } else if (
+        formData.eod_config.email_address.trim() &&
+        !isValidEmail(formData.eod_config.email_address)
+      ) {
+        newErrors.eod_config.email_address = "Please enter a valid email";
+        isValid = false;
+      } else {
+        newErrors.eod_config.email_address = "";
+      }
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   // Handle input change
   const handleChange = (section, key, value) => {
     setFormData((prev) => ({
@@ -91,7 +176,9 @@ const SettingsPage = () => {
 
   // Handle update button click
   const handleUpdate = (section) => {
-    EditSettingsData({ [section]: formData[section] });
+    if (validateSection(section)) {
+      EditSettingsData({ [section]: formData[section] });
+    }
   };
 
   return (
@@ -133,8 +220,12 @@ const SettingsPage = () => {
               </h3>
               <div className="bg-base-100 p-6 rounded-lg shadow-inner">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="badge badge-primary">Name</div>
-                  <span>{capitalizeFirstLetter(CompanyData.name)}</span>
+                  <div className="badge badge-secondary">Username</div>
+                  <span>{CompanyData.user_details[0].username}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="badge badge-accent">Email</div>
+                  <span>{CompanyData.user_details[0].email}</span>
                 </div>
               </div>
             </div>
@@ -267,15 +358,25 @@ const SettingsPage = () => {
               <label className="label">
                 <span className="label-text font-medium">Access Token</span>
               </label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  value={formData.linkedin_api.access_token}
-                  onChange={(e) =>
-                    handleChange("linkedin_api", "access_token", e.target.value)
-                  }
-                />
+              <div className="flex gap-2 flex-col">
+                <div className="relative w-full">
+                  <input
+                    type="text"
+                    className={`input input-bordered w-full ${
+                      errors.linkedin_api.access_token ? "input-error" : ""
+                    }`}
+                    value={formData.linkedin_api.access_token}
+                    onChange={(e) =>
+                      handleChange("linkedin_api", "access_token", e.target.value)
+                    }
+                  />
+                  {errors.linkedin_api.access_token && (
+                    <div className="text-error text-xs flex items-center mt-1">
+                      <AlertCircle size={12} className="mr-1" />
+                      {errors.linkedin_api.access_token}
+                    </div>
+                  )}
+                </div>
                 <button
                   className="btn btn-primary"
                   onClick={() => handleUpdate("linkedin_api")}
@@ -309,12 +410,20 @@ const SettingsPage = () => {
                   </label>
                   <input
                     type="text"
-                    className="input input-bordered w-full"
+                    className={`input input-bordered w-full ${
+                      errors.smtp_config.smtp_host ? "input-error" : ""
+                    }`}
                     value={formData.smtp_config.smtp_host}
                     onChange={(e) =>
                       handleChange("smtp_config", "smtp_host", e.target.value)
                     }
                   />
+                  {errors.smtp_config.smtp_host && (
+                    <div className="text-error text-xs flex items-center mt-1">
+                      <AlertCircle size={12} className="mr-1" />
+                      {errors.smtp_config.smtp_host}
+                    </div>
+                  )}
                 </div>
 
                 <div className="form-control w-full">
@@ -323,12 +432,20 @@ const SettingsPage = () => {
                   </label>
                   <input
                     type="text"
-                    className="input input-bordered w-full"
+                    className={`input input-bordered w-full ${
+                      errors.smtp_config.smtp_port ? "input-error" : ""
+                    }`}
                     value={formData.smtp_config.smtp_port}
                     onChange={(e) =>
                       handleChange("smtp_config", "smtp_port", e.target.value)
                     }
                   />
+                  {errors.smtp_config.smtp_port && (
+                    <div className="text-error text-xs flex items-center mt-1">
+                      <AlertCircle size={12} className="mr-1" />
+                      {errors.smtp_config.smtp_port}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -339,7 +456,9 @@ const SettingsPage = () => {
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
-                    className="input input-bordered w-full pr-10"
+                    className={`input input-bordered w-full pr-10 ${
+                      errors.smtp_config.password ? "input-error" : ""
+                    }`}
                     value={formData.smtp_config.password}
                     placeholder="Type Password"
                     onChange={(e) =>
@@ -358,6 +477,12 @@ const SettingsPage = () => {
                     )}
                   </button>
                 </div>
+                {errors.smtp_config.password && (
+                  <div className="text-error text-xs flex items-center mt-1">
+                    <AlertCircle size={12} className="mr-1" />
+                    {errors.smtp_config.password}
+                  </div>
+                )}
               </div>
 
               <div className="form-control w-full mb-4">
@@ -366,12 +491,20 @@ const SettingsPage = () => {
                 </label>
                 <input
                   type="email"
-                  className="input input-bordered w-full"
+                  className={`input input-bordered w-full ${
+                    errors.smtp_config.sender_email ? "input-error" : ""
+                  }`}
                   value={formData.smtp_config.sender_email}
                   onChange={(e) =>
                     handleChange("smtp_config", "sender_email", e.target.value)
                   }
                 />
+                {errors.smtp_config.sender_email && (
+                  <div className="text-error text-xs flex items-center mt-1">
+                    <AlertCircle size={12} className="mr-1" />
+                    {errors.smtp_config.sender_email}
+                  </div>
+                )}
               </div>
 
               <button
@@ -405,12 +538,20 @@ const SettingsPage = () => {
                 </label>
                 <input
                   type="email"
-                  className="input input-bordered w-full"
+                  className={`input input-bordered w-full ${
+                    errors.eod_config.email_address ? "input-error" : ""
+                  }`}
                   value={formData.eod_config.email_address}
                   onChange={(e) =>
                     handleChange("eod_config", "email_address", e.target.value)
                   }
                 />
+                {errors.eod_config.email_address && (
+                  <div className="text-error text-xs flex items-center mt-1">
+                    <AlertCircle size={12} className="mr-1" />
+                    {errors.eod_config.email_address}
+                  </div>
+                )}
               </div>
 
               <div className="form-control mb-4">
