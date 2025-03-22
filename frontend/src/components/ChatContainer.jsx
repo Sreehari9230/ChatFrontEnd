@@ -18,6 +18,7 @@ import WelcomeChat from "./WelcomeChat";
 import ChatBubbles from "./ChatBubbles";
 import useWebSocketStore from "../store/useWebSocketStore";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
+import NoChatBubbles from "./NoChatBubbles";
 
 const ChatContainer = () => {
   const {
@@ -29,12 +30,13 @@ const ChatContainer = () => {
     chatManuallyButtonClicked,
     chatId,
     isChatHistoryLoading,
-    SendButtonInWelcomeChat
+    SendButtonInWelcomeChat,
   } = useChatStore();
   // console.log(teamSelected, "hehe");
   const { authUser } = useAuthStore();
 
-  const { connect, isFetchMessagesLoading } = useWebSocketStore();
+  const { connect, isFetchMessagesLoading, currentMessages, fetchedMessages } =
+    useWebSocketStore();
 
   useEffect(() => {
     if (chatId) {
@@ -95,31 +97,39 @@ const ChatContainer = () => {
     // </div>
 
     <div className="flex-1 flex flex-col overflow-auto">
-      <ChatHeader /> {/* Always Visible */}
-      {formButtonClicked ? (
-        formRenderContent() // Show form when form button is clicked
-      ) : !hasChatHistory || newChatButtonClicked ? (
-        isFetchMessagesLoading ? (
-          <MessageSkeleton />
-        ) : SendButtonInWelcomeChat ? ( // Add this condition
-          <>
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              <ChatBubbles />
-            </div>
-            <MessageInput />
-          </>
-        ) : (
-          <WelcomeChat />
-        )
-      ) : (
+    <ChatHeader /> {/* Always Visible */}
+    {formButtonClicked ? (
+      formRenderContent() // Show form when form button is clicked
+    ) : !hasChatHistory || newChatButtonClicked ? (
+      isFetchMessagesLoading ? (
+        <MessageSkeleton />
+      ) : SendButtonInWelcomeChat ? ( // Add this condition
         <>
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            <ChatBubbles />
+            {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
+              <NoChatBubbles />
+            ) : (
+              <ChatBubbles />
+            )}
           </div>
           <MessageInput />
         </>
-      )}
-    </div>
+      ) : (
+        <WelcomeChat />
+      )
+    ) : (
+      <>
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
+            <NoChatBubbles />
+          ) : (
+            <ChatBubbles />
+          )}
+        </div>
+        <MessageInput />
+      </>
+    )}
+  </div>
   );
 };
 
