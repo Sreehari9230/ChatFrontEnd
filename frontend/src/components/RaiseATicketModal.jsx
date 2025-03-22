@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useChatStore } from "../store/useChatStore";
+import { useSettingsStore } from "../store/useSettingsStore";
 
 const RaiseATicketModal = ({ isOpen, onClose }) => {
   const [message, setMessage] = useState("");
-  const { postTicket } = useChatStore();
+  const { PostTicket } = useSettingsStore();
 
   const handleSubmitButton = () => {
-    postTicket(message);
+    PostTicket(message);
   };
 
   if (!isOpen) return null;

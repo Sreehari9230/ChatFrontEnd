@@ -32,6 +32,8 @@ export const useSettingsStore = create((set) => ({
     //         "updated_at": "2025-03-16T06:44:28.480776Z" -
     //     }
     // }
+    isPostingTicket: false,
+
     FetchSettingsData: async () => {
         try {
             console.log('Inside FetchSettingsData Function')
@@ -75,6 +77,24 @@ export const useSettingsStore = create((set) => ({
         } finally {
             console.log('FetchSettingsData Function Over')
             set({ isSettingsDataLoading: false })
+        }
+    },
+
+    PostTicket: async (data) => {
+        try {
+            console.log('Inside EditSettingsData Function')
+            set({ isPostingTicket: true })
+            const accessToken = localStorage.getItem("access_token");
+            console.log("Access Token:", accessToken);
+
+            const res = await axiosInstance.put("/organization/raise-ticket/", data, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+        } catch (error) {
+            toast.error(`Error In PostTicket: ${error.message}`);
+            console.error("Error In PostTicket:", error);
+        } finally {
+            set({ isPostingTicket: false })
         }
     }
 }));
