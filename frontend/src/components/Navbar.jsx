@@ -2,13 +2,14 @@ import React from "react";
 import { ChartColumnBig, Settings, Stamp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
+import SmartTeams from '../assets/SmartTeams.jpg'
 
 const Navbar = ({ onOpenTicket }) => {
   const { userAuth } = useAuthStore();
 
   return (
     <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">
-      <p>DontForget To Edit App.jsx</p>
+      {/* <p>DontForget To Edit App.jsx</p> */}
       <div className="container mx-auto px-4 h-16">
         <div className="flex items-center justify-between h-full">
           <div className="flex items-center gap-8">
@@ -17,7 +18,7 @@ const Navbar = ({ onOpenTicket }) => {
               className="flex items-center gap-2.5 hover:opacity-80 transition-all"
             >
               <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                <img src="/SmartTeams.jpg" alt="Logo" className="w-15 h-15" />
+                <img src={SmartTeams} alt="Logo" className="w-15 h-15" />
               </div>
               <h1 className="text-lg font-bold">Smart Teams</h1>
             </Link>

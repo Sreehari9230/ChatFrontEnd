@@ -26,26 +26,26 @@ const HelpPage = () => {
 
   // Sample FAQs
   const faqs = [
-    {
-      id: 1,
-      question: "How do I create a team in Smart Teams?",
-      answer: "To create a team, navigate to the Dashboard and click on the 'Create New Team' button. Enter your team name, add members by email, and set permissions as needed."
-    },
+    // {
+    //   id: 1,
+    //   question: "How do I create a team in Smart Teams?",
+    //   answer: "To create a team, navigate to the Dashboard and click on the 'Create New Team' button. Enter your team name, add members by email, and set permissions as needed."
+    // },
     {
       id: 2,
       question: "How do I reset my password?",
       answer: "Click on the 'Forgot Password' link on the login page. Enter your email address, and we'll send you instructions to reset your password."
     },
-    {
-      id: 3,
-      question: "Can I use Smart Teams on multiple devices?",
-      answer: "Yes, you can access your Smart Teams account from any device with internet connectivity. Your data will sync automatically across all your devices."
-    },
-    {
-      id: 4,
-      question: "How do I manage team permissions?",
-      answer: "Go to Teams > Select Team > Members tab. From there, you can adjust role permissions for each team member by clicking on the settings icon next to their name."
-    }
+    // {
+    //   id: 3,
+    //   question: "Can I use Smart Teams on multiple devices?",
+    //   answer: "Yes, you can access your Smart Teams account from any device with internet connectivity. Your data will sync automatically across all your devices."
+    // },
+    // {
+    //   id: 4,
+    //   question: "How do I manage team permissions?",
+    //   answer: "Go to Teams > Select Team > Members tab. From there, you can adjust role permissions for each team member by clicking on the settings icon next to their name."
+    // }
   ];
   return (
     <div className="pt-16 bg-base-100 min-h-screen">
@@ -196,7 +196,7 @@ const HelpPage = () => {
                 ))}
               </div>
               
-              <div className="mt-8 card bg-base-300 p-6">
+              {/* <div className="mt-8 card bg-base-300 p-6">
                 <h3 className="text-xl font-semibold mb-4">Can't find what you're looking for?</h3>
                 <p className="mb-4">Browse our complete documentation or contact our support team for assistance.</p>
                 <div className="flex flex-wrap gap-4">
@@ -209,7 +209,7 @@ const HelpPage = () => {
                     Contact Support
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
           
@@ -228,7 +228,9 @@ const HelpPage = () => {
                       Email Support
                     </h3>
                     <p className="mb-4">Our support team typically responds within 24 hours on business days.</p>
-                    <a href="mailto:support@smartteams.com" className="btn btn-primary">
+                    <a 
+                    href="mailto:support@smartteams.com" 
+                    className="btn btn-primary">
                       Email Us
                     </a>
                   </div>
@@ -241,14 +243,14 @@ const HelpPage = () => {
                       Phone Support
                     </h3>
                     <p className="mb-4">Available Monday to Friday, 9 AM to 5 PM EST.</p>
-                    <a href="tel:+18001234567" className="btn btn-primary">
+                    {/* <a href="tel:+18001234567" className="btn btn-primary">
                       Call Us
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
               
-              <div className="card bg-base-200">
+              {/* <div className="card bg-base-200">
                 <div className="card-body">
                   <h3 className="text-xl font-semibold mb-4">Send Us a Message</h3>
                   
@@ -288,7 +290,7 @@ const HelpPage = () => {
                     </button>
                   </form>
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
         </div>
