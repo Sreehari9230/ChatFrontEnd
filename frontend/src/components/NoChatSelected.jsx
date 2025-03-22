@@ -1,5 +1,6 @@
 import React from "react";
 import { MessageSquare } from "lucide-react";
+import SmartTeams from '../assets/SmartTeams.jpg'
 
 const NoChatSelected = () => {
   return (
@@ -13,7 +14,7 @@ const NoChatSelected = () => {
          justify-center animate-bounce"
             >
               <img
-                src="/SmartTeams.jpg"
+                src={SmartTeams}
                 alt="Logo"
                 className="w-40 h-40 text-primary"
               />
