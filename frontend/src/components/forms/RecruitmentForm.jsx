@@ -13,15 +13,33 @@ const RecruitmentForm = () => {
     location: "",
     company_name: "",
     job_requirement: "",
-    expected_reach_out: 0,
+    expected_reach_out: "",
   });
+
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" }); // Clear errors on input
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.job_title.trim()) newErrors.job_title = "Job title is required.";
+    if (!formData.location.trim()) newErrors.location = "Location is required.";
+    if (!formData.company_name.trim()) newErrors.company_name = "Company name is required.";
+    if (!formData.job_requirement.trim()) newErrors.job_requirement = "Job requirement is required.";
+    if (!formData.expected_reach_out || formData.expected_reach_out < 1) {
+      newErrors.expected_reach_out = "Expected reach out must be at least 1.";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     sendMessage({ action: "form", form: formData });
     setIsWaitingForResponse(true);
   };
@@ -54,8 +72,8 @@ const RecruitmentForm = () => {
               value={formData.job_title}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.job_title && <p className="text-red-500 text-xs mt-1">{errors.job_title}</p>}
           </div>
 
           {/* Location */}
@@ -68,8 +86,8 @@ const RecruitmentForm = () => {
               value={formData.location}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location}</p>}
           </div>
 
           {/* Company Name */}
@@ -82,8 +100,8 @@ const RecruitmentForm = () => {
               value={formData.company_name}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.company_name && <p className="text-red-500 text-xs mt-1">{errors.company_name}</p>}
           </div>
 
           {/* Job Requirement */}
@@ -96,8 +114,8 @@ const RecruitmentForm = () => {
               onChange={handleChange}
               className="textarea textarea-sm input-bordered w-full"
               rows={2}
-              required
             ></textarea>
+            {errors.job_requirement && <p className="text-red-500 text-xs mt-1">{errors.job_requirement}</p>}
           </div>
 
           {/* Expected Reach Out */}
@@ -110,11 +128,12 @@ const RecruitmentForm = () => {
               value={formData.expected_reach_out}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              min={1}
-              required
+              // min="1"
             />
+            {errors.expected_reach_out && <p className="text-red-500 text-xs mt-1">{errors.expected_reach_out}</p>}
           </div>
         </div>
+        
         {/* Submit Button */}
         <div className="mt-4">
           <button
