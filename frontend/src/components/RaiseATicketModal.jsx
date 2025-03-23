@@ -1,13 +1,22 @@
 import React, { useState } from "react";
-import { useChatStore } from "../store/useChatStore";
 import { useSettingsStore } from "../store/useSettingsStore";
+import { toast } from "react-hot-toast";
 
 const RaiseATicketModal = ({ isOpen, onClose }) => {
   const [message, setMessage] = useState("");
-  const { PostTicket } = useSettingsStore();
+  const { PostTicket, isPostingTicket } = useSettingsStore();
 
-  const handleSubmitButton = () => {
-    PostTicket(message);
+  const handleSubmitButton = async () => {
+    try {
+      const response = await PostTicket({ message });
+      if (response?.message) {
+        toast.success(response.message);
+      }
+    } catch (error) {
+      toast.error("Failed to raise a ticket.");
+    } finally {
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
@@ -18,7 +27,6 @@ const RaiseATicketModal = ({ isOpen, onClose }) => {
         <h2 className="text-xl font-bold mb-4">Raise a Ticket</h2>
 
         <textarea
-          // className="textarea textarea-bordered w-full h-32"
           className="textarea textarea-secondary w-full h-32"
           placeholder="Describe your issue..."
           value={message}
@@ -26,18 +34,15 @@ const RaiseATicketModal = ({ isOpen, onClose }) => {
         />
 
         <div className="flex justify-end gap-2 mt-4">
-          <button className="btn btn-outline" onClick={onClose}>
+          <button className="btn btn-outline" onClick={onClose} disabled={isPostingTicket}>
             Cancel
           </button>
           <button
-            className="btn btn-primary"
-            onClick={() => {
-              console.log("Submitted ticket:", message);
-              handleSubmitButton(); // Call the function
-              onClose(); // Close the modal
-            }}
+            className={`btn btn-primary ${isPostingTicket ? "btn-disabled" : ""}`}
+            onClick={handleSubmitButton}
+            disabled={isPostingTicket}
           >
-            Submit
+            {isPostingTicket ? <span className="loading loading-spinner"></span> : "Submit"}
           </button>
         </div>
       </div>
@@ -46,3 +51,4 @@ const RaiseATicketModal = ({ isOpen, onClose }) => {
 };
 
 export default RaiseATicketModal;
+

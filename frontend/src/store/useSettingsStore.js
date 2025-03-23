@@ -80,21 +80,45 @@ export const useSettingsStore = create((set) => ({
         }
     },
 
+    // PostTicket: async (data) => {
+    //     try {
+    //         console.log('Inside EditSettingsData Function')
+    //         set({ isPostingTicket: true })
+    //         const accessToken = localStorage.getItem("access_token");
+    //         console.log("Access Token:", accessToken);
+
+    //         const res = await axiosInstance.put("/organization/raise-ticket/", data, {
+    //             headers: { Authorization: `Bearer ${accessToken}` },
+    //         });
+    //     } catch (error) {
+    //         toast.error(`Error In PostTicket: ${error.message}`);
+    //         console.error("Error In PostTicket:", error);
+    //     } finally {
+    //         set({ isPostingTicket: false })
+    //     }
+    // }
     PostTicket: async (data) => {
         try {
-            console.log('Inside EditSettingsData Function')
-            set({ isPostingTicket: true })
+            console.log("Inside PostTicket function");
+            set({ isPostingTicket: true });
+    
             const accessToken = localStorage.getItem("access_token");
             console.log("Access Token:", accessToken);
-
-            const res = await axiosInstance.put("/organization/raise-ticket/", data, {
+    console.log(data, "data")
+            const res = await axiosInstance.post("/organization/raise-ticket/", data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
+    
+            console.log("Response:", res.data);
+            return res.data;  // Return response data to handle in modal
+    
         } catch (error) {
             toast.error(`Error In PostTicket: ${error.message}`);
             console.error("Error In PostTicket:", error);
+            throw error;  // Ensure error is caught in modal
         } finally {
-            set({ isPostingTicket: false })
+            set({ isPostingTicket: false });
         }
     }
+    
 }));
