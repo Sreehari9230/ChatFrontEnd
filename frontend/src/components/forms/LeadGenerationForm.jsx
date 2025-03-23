@@ -6,6 +6,8 @@ import { Loader2 } from "lucide-react";
 const LeadGenerationForm = () => {
   const { sendMessage, formResponseIsLoading } = useWebSocketStore();
   const { formIsSubmitted } = useChatStore();
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
     target_industry: "",
@@ -13,17 +15,28 @@ const LeadGenerationForm = () => {
     geographic_focus: "",
     lead_source_channels: "",
   });
-  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error when user types
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formData).some((val) => !val.trim())) return;
-    
+
+    // Validate all fields
+    const newErrors = {};
+    if (!formData.target_industry.trim()) newErrors.target_industry = "Target Industry is required.";
+    if (!formData.company_size_range.trim()) newErrors.company_size_range = "Company Size Range is required.";
+    if (!formData.geographic_focus.trim()) newErrors.geographic_focus = "Geographic Focus is required.";
+    if (!formData.lead_source_channels.trim()) newErrors.lead_source_channels = "Lead Source Channels are required.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     const payload = {
       action: "form",
       form: formData,
@@ -65,8 +78,10 @@ const LeadGenerationForm = () => {
               value={formData.target_industry}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.target_industry && (
+              <p className="text-red-500 text-xs mt-1">{errors.target_industry}</p>
+            )}
           </div>
 
           <div className="form-control">
@@ -78,8 +93,10 @@ const LeadGenerationForm = () => {
               value={formData.company_size_range}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.company_size_range && (
+              <p className="text-red-500 text-xs mt-1">{errors.company_size_range}</p>
+            )}
           </div>
 
           <div className="form-control">
@@ -91,8 +108,10 @@ const LeadGenerationForm = () => {
               value={formData.geographic_focus}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.geographic_focus && (
+              <p className="text-red-500 text-xs mt-1">{errors.geographic_focus}</p>
+            )}
           </div>
 
           <div className="form-control md:col-span-2">
@@ -104,8 +123,10 @@ const LeadGenerationForm = () => {
               value={formData.lead_source_channels}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.lead_source_channels && (
+              <p className="text-red-500 text-xs mt-1">{errors.lead_source_channels}</p>
+            )}
           </div>
         </div>
 
