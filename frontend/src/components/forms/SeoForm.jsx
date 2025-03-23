@@ -7,6 +7,8 @@ const SeoForm = () => {
   const { sendMessage, formResponseIsLoading } = useWebSocketStore();
   const { formIsSubmitted } = useChatStore();
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
     website_name: "",
     competitors: "",
@@ -18,11 +20,28 @@ const SeoForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error when user types
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formData).some((val) => !val.trim())) return;
+
+    // Validate fields
+    const newErrors = {};
+    if (!formData.website_name.trim()) newErrors.website_name = "Website Name is required.";
+    if (!formData.competitors.trim()) newErrors.competitors = "Competitors field is required.";
+    if (!formData.target_audience.trim()) newErrors.target_audience = "Target Audience is required.";
+    if (!formData.primary_goals.trim()) newErrors.primary_goals = "Primary Goals are required.";
+
+    const adBudgetValue = parseFloat(formData.ad_budget);
+    if (!formData.ad_budget.trim() || isNaN(adBudgetValue) || adBudgetValue <= 0) {
+      newErrors.ad_budget = "Ad Budget must be greater than 0.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     const payload = {
       action: "form",
@@ -64,8 +83,8 @@ const SeoForm = () => {
               value={formData.website_name}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.website_name && <p className="text-red-500 text-xs mt-1">{errors.website_name}</p>}
           </div>
 
           <div className="form-control">
@@ -77,8 +96,8 @@ const SeoForm = () => {
               value={formData.competitors}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.competitors && <p className="text-red-500 text-xs mt-1">{errors.competitors}</p>}
           </div>
 
           <div className="form-control">
@@ -90,12 +109,12 @@ const SeoForm = () => {
               value={formData.target_audience}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.target_audience && <p className="text-red-500 text-xs mt-1">{errors.target_audience}</p>}
           </div>
 
           <div className="form-control md:col-span-2">
-            <label className="label-text">Ad Budget ($)</label>
+            <label className="label-text">Ad Budget (₹)</label>
             <input
               type="number"
               name="ad_budget"
@@ -103,8 +122,8 @@ const SeoForm = () => {
               value={formData.ad_budget}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.ad_budget && <p className="text-red-500 text-xs mt-1">{errors.ad_budget}</p>}
           </div>
 
           <div className="form-control md:col-span-2">
@@ -116,8 +135,8 @@ const SeoForm = () => {
               value={formData.primary_goals}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.primary_goals && <p className="text-red-500 text-xs mt-1">{errors.primary_goals}</p>}
           </div>
         </div>
 
