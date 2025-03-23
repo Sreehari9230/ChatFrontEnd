@@ -156,23 +156,10 @@ export const useChatStore = create((set, get) => ({
                 getNewChat(teamMap[selectedTeam]); // Use the latest teamSelected state
             }
         } catch (error) {
-            toast.error(error.message);
+            // toast.error(error.message);
             console.error("Error fetching chat history:", error);
         } finally {
             set({ isChatHistoryLoading: false });
-        }
-    },
-
-    postTicket: async (message) => {
-        try {
-            const res = await axiosInstance.post(`/blabla/api/blanjnj`, {
-                message
-                // headers: {
-                //     Authorization: `Bearer ${accessToken}`,
-                // },
-            });
-        } catch (error) {
-            toast.error(error.message);
         }
     },
 
@@ -208,7 +195,8 @@ export const useChatStore = create((set, get) => ({
 
             console.log(`New Chat ID: ${newChatId}`);
         } catch (error) {
-            toast.error(error.message || "An error occurred while fetching the chat.");
+            // toast.error(error.message || "An error occurred while fetching the chat.");
+            conlsoe.log(error.message, "Error In getNewCHat Function");
         }
     },
 }))

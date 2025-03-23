@@ -94,7 +94,8 @@ export const useAuthStore = create((set) => ({
 
         } catch (error) {
             const message = error.response?.data?.message || 'Login failed. Please check your credentials.';
-            toast.error(message);
+            console.log('Catch Error In login function', message)
+            // toast.error(message);
         } finally {
             set({ isLoggingIn: false });
         }

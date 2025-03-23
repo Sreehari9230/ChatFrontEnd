@@ -49,7 +49,7 @@ export const useSettingsStore = create((set) => ({
             set({ SettingsData: res.data });
 
         } catch (error) {
-            toast.error(`Error In FetchSettingsData: ${error.message}`);
+            // toast.error(`Error In FetchSettingsData: ${error.message}`);
             console.error("Error In FetchSettingsData:", error);
         } finally {
             console.log('FetchSettingsData Function Over')
@@ -72,7 +72,7 @@ export const useSettingsStore = create((set) => ({
             set({ SettingsData: res.data });
 
         } catch (error) {
-            toast.error(`Error In FetchSettingsData: ${error.message}`);
+            // toast.error(`Error In FetchSettingsData: ${error.message}`);
             console.error("Error In FetchSettingsData:", error);
         } finally {
             console.log('FetchSettingsData Function Over')
@@ -80,23 +80,6 @@ export const useSettingsStore = create((set) => ({
         }
     },
 
-    // PostTicket: async (data) => {
-    //     try {
-    //         console.log('Inside EditSettingsData Function')
-    //         set({ isPostingTicket: true })
-    //         const accessToken = localStorage.getItem("access_token");
-    //         console.log("Access Token:", accessToken);
-
-    //         const res = await axiosInstance.put("/organization/raise-ticket/", data, {
-    //             headers: { Authorization: `Bearer ${accessToken}` },
-    //         });
-    //     } catch (error) {
-    //         toast.error(`Error In PostTicket: ${error.message}`);
-    //         console.error("Error In PostTicket:", error);
-    //     } finally {
-    //         set({ isPostingTicket: false })
-    //     }
-    // }
     PostTicket: async (data) => {
         try {
             console.log("Inside PostTicket function");
@@ -113,9 +96,8 @@ export const useSettingsStore = create((set) => ({
             return res.data;  // Return response data to handle in modal
     
         } catch (error) {
-            toast.error(`Error In PostTicket: ${error.message}`);
+            // toast.error(`Error In PostTicket: ${error.message}`);
             console.error("Error In PostTicket:", error);
-            throw error;  // Ensure error is caught in modal
         } finally {
             set({ isPostingTicket: false });
         }
