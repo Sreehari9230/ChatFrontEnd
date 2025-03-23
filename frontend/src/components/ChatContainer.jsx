@@ -51,7 +51,7 @@ const ChatContainer = () => {
     "Marketing Research Team": MarketingResearchForm,
     "Social Media Team": SocialMediaForm,
     "Content Creation": ContentCreationForm,
-    "Customer Relations": CustomerRelationsForm,
+    "Customer Relationship Management": CustomerRelationsForm,
     "Sales Strategy": SalesStrategyForm,
     "Lead Generation": LeadGenerationForm,
   };

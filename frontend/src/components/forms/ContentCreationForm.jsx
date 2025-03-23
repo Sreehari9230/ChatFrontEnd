@@ -9,10 +9,20 @@ const ContentCreationForm = () => {
 
   const [topic, setTopic] = useState("");
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setTopic(e.target.value);
+    setError(""); // Clear error when user types
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!topic.trim()) return;
+
+    if (!topic.trim()) {
+      setError("Topic is required.");
+      return;
+    }
 
     const payload = {
       action: "form",
@@ -49,10 +59,11 @@ const ContentCreationForm = () => {
             type="text"
             name="topic"
             value={topic}
-            onChange={(e) => setTopic(e.target.value)}
+            onChange={handleChange}
             className="input input-sm input-bordered w-full"
             placeholder="Enter your topic..."
           />
+          {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
         </div>
 
         {/* Submit Button */}
