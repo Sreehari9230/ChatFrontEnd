@@ -7,6 +7,8 @@ const CustomerRelationsForm = () => {
   const { sendMessage, formResponseIsLoading } = useWebSocketStore();
   const { formIsSubmitted } = useChatStore();
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
     company_product: "",
     customer_type: "",
@@ -18,11 +20,24 @@ const CustomerRelationsForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error when user types
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formData).some((val) => !val.trim())) return;
+
+    // Validate all fields with custom messages
+    const newErrors = {};
+    if (!formData.company_product.trim()) newErrors.company_product = "Company Product is required.";
+    if (!formData.customer_type.trim()) newErrors.customer_type = "Customer Type is required.";
+    if (!formData.interaction_channel.trim()) newErrors.interaction_channel = "Interaction Channel is required.";
+    if (!formData.feedback_source.trim()) newErrors.feedback_source = "Feedback Source is required.";
+    if (!formData.purchase_history_depth.trim()) newErrors.purchase_history_depth = "Purchase History Depth is required.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     const payload = {
       action: "form",
@@ -66,8 +81,10 @@ const CustomerRelationsForm = () => {
               value={formData.company_product}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.company_product && (
+              <p className="text-red-500 text-xs mt-1">{errors.company_product}</p>
+            )}
           </div>
 
           <div className="form-control">
@@ -79,8 +96,10 @@ const CustomerRelationsForm = () => {
               value={formData.customer_type}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.customer_type && (
+              <p className="text-red-500 text-xs mt-1">{errors.customer_type}</p>
+            )}
           </div>
 
           <div className="form-control">
@@ -92,8 +111,10 @@ const CustomerRelationsForm = () => {
               value={formData.interaction_channel}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.interaction_channel && (
+              <p className="text-red-500 text-xs mt-1">{errors.interaction_channel}</p>
+            )}
           </div>
 
           <div className="form-control md:col-span-2">
@@ -105,8 +126,10 @@ const CustomerRelationsForm = () => {
               value={formData.feedback_source}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.feedback_source && (
+              <p className="text-red-500 text-xs mt-1">{errors.feedback_source}</p>
+            )}
           </div>
 
           <div className="form-control md:col-span-2">
@@ -118,8 +141,10 @@ const CustomerRelationsForm = () => {
               value={formData.purchase_history_depth}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.purchase_history_depth && (
+              <p className="text-red-500 text-xs mt-1">{errors.purchase_history_depth}</p>
+            )}
           </div>
         </div>
 
