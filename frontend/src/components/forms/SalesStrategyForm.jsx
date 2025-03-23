@@ -7,6 +7,8 @@ const SalesStrategyForm = () => {
   const { sendMessage, formResponseIsLoading } = useWebSocketStore();
   const { formIsSubmitted } = useChatStore();
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
     industry_sector: "",
     target_market: "",
@@ -17,11 +19,24 @@ const SalesStrategyForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error when user types
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formData).some((val) => !val.trim())) return;
+
+    // Validate all fields
+    const newErrors = {};
+    if (!formData.industry_sector.trim()) newErrors.industry_sector = "Industry Sector is required.";
+    if (!formData.target_market.trim()) newErrors.target_market = "Target Market is required.";
+    if (!formData.timeframe.trim()) newErrors.timeframe = "Timeframe is required.";
+    if (!formData.data_source.trim()) newErrors.data_source = "Data Source is required.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     const payload = {
       action: "form",
       form: formData,
@@ -63,8 +78,10 @@ const SalesStrategyForm = () => {
               value={formData.industry_sector}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.industry_sector && (
+              <p className="text-red-500 text-xs mt-1">{errors.industry_sector}</p>
+            )}
           </div>
 
           <div className="form-control">
@@ -76,8 +93,10 @@ const SalesStrategyForm = () => {
               value={formData.target_market}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.target_market && (
+              <p className="text-red-500 text-xs mt-1">{errors.target_market}</p>
+            )}
           </div>
 
           <div className="form-control">
@@ -89,8 +108,10 @@ const SalesStrategyForm = () => {
               value={formData.timeframe}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.timeframe && (
+              <p className="text-red-500 text-xs mt-1">{errors.timeframe}</p>
+            )}
           </div>
 
           <div className="form-control md:col-span-2">
@@ -102,8 +123,10 @@ const SalesStrategyForm = () => {
               value={formData.data_source}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.data_source && (
+              <p className="text-red-500 text-xs mt-1">{errors.data_source}</p>
+            )}
           </div>
         </div>
 
