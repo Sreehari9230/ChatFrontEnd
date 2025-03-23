@@ -35,7 +35,7 @@ const Sidebar = () => {
     <aside className="h-full w-75 border-r border-base-300 flex flex-col p-4">
       <div className="border-b border-base-300 w-full pb-4 mb-2">
         <div className="flex items-center gap-2">
-          <Group className="size-6" />
+          <Group className="size-6 text-primary" />
           <span className="font-medium">Departments</span>
         </div>
       </div>
