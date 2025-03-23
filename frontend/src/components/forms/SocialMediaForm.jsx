@@ -15,15 +15,29 @@ const SocialMediaForm = () => {
     goal: "",
   });
 
+  const [errors, setErrors] = useState({});
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Clear error when user types
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    Object.entries(formData).forEach(([key, value]) => {
+      if (!value.trim()) newErrors[key] = "This field is required.";
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formData).some((val) => !val.trim())) return;
+    if (!validateForm()) return;
 
     const payload = {
       action: "form",
@@ -44,6 +58,7 @@ const SocialMediaForm = () => {
         platform: "",
         goal: "",
       });
+      setErrors({});
       setIsWaitingForResponse(false);
     }
   }, [formResponseIsLoading, isWaitingForResponse, formIsSubmitted]);
@@ -58,75 +73,26 @@ const SocialMediaForm = () => {
           Social Media Campaign Setup
         </h2>
 
-        {/* Competitors Field */}
-        <div className="form-control">
-          <label className="label-text">Competitors</label>
-          <input
-            type="text"
-            name="competitors"
-            placeholder="Enter Competitor Name"
-            value={formData.competitors}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            required
-          />
-        </div>
-
-        {/* Campaign Theme Field */}
-        <div className="form-control">
-          <label className="label-text">Campaign Theme</label>
-          <input
-            type="text"
-            name="campaign_theme"
-            placeholder="Enter Campaign Theme"
-            value={formData.campaign_theme}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            required
-          />
-        </div>
-
-        {/* Target Audience Field */}
-        <div className="form-control">
-          <label className="label-text">Target Audience</label>
-          <input
-            type="text"
-            name="target_audience"
-            placeholder="Enter Target Audience"
-            value={formData.target_audience}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            required
-          />
-        </div>
-
-        {/* Platform Field */}
-        <div className="form-control">
-          <label className="label-text">Platform</label>
-          <input
-            type="text"
-            name="platform"
-            placeholder="Enter Platform"
-            value={formData.platform}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            required
-          />
-        </div>
-
-        {/* Goal Field */}
-        <div className="form-control">
-          <label className="label-text">Goal</label>
-          <input
-            type="text"
-            name="goal"
-            placeholder="Enter Goal"
-            value={formData.goal}
-            onChange={handleChange}
-            className="input input-sm input-bordered w-full"
-            required
-          />
-        </div>
+        {[
+          { name: "competitors", label: "Competitors", placeholder: "Enter Competitor Name" },
+          { name: "campaign_theme", label: "Campaign Theme", placeholder: "Enter Campaign Theme" },
+          { name: "target_audience", label: "Target Audience", placeholder: "Enter Target Audience" },
+          { name: "platform", label: "Platform", placeholder: "Enter Platform" },
+          { name: "goal", label: "Goal", placeholder: "Enter Goal" },
+        ].map(({ name, label, placeholder }) => (
+          <div key={name} className="form-control">
+            <label className="label-text">{label}</label>
+            <input
+              type="text"
+              name={name}
+              placeholder={placeholder}
+              value={formData[name]}
+              onChange={handleChange}
+              className="input input-sm input-bordered w-full"
+            />
+            {errors[name] && <p className="text-red-500 text-xs mt-1">{errors[name]}</p>}
+          </div>
+        ))}
 
         {/* Submit Button */}
         <div className="mt-4">
