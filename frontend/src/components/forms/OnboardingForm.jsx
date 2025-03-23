@@ -16,8 +16,31 @@ const OnboardingForm = () => {
     startDate: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" }); // Clear errors on input
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!formData.employee_id.trim()) newErrors.employee_id = "Employee ID is required.";
+    if (!formData.first_name.trim()) newErrors.first_name = "Employee Name is required.";
+    if (!formData.department.trim()) newErrors.department = "Department is required.";
+    if (!formData.position.trim()) newErrors.position = "Position is required.";
+    if (!formData.startDate.trim()) newErrors.startDate = "Start Date is required.";
+
+    // Email validation
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
@@ -26,6 +49,8 @@ const OnboardingForm = () => {
       console.error("❌ No chat ID available.");
       return;
     }
+    if (!validateForm()) return;
+
     const payload = {
       action: "form",
       form: formData,
@@ -62,8 +87,8 @@ const OnboardingForm = () => {
               value={formData.employee_id}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.employee_id && <p className="text-red-500 text-xs mt-1">{errors.employee_id}</p>}
           </div>
 
           {/* Employee Name */}
@@ -76,22 +101,22 @@ const OnboardingForm = () => {
               value={formData.first_name}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.first_name && <p className="text-red-500 text-xs mt-1">{errors.first_name}</p>}
           </div>
 
           {/* Email */}
           <div className="form-control md:col-span-2">
             <label className="label-text">Email</label>
             <input
-              type="email"
+              type="text"
               name="email"
               placeholder="Enter Email"
               value={formData.email}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
           {/* Department */}
@@ -104,8 +129,8 @@ const OnboardingForm = () => {
               value={formData.department}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.department && <p className="text-red-500 text-xs mt-1">{errors.department}</p>}
           </div>
 
           {/* Position */}
@@ -118,8 +143,8 @@ const OnboardingForm = () => {
               value={formData.position}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.position && <p className="text-red-500 text-xs mt-1">{errors.position}</p>}
           </div>
 
           {/* Start Date */}
@@ -131,8 +156,8 @@ const OnboardingForm = () => {
               value={formData.startDate}
               onChange={handleChange}
               className="input input-sm input-bordered w-full"
-              required
             />
+            {errors.startDate && <p className="text-red-500 text-xs mt-1">{errors.startDate}</p>}
           </div>
         </div>
 
