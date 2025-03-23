@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { useChatStore } from "../store/useChatStore";
-import { Group } from "lucide-react";
+import { Group, Briefcase, Users, ShoppingBag } from "lucide-react"; // Import relevant icons
 import { teamMap } from "../lib/utils";
 import { useAuthStore } from "../store/useAuthStore";
 
+const departmentIcons = {
+  "HR Department": Users,
+  SalesDepartment: ShoppingBag,
+  "Marketing Department": Briefcase,
+};
+
 const Sidebar = () => {
   const { setTeamSelected, getChatHistory } = useChatStore();
-  const { DepartmentsTeams, CompanyData } = useAuthStore();
+  const { CompanyData } = useAuthStore();
 
   const DepartmentsTeams2 = CompanyData.package.features;
 
@@ -35,38 +41,43 @@ const Sidebar = () => {
       </div>
 
       <div className="overflow-y-auto w-full">
-        {Object.entries(DepartmentsTeams2).map(([department, teams]) => (
-          <div
-            key={department}
-            className="collapse collapse-arrow bg-base-200 mb-2"
-          >
-            <input
-              type="checkbox"
-              checked={openDepartment === department}
-              onChange={() => handleToggle(department)}
-              className="hidden"
-            />
+        {Object.entries(DepartmentsTeams2).map(([department, teams]) => {
+          const Icon = departmentIcons[department] || Group; // Default icon if department not in mapping
+
+          return (
             <div
-              className="collapse-title text-lg font-medium cursor-pointer"
-              onClick={() => handleToggle(department)}
+              key={department}
+              className="collapse collapse-arrow bg-base-200 mb-2"
             >
-              {department}
+              <input
+                type="checkbox"
+                checked={openDepartment === department}
+                onChange={() => handleToggle(department)}
+                className="hidden"
+              />
+              <div
+                className="collapse-title text-lg font-medium cursor-pointer flex items-center gap-3"
+                onClick={() => handleToggle(department)}
+              >
+                <Icon className="size-5 text-primary" /> {/* Department icon */}
+                {department}
+              </div>
+              <div className="collapse-content">
+                {teams.map((team) => (
+                  <button
+                    key={team}
+                    onClick={() => handleTeamSelection(team)}
+                    className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors text-sm rounded-md ${
+                      selectedTeam === team ? "bg-base-300" : ""
+                    }`}
+                  >
+                    {team}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="collapse-content">
-              {teams.map((team) => (
-                <button
-                  key={team}
-                  onClick={() => handleTeamSelection(team)}
-                  className={`w-full p-2 flex items-center gap-3 hover:bg-base-300 transition-colors text-sm rounded-md ${
-                    selectedTeam === team ? "bg-base-300" : ""
-                  }`}
-                >
-                  {team}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </aside>
   );
