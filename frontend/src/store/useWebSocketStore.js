@@ -26,8 +26,8 @@ const useWebSocketStore = create((set, get) => ({
     // Clear messages before reconnecting
     set({ currentMessages: [], fetchedMessages: [] });
 
-    const ws = new WebSocket(`wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/${chatId}/`);
-    // const ws = new WebSocket(`ws://13.61.220.76/ws/messages/${chatId}/`);
+    // const ws = new WebSocket(`wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/${chatId}/`);
+    const ws = new WebSocket(`ws://13.61.220.76/ws/messages/${chatId}/`);
 
 
     ws.onopen = () => {
@@ -35,38 +35,6 @@ const useWebSocketStore = create((set, get) => ({
       set({ isConnected: true });
       get().fetchChatMessages(); // Fetch chat history when connected
     };
-
-    // ws.onmessage = (event) => {
-    //   try {
-    //     const data = JSON.parse(event.data);
-    //     console.log("📩 Message received:", data);
-
-    //     if (data.action === 'task_queued') {
-    //       set((state) => ({
-    //         ThinkingMessage: [data] // Always replace the previous message
-    //       }));
-    //     }
-
-
-    //     if (data.action === "show_messages" && Array.isArray(data.messages)) {
-    //       set({ fetchedMessages: data.messages });
-    //       set({ isFetchMessagesLoading: false });
-    //     } else if (data.action === "new_message") {
-    //       set((state) => ({
-    //         currentMessages: [...state.currentMessages, data],
-    //         responseIsThinking: false,
-    //       }));
-    //     }
-
-    //     // Set formResponseIsLoading to false when receiving "form_response"
-    //     if (data.action === "new_message") {
-    //       set({ formResponseIsLoading: false });
-    //     }
-
-    //   } catch (error) {
-    //     console.error("❌ Error parsing WebSocket message:", error);
-    //   }
-    // };
 
     ws.onmessage = (event) => {
       try {
