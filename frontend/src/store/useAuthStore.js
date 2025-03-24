@@ -101,31 +101,6 @@ export const useAuthStore = create((set) => ({
         }
     },
 
-    // fetchHome: async (accessToken) => {
-    //     try {
-    //         console.log('inside fetchHome');
-    //         const res = await axiosInstance.get("/organization/home/", {
-    //             headers: { Authorization: `Bearer ${accessToken}` },
-    //         });
-    //         console.log('fetchHome over', res.data);
-
-    //         // const newDepartmentsTeams = res.data.package.features;
-    //         // set({ DepartmentsTeams: newDepartmentsTeams });
-
-    //         // Store the new data in localStorage
-    //         // localStorage.setItem('DepartmentsTeams', JSON.stringify(newDepartmentsTeams));
-
-    //         const Company = res.data;
-    //         set({ CompanyData: Company });
-
-    //         // Store the new data in localStorage
-    //         localStorage.setItem("CompanyData", JSON.stringify(Company));
-    //     } catch (error) {
-    //         console.error("Error fetching home data:", error);
-    //     }
-    // },
-
-
     fetchHome: async (accessToken) => {
         try {
             console.log("inside fetchHome");
@@ -134,7 +109,7 @@ export const useAuthStore = create((set) => ({
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
     
-            console.log("fetchHome over", res.data);
+            console.log("fetchHome ResponseData", res.data);
     
             // Clear existing CompanyData from localStorage
             // localStorage.removeItem("CompanyData");
@@ -142,14 +117,11 @@ export const useAuthStore = create((set) => ({
             const Company = res.data;
             set({ CompanyData: Company });
     
-            // Store the new data in localStorage
             localStorage.setItem("CompanyData", JSON.stringify(Company));
         } catch (error) {
             console.error("Error fetching home data:", error);
         }
     },
-
-    
 
     logout: () => {
         // Get the current theme before clearing storage
