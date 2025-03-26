@@ -10,7 +10,7 @@ const useWebSocketStore = create((set, get) => ({
   formResponseIsLoading: false,
   ThinkingMessage: [],
 
-
+ 
   connect: (chatId) => {
     if (!chatId) {
       console.error("WebSocketStore: chatId is missing.");
