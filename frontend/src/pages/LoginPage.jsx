@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { Eye, EyeOff, Loader2, Mail, MessageSquare, Lock, ChartColumnBig } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Mail,
+  MessageSquare,
+  Lock,
+  ChartColumnBig,
+} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import SmartTeams from '../assets/SmartTeams.jpg'
+import SmartTeams from "../assets/SmartTeams.jpg";
 import AiBots from "../assets/AiBots.jpg";
 
 const LoginPage = () => {
@@ -34,10 +42,6 @@ const LoginPage = () => {
       setIsLoggingIn(false);
       return toast.error("Password is required");
     }
-    if (formData.password.length < 1) {
-      setIsLoggingIn(false);
-      return toast.error("Password must be at least 6 characters");
-    }
     console.log("Form submitted successfully:", formData);
     return true;
   };
@@ -47,25 +51,26 @@ const LoginPage = () => {
     e.preventDefault();
     const success = validateForm();
     if (success) {
-      console.log("insideSuccessCondition");
+      console.log("inside Success Condition In HandleSubmit");
       // Trigger login action with form data
-      const response = await login(formData); // Make sure login returns the tokens
-      console.log(response, "bhjvghv");
-      console.log("accessTokenInHandleSubmit:", response.access_token);
-      console.log("refreshTokenInHandleSubmit:", response.refresh_token);
-      // Store tokens upon successful login
+
+      const response = await login(formData);
+      console.log(response);
+      if (response == "Login failed. Please check your credentials.") {
+        setIsLoggingIn(false);
+        toast.error("Invalid email, password, or user role");
+      }
 
       if (response.access_token && response.refresh_token) {
         localStorage.setItem("access_token", response.access_token);
         localStorage.setItem("refresh_token", response.refresh_token);
 
-        //  // Optionally, call fetchHome here
         await fetchHome(response.access_token);
+        toast.success("Logged In Successfully");
 
         // Optionally, redirect or show user a success message
-        navigate("/"); // Redirect after successful login
+        navigate("/");
       } else {
-        // Handle failure case or error if tokens aren't returned
         console.error("Token missing after login");
       }
     }
@@ -73,11 +78,10 @@ const LoginPage = () => {
   };
 
   const handleResetPassword = async (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
 
     console.log("Inside handleResetPassword function in login page");
 
-    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!resetEmail.trim()) {
       return toast.error("Email is required");
@@ -86,11 +90,10 @@ const LoginPage = () => {
       return toast.error("Please enter a valid email address");
     }
 
-    setIsResettingPassword(true); // Start loading state
+    setIsResettingPassword(true);
 
     const data = { email: resetEmail };
 
-    // Call ForgotPassword and handle response
     const response = await ForgotPassword(data);
     console.log(response);
     if (response.success) {
@@ -102,7 +105,6 @@ const LoginPage = () => {
       toast.error(response.message);
     }
   };
-
 
   return (
     <div
@@ -199,10 +201,7 @@ const LoginPage = () => {
 
             {/* Help and Forgot Password Links */}
             <div className="flex justify-between items-center">
-              <Link
-                to="/help"
-                className="text-sm text-white hover:underline"
-              >
+              <Link to="/help" className="text-sm text-white hover:underline">
                 Need help?
               </Link>
               <button

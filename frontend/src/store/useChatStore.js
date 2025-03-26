@@ -196,7 +196,7 @@ export const useChatStore = create((set, get) => ({
             console.log(`New Chat ID: ${newChatId}`);
         } catch (error) {
             // toast.error(error.message || "An error occurred while fetching the chat.");
-            conlsoe.log(error.message, "Error In getNewCHat Function");
+            console.log(error.message, "Error In getNewCHat Function");
         }
     },
 }))
