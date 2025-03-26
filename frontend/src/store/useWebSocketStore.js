@@ -27,7 +27,7 @@ const useWebSocketStore = create((set, get) => ({
     set({ currentMessages: [], fetchedMessages: [] });
 
     // const ws = new WebSocket(`wss://v5dmsmd1-8000.inc1.devtunnels.ms/ws/messages/${chatId}/`);
-    const ws = new WebSocket(`ws://13.61.220.76/ws/messages/${chatId}/`);
+    const ws = new WebSocket(`wss://13.61.220.76/ws/messages/${chatId}/`);
 
 
     ws.onopen = () => {
