@@ -134,7 +134,7 @@ const LoginPage = () => {
               />
             </div>
             <h1 className="text-2xl font-bold mt-2 text-white drop-shadow-md">
-              Smart Teams
+              Smart Teams  NetlifyUpdated
             </h1>
           </div>
         </div>
