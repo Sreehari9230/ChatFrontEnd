@@ -35,7 +35,7 @@ const FetchedBubbles = () => {
     sendMessage({ action: "retry", message: "retry" });
   };
 
-  if (isFetchMessagesLoading) return <MessageSkeleton />;
+  // if (isFetchMessagesLoading) return <MessageSkeleton />;
 
   return (
     <>
