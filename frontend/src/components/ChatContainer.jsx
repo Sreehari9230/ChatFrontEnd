@@ -19,6 +19,7 @@ import ChatBubbles from "./ChatBubbles";
 import useWebSocketStore from "../store/useWebSocketStore";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import NoChatBubbles from "./NoChatBubbles";
+// import Teams from "./Teams";
 
 const ChatContainer = () => {
   const {
@@ -77,40 +78,7 @@ const ChatContainer = () => {
     // form should be shown if the form button in the newUi is clicked
     // newUi should be shpwn if the user gets in and he has no prevous chat in the team or he has clicked the newChat button
 
-    // <div className="flex-1 flex flex-col overflow-auto">
-    //   <ChatHeader /> {/* Always Visible */}
-    //   {formButtonClicked ? (
-    //     formRenderContent() // Show form when form button is clicked
-    //   ) : !hasChatHistory || newChatButtonClicked ? (
-    //     isFetchMessagesLoading || isChatHistoryLoading ? (
-    //       <MessageSkeleton />
-    //     ) : SendButtonInWelcomeChat ? ( // Add this condition
-    //       <>
-    //         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-    //           {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
-    //             <NoChatBubbles />
-    //           ) : (
-    //             <ChatBubbles />
-    //           )}
-    //         </div>
-    //         <MessageInput />
-    //       </>
-    //     ) : (
-    //       <WelcomeChat />
-    //     )
-    //   ) : (
-    //     <>
-    //       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-    //         {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
-    //           <NoChatBubbles />
-    //         ) : (
-    //           <ChatBubbles />
-    //         )}
-    //       </div>
-    //       <MessageInput />
-    //     </>
-    //   )}
-    // </div>
+
 
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader /> {/* Always Visible */}
