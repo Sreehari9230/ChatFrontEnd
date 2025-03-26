@@ -4,9 +4,8 @@ import toast from 'react-hot-toast'
 
 export const useAuthStore = create((set) => ({
     authUser: null,
-    // isSigningUp: false,
+
     isLoggingIn: false,
-    // isUpdatingProfile: false,
 
     isCheckingAuth: true,
 
@@ -17,10 +16,6 @@ export const useAuthStore = create((set) => ({
 
     userAuth: false,
 
-
-
-    // DepartmentsTeams: JSON.parse(localStorage.getItem('DepartmentsTeams')) || [],
-    // CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || null,
     CompanyData: JSON.parse(localStorage.getItem("CompanyData")) || [],
     // {
     //     "id": "96733e68-4241-4892-8028-2ccc820d2659",
@@ -68,7 +63,7 @@ export const useAuthStore = create((set) => ({
         set({ isLoggingIn: true });
         try {
             const res = await axiosInstance.post('/organization/login/', data);
-            console.log('response:', res.data)
+            console.log('response:', res)
             const { access_token, refresh_token, user_id, role } = res.data;
             // Set auth-related details in the state
 
@@ -81,6 +76,7 @@ export const useAuthStore = create((set) => ({
             });
             console.log('accessToken:', access_token);
             console.log('refreshToken:', refresh_token);
+            // const message = res.data
 
             // Store tokens locally
             localStorage.setItem('access_token', access_token);
@@ -89,13 +85,14 @@ export const useAuthStore = create((set) => ({
             // Return the response tokens to be used in the login handler
             return {
                 access_token,
-                refresh_token
+                refresh_token,
             };
 
         } catch (error) {
             const message = error.response?.data?.message || 'Login failed. Please check your credentials.';
             console.log('Catch Error In login function', message)
-            // toast.error(message);
+            console.log('Catch Error In login function res', error.error)
+            return message
         } finally {
             set({ isLoggingIn: false });
         }
@@ -104,19 +101,19 @@ export const useAuthStore = create((set) => ({
     fetchHome: async (accessToken) => {
         try {
             console.log("inside fetchHome");
-    
+
             const res = await axiosInstance.get("/organization/home/", {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
-    
+
             console.log("fetchHome ResponseData", res.data);
-    
+
             // Clear existing CompanyData from localStorage
             // localStorage.removeItem("CompanyData");
-    
+
             const Company = res.data;
             set({ CompanyData: Company });
-    
+
             localStorage.setItem("CompanyData", JSON.stringify(Company));
         } catch (error) {
             console.error("Error fetching home data:", error);
