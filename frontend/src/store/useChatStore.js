@@ -12,6 +12,8 @@ export const useChatStore = create((set, get) => ({
     isTeamSelected: false,
     teamSelected: '',
 
+    newChatIdLoading: false,
+
     isChatHistoryLoading: false,
     chatHistory: [],
     hasChatHistory: false,
@@ -173,6 +175,7 @@ export const useChatStore = create((set, get) => ({
 
     getNewChat: async (teamSelected) => {
         try {
+            set({ newChatIdLoading: true })
             console.log(`New Chat Is Fetching For ${teamSelected}`);
 
             const accessToken = localStorage.getItem('access_token');
@@ -197,6 +200,8 @@ export const useChatStore = create((set, get) => ({
         } catch (error) {
             // toast.error(error.message || "An error occurred while fetching the chat.");
             console.log(error.message, "Error In getNewCHat Function");
+        } finally {
+            set({ newChatIdLoading: false })
         }
     },
 }))
