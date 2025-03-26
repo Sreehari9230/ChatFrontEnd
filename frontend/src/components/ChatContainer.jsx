@@ -31,6 +31,7 @@ const ChatContainer = () => {
     chatId,
     isChatHistoryLoading,
     SendButtonInWelcomeChat,
+    newChatIdLoading,
   } = useChatStore();
   // console.log(teamSelected, "hehe");
   const { authUser } = useAuthStore();
@@ -81,29 +82,63 @@ const ChatContainer = () => {
     //   {formButtonClicked ? (
     //     formRenderContent() // Show form when form button is clicked
     //   ) : !hasChatHistory || newChatButtonClicked ? (
-    //     isFetchMessagesLoading ? (
+    //     isFetchMessagesLoading || isChatHistoryLoading ? (
     //       <MessageSkeleton />
+    //     ) : SendButtonInWelcomeChat ? ( // Add this condition
+    //       <>
+    //         <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    //           {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
+    //             <NoChatBubbles />
+    //           ) : (
+    //             <ChatBubbles />
+    //           )}
+    //         </div>
+    //         <MessageInput />
+    //       </>
     //     ) : (
     //       <WelcomeChat />
     //     )
     //   ) : (
     //     <>
     //       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-    //         <ChatBubbles /> {/* Show chat messages if form is not shown */}
+    //         {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
+    //           <NoChatBubbles />
+    //         ) : (
+    //           <ChatBubbles />
+    //         )}
     //       </div>
-    //       <MessageInput /> {/* Always keep input with chat */}
+    //       <MessageInput />
     //     </>
     //   )}
     // </div>
 
     <div className="flex-1 flex flex-col overflow-auto">
-    <ChatHeader /> {/* Always Visible */}
-    {formButtonClicked ? (
-      formRenderContent() // Show form when form button is clicked
-    ) : !hasChatHistory || newChatButtonClicked ? (
-      isFetchMessagesLoading ? (
-        <MessageSkeleton />
-      ) : SendButtonInWelcomeChat ? ( // Add this condition
+      <ChatHeader /> {/* Always Visible */}
+      {newChatIdLoading ? (
+        // <LoaderComponent /> // Replace with your actual loader component
+        <div className="flex items-center justify-center flex-1">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      ) : formButtonClicked ? (
+        formRenderContent() // Show form when form button is clicked
+      ) : !hasChatHistory || newChatButtonClicked ? (
+        isFetchMessagesLoading || isChatHistoryLoading ? (
+          <MessageSkeleton />
+        ) : SendButtonInWelcomeChat ? ( // Add this condition
+          <>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
+                <NoChatBubbles />
+              ) : (
+                <ChatBubbles />
+              )}
+            </div>
+            <MessageInput />
+          </>
+        ) : (
+          <WelcomeChat />
+        )
+      ) : (
         <>
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
@@ -114,22 +149,8 @@ const ChatContainer = () => {
           </div>
           <MessageInput />
         </>
-      ) : (
-        <WelcomeChat />
-      )
-    ) : (
-      <>
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {fetchedMessages.length === 0 && currentMessages.length === 0 ? (
-            <NoChatBubbles />
-          ) : (
-            <ChatBubbles />
-          )}
-        </div>
-        <MessageInput />
-      </>
-    )}
-  </div>
+      )}
+    </div>
   );
 };
 
