@@ -40,8 +40,8 @@ const WelcomeChat = () => {
   };
 
   const handleNewForm = () => {
-    console.log(`Starting New Form in ${teamSelected}`);
-    console.log(teamSelected);
+    // console.log(`Starting New Form in ${teamSelected}`);
+    // console.log(teamSelected);
     setFormButtonClicked();
   };
 

@@ -29,7 +29,7 @@ import { useGraphStore } from "../store/useGraphStore";
 const GraphPage = () => {
   const { GraphData, GetGraphData, GraphDataLoading } = useGraphStore();
 
-  console.log(GraphData, "insidegraphdata");
+  // console.log(GraphData, "insidegraphdata");
   useEffect(() => {
     GetGraphData();
   }, []);
@@ -39,15 +39,15 @@ const GraphPage = () => {
 
   // Set initial selected date (if data is available)
   const initialDate = hasData ? GraphData[0].date : "";
-  console.log(initialDate, "initialdate");
+  // console.log(initialDate, "initialdate");
   const [selectedDate, setSelectedDate] = useState("");
-  console.log(selectedDate, "selctedDtaa1");
+  // console.log(selectedDate, "selctedDtaa1");
   useEffect(() => {
     if (hasData) {
       setSelectedDate(GraphData[0].date);
     }
   }, [GraphData]); // Runs whenever GraphData changes
-  console.log(selectedDate, "selctedDtaa2");
+  // console.log(selectedDate, "selctedDtaa2");
 
   // Set active tab
   const [activeTab, setActiveTab] = useState("overall");

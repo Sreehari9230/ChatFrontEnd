@@ -6,7 +6,7 @@ const ChatHistoryDrawer = ({ onClose }) => {
   const { chatHistory, isChatHistoryLoading, updateChatId } = useChatStore();
 
   useEffect(() => {
-    console.log(chatHistory, "inside chat history drawer");
+    // console.log(chatHistory, "inside chat history drawer");
   }, [chatHistory]);
 
   return (

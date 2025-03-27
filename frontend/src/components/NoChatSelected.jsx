@@ -8,7 +8,7 @@ const NoChatSelected = () => {
 
   const hours = new Date().getHours();
   // const hours = 2
-  console.log(hours);
+  // console.log(hours);
   let greeting = "Good evening";
   let Icon = Moon;
 

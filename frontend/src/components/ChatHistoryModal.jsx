@@ -7,7 +7,7 @@ const ChatHistoryModal = ({ chats, onClose }) => {
   const { chatHistory, isChatHistoryLoading, updateChatId } = useChatStore();
 
   useEffect(() => {
-    console.log(chatHistory, "inside chat history modal");
+    // console.log(chatHistory, "inside chat history modal");
   }, [chatHistory]);
 
   return (

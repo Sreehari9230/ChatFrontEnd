@@ -36,63 +36,63 @@ export const useSettingsStore = create((set) => ({
 
     FetchSettingsData: async () => {
         try {
-            console.log('Inside FetchSettingsData Function')
+            // console.log('Inside FetchSettingsData Function')
             set({ isSettingsDataLoading: true })
             const accessToken = localStorage.getItem("access_token");
-            console.log("Access Token:", accessToken);
+            // console.log("Access Token:", accessToken);
 
             const res = await axiosInstance.get("/organization/settings/", {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
 
-            console.log("Fetched Settings Data:", res.data);
+            // console.log("Fetched Settings Data:", res.data);
             set({ SettingsData: res.data });
 
         } catch (error) {
             // toast.error(`Error In FetchSettingsData: ${error.message}`);
             console.error("Error In FetchSettingsData:", error);
         } finally {
-            console.log('FetchSettingsData Function Over')
+            // console.log('FetchSettingsData Function Over')
             set({ isSettingsDataLoading: false })
         }
     },
 
     EditSettingsData: async (data) => {
         try {
-            console.log('Inside EditSettingsData Function')
+            // console.log('Inside EditSettingsData Function')
             set({ isSettingsDataLoading: true })
             const accessToken = localStorage.getItem("access_token");
-            console.log("Access Token:", accessToken);
+            // console.log("Access Token:", accessToken);
 
             const res = await axiosInstance.put("/organization/settings/", data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
 
-            console.log("Updated Settings Data:", res.data);
+            // console.log("Updated Settings Data:", res.data);
             set({ SettingsData: res.data });
 
         } catch (error) {
             // toast.error(`Error In FetchSettingsData: ${error.message}`);
             console.error("Error In FetchSettingsData:", error);
         } finally {
-            console.log('FetchSettingsData Function Over')
+            // console.log('FetchSettingsData Function Over')
             set({ isSettingsDataLoading: false })
         }
     },
 
     PostTicket: async (data) => {
         try {
-            console.log("Inside PostTicket function");
+            // console.log("Inside PostTicket function");
             set({ isPostingTicket: true });
     
             const accessToken = localStorage.getItem("access_token");
-            console.log("Access Token:", accessToken);
-    console.log(data, "data")
+            // console.log("Access Token:", accessToken);
+    // console.log(data, "data")
             const res = await axiosInstance.post("/organization/raise-ticket/", data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
     
-            console.log("Response:", res.data);
+            // console.log("Response:", res.data);
             return res.data;  // Return response data to handle in modal
     
         } catch (error) {

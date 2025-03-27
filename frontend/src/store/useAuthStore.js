@@ -63,7 +63,7 @@ export const useAuthStore = create((set) => ({
         set({ isLoggingIn: true });
         try {
             const res = await axiosInstance.post('/organization/login/', data);
-            console.log('response:', res)
+            // console.log('response:', res)
             const { access_token, refresh_token, user_id, role } = res.data;
             // Set auth-related details in the state
 
@@ -74,8 +74,8 @@ export const useAuthStore = create((set) => ({
                 userRole: role,
                 userId: user_id,
             });
-            console.log('accessToken:', access_token);
-            console.log('refreshToken:', refresh_token);
+            // console.log('accessToken:', access_token);
+            // console.log('refreshToken:', refresh_token);
             // const message = res.data
 
             // Store tokens locally
@@ -90,8 +90,8 @@ export const useAuthStore = create((set) => ({
 
         } catch (error) {
             const message = error.response?.data?.message || 'Login failed. Please check your credentials.';
-            console.log('Catch Error In login function', message)
-            console.log('Catch Error In login function res', error.error)
+            // console.log('Catch Error In login function', message)
+            // console.log('Catch Error In login function res', error.error)
             return message
         } finally {
             set({ isLoggingIn: false });
@@ -100,13 +100,13 @@ export const useAuthStore = create((set) => ({
 
     fetchHome: async (accessToken) => {
         try {
-            console.log("inside fetchHome");
+            // console.log("inside fetchHome");
 
             const res = await axiosInstance.get("/organization/home/", {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
 
-            console.log("fetchHome ResponseData", res.data);
+            // console.log("fetchHome ResponseData", res.data);
 
             // Clear existing CompanyData from localStorage
             // localStorage.removeItem("CompanyData");
@@ -144,11 +144,11 @@ export const useAuthStore = create((set) => ({
 
     ForgotPassword: async (data) => {
         try {
-            console.log("Inside ForgotPassword Fn");
+            // console.log("Inside ForgotPassword Fn");
 
             const res = await axiosInstance.post("/auth/forgot-password/", data);
 
-            console.log(res.data);
+            // console.log(res.data);
 
             if (res.data.success == false) {
                 return { success: false, message: res.data.message };

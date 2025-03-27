@@ -42,7 +42,7 @@ const LoginPage = () => {
       setIsLoggingIn(false);
       return toast.error("Password is required");
     }
-    console.log("Form submitted successfully:", formData);
+    // console.log("Form submitted successfully:", formData);
     return true;
   };
 
@@ -51,11 +51,11 @@ const LoginPage = () => {
     e.preventDefault();
     const success = validateForm();
     if (success) {
-      console.log("inside Success Condition In HandleSubmit");
+      // console.log("inside Success Condition In HandleSubmit");
       // Trigger login action with form data
 
       const response = await login(formData);
-      console.log(response);
+      // console.log(response);
       if (response == "Login failed. Please check your credentials.") {
         setIsLoggingIn(false);
         toast.error("Invalid email, password, or user role");
@@ -80,7 +80,7 @@ const LoginPage = () => {
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
-    console.log("Inside handleResetPassword function in login page");
+    // console.log("Inside handleResetPassword function in login page");
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!resetEmail.trim()) {
@@ -95,7 +95,7 @@ const LoginPage = () => {
     const data = { email: resetEmail };
 
     const response = await ForgotPassword(data);
-    console.log(response);
+    // console.log(response);
     if (response.success) {
       setIsResettingPassword(false); // Start loading state
       toast.success(response.message);
