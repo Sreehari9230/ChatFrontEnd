@@ -1,40 +1,23 @@
 import React, { useState } from "react";
 import { useChatStore } from "../store/useChatStore";
-import {
-  Group,
-  Briefcase,
-  Users,
-  ShoppingBag,
-  Code,
-  ClipboardList,
-  DollarSign,
-  Server,
-  FlaskConical,
-} from "lucide-react";
+import { Group, Briefcase, Users, ShoppingBag } from "lucide-react"; // Import relevant icons
 import { teamMap } from "../lib/utils";
 import { useAuthStore } from "../store/useAuthStore";
-import "../components/styles/scrollstyle.css";
 
 const departmentIcons = {
   "HR Department": Users,
-  SalesDepartment: ShoppingBag,
+  "SalesDepartment": ShoppingBag,
   "Marketing Department": Briefcase,
-  "Software Development": Code,
-  "Project Management": ClipboardList,
-  Finance: DollarSign,
-  Operations: Briefcase,
-  "IT & Infrastructure": Server,
-  "R&D": FlaskConical,
 };
 
 const additionalDepartments = [
-  "Software Development",
-  "Project Management",
-  "Finance",
-  "Operations",
-  "IT & Infrastructure",
-  "R&D",
-];
+    "Software Development",
+    "Project Management",
+    "Finance",
+    "Operations",
+    "IT & Infrastructure",
+    "R&D",
+  ];
 
 const Sidebar = () => {
   const { setTeamSelected, getChatHistory } = useChatStore();
@@ -62,6 +45,8 @@ const Sidebar = () => {
     // Add function logic here (e.g., update state, fetch data, etc.)
   };
 
+
+
   return (
     <aside className="h-full w-75 border-r border-base-300 flex flex-col p-4">
       <div className="border-b border-base-300 w-full pb-4 mb-2">
@@ -71,9 +56,9 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="overflow-y-auto w-full custom-scrollbar">
+      <div className="overflow-y-auto w-full">
         {Object.entries(DepartmentsTeams2).map(([department, teams]) => {
-          const Icon = departmentIcons[department] || Group; // Default icon if not mapped
+          const Icon = departmentIcons[department] || Group; // Default icon if department not in mapping
 
           return (
             <div
@@ -111,19 +96,18 @@ const Sidebar = () => {
         })}
 
         {/* Render additional departments as standalone buttons */}
-        {additionalDepartments.map((department) => {
-          const Icon = departmentIcons[department] || Group;
-          return (
-            <button
-              key={department}
-              onClick={() => handleDepartmentClick(department)}
-              className="w-full bg-base-200 mb-2 p-3 flex items-center gap-3 hover:bg-base-300 transition-colors text-lg font-medium rounded-md"
-            >
-              <Icon className="size-5 text-primary" />
-              {department}
-            </button>
-          );
-        })}
+        {additionalDepartments.map((department) => (
+          <button
+            key={department}
+            onClick={() => handleDepartmentClick(department)}
+            className="w-full bg-base-200 mb-2 p-3 flex items-center gap-3 hover:bg-base-300 transition-colors text-lg font-medium rounded-md"
+          >
+            <Group className="size-5 text-primary" />
+            {department}
+          </button>
+        ))}
+
+
       </div>
     </aside>
   );
