@@ -65,7 +65,7 @@ const ChatContainer = () => {
     ) {
       const SelectedForm = formComponents[teamSelected];
       if (SelectedForm) {
-        console.log(`Rendering form for: ${teamSelected}`);
+        // console.log(`Rendering form for: ${teamSelected}`);
         return <SelectedForm />;
       }
     }

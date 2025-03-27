@@ -66,7 +66,7 @@ const SettingsPage = () => {
   }
 
   const handleLogout = () => {
-    console.log("Logging out...");
+    // console.log("Logging out...");
     logout();
     navigate("/login"); // Redirect user to login page
   };

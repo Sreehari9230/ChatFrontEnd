@@ -36,12 +36,12 @@ export const useChatStore = create((set, get) => ({
     SendButtonInWelcomeChat: false,
 
     SetSendButtonInWelcomeChat: () => {
-        console.log('inside SetSendButtonInWelcomeChat function')
+        // console.log('inside SetSendButtonInWelcomeChat function')
         set({ SendButtonInWelcomeChat: true })
     },
 
     UnSetSendButtonInWelcomeChat: () => {
-        console.log('inside UnSetSendButtonInWelcomeChat function')
+        // console.log('inside UnSetSendButtonInWelcomeChat function')
         set({ SendButtonInWelcomeChat: false })
     },
 
@@ -49,14 +49,14 @@ export const useChatStore = create((set, get) => ({
 
 
     formIsSubmitted: () => {
-        console.log("Form submitted, showing chat bubbles & input");
+        // console.log("Form submitted, showing chat bubbles & input");
         // state.formButtonClicked = false; // Hide form
         set({ formButtonClicked: false })
         set({ newChatButtonClicked: false })
     },
 
     setFormButtonClicked: () => {
-        console.log("Form button clicked, showing form UI");
+        // console.log("Form button clicked, showing form UI");
         // state.formButtonClicked = true; // Show form
         set({ formButtonClicked: true })
 
@@ -64,7 +64,7 @@ export const useChatStore = create((set, get) => ({
     },
 
     setChatManuallyButtonClicked: () => {
-        console.log("Chat manually button clicked, showing chat bubbles & input");
+        // console.log("Chat manually button clicked, showing chat bubbles & input");
         // state.formButtonClicked = false; // Hide form
         // state.newChatButtonClicked = false; // Hide new chat UI
         set({ formButtonClicked: false })
@@ -72,7 +72,7 @@ export const useChatStore = create((set, get) => ({
     },
 
     setNewChatButtonClicked: () => {
-        console.log("New chat button clicked, showing new chat UI");
+        // console.log("New chat button clicked, showing new chat UI");
         set({ newChatButtonClicked: true })
     },
 
@@ -80,7 +80,7 @@ export const useChatStore = create((set, get) => ({
         set({ deaprtmentSelected: department })
     },
     SetComingSoonDepartment: () => {
-        console.log('inside setComingSoonDepartment')
+        // console.log('inside setComingSoonDepartment')
         set({ isComingSoonDepartmentSelected: true })
     },
 
@@ -103,7 +103,7 @@ export const useChatStore = create((set, get) => ({
             newChatButtonClicked: false,
             isComingSoonDepartmentSelected: false
         });
-        console.log(`Team selected: ${team}, resetting chat states.`);
+        // console.log(`Team selected: ${team}, resetting chat states.`);
     },
 
     setHistoryModal: (isOpen) => set({ isHistoryModalOpen: isOpen }),
@@ -114,13 +114,13 @@ export const useChatStore = create((set, get) => ({
         // Ensure messages are cleared in useWebSocketStore
         useWebSocketStore.getState().ws?.close(); // Close the existing WebSocket connection
         useWebSocketStore.setState({ currentMessages: [], fetchedMessages: [] });
-        console.log("Chat ID updated, messages cleared");
+        // console.log("Chat ID updated, messages cleared");
     },
 
     getChatHistory: async (teamSelected) => {
         set({ isChatHistoryLoading: true });
         try {
-            console.log('Fetching chat history...');
+            // console.log('Fetching chat history...');
             const accessToken = localStorage.getItem('access_token');
             if (!accessToken) {
                 throw new Error('Access token is missing. Please log in again.');
@@ -132,7 +132,7 @@ export const useChatStore = create((set, get) => ({
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            console.log(res, 'hahaha')
+            // console.log(res, 'hahaha')
 
             // Using mock data instead
             // const res = {
@@ -145,7 +145,7 @@ export const useChatStore = create((set, get) => ({
             // };
 
             set((state) => {
-                console.log('Updated chat history:', res.data);
+                // console.log('Updated chat history:', res.data);
                 const chatHistory = res.data;
 
                 // If chat history is not empty, update the chatId with the last chat session ID
@@ -182,7 +182,7 @@ export const useChatStore = create((set, get) => ({
     getNewChat: async (teamSelected) => {
         try {
             set({ newChatIdLoading: true })
-            console.log(`New Chat Is Fetching For ${teamSelected}`);
+            // console.log(`New Chat Is Fetching For ${teamSelected}`);
 
             const accessToken = localStorage.getItem('access_token');
             if (!accessToken) {
@@ -202,10 +202,10 @@ export const useChatStore = create((set, get) => ({
             const newChatId = res.data.chat_message_id;
             set((state) => ({ ...state, chatId: newChatId })); // ✅ Update chatId state
 
-            console.log(`New Chat ID: ${newChatId}`);
+            // console.log(`New Chat ID: ${newChatId}`);
         } catch (error) {
             // toast.error(error.message || "An error occurred while fetching the chat.");
-            console.log(error.message, "Error In getNewCHat Function");
+            // console.log(error.message, "Error In getNewCHat Function");
         } finally {
             set({ newChatIdLoading: false })
         }
