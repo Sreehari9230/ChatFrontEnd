@@ -37,7 +37,12 @@ const additionalDepartments = [
 ];
 
 const Sidebar = () => {
-  const { setTeamSelected, getChatHistory } = useChatStore();
+  const {
+    setTeamSelected,
+    getChatHistory,
+    setDepartmentSelected,
+    SetComingSoonDepartment,
+  } = useChatStore();
   const { CompanyData } = useAuthStore();
 
   const DepartmentsTeams2 = CompanyData.package.features;
@@ -59,6 +64,8 @@ const Sidebar = () => {
 
   const handleDepartmentClick = (department) => {
     console.log("Department Clicked:", department);
+    setDepartmentSelected(department);
+    SetComingSoonDepartment();
     // Add function logic here (e.g., update state, fetch data, etc.)
   };
 
