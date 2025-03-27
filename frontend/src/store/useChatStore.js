@@ -12,6 +12,8 @@ export const useChatStore = create((set, get) => ({
     isTeamSelected: false,
     teamSelected: '',
 
+    isComingSoonDepartmentSelected: false,
+
     newChatIdLoading: false,
 
     isChatHistoryLoading: false,
@@ -71,12 +73,15 @@ export const useChatStore = create((set, get) => ({
 
     setNewChatButtonClicked: () => {
         console.log("New chat button clicked, showing new chat UI");
-        // state.newChatButtonClicked = true;
         set({ newChatButtonClicked: true })
     },
 
     setDepartmentSelected: (department) => {
         set({ deaprtmentSelected: department })
+    },
+    SetComingSoonDepartment: () => {
+        console.log('inside setComingSoonDepartment')
+        set({ isComingSoonDepartmentSelected: true })
     },
 
     setTeamSelected: (team) => {
@@ -96,6 +101,7 @@ export const useChatStore = create((set, get) => ({
             formButtonClicked: false,
             chatManuallyButtonClicked: false,
             newChatButtonClicked: false,
+            isComingSoonDepartmentSelected: false
         });
         console.log(`Team selected: ${team}, resetting chat states.`);
     },
