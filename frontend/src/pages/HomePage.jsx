@@ -15,10 +15,10 @@ const HomePage = () => {
         <div className="bg-base-100 rounded-lg shadow-cl w-full max-w h-[calc(100vh-6rem)]">
           <div className="flex h-full rounded-lg overflow-hidden">
             <Sidebar />
-            {!isTeamSelected ? (
-              <NoChatSelected />
-            ) : isComingSoonDepartmentSelected ? (
+            {isComingSoonDepartmentSelected ? (
               <ComingSoon />
+            ) : !isTeamSelected ? (
+              <NoChatSelected />
             ) : (
               <ChatContainer />
             )}
