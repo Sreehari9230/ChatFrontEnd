@@ -559,7 +559,9 @@ const CurrentBubbles = () => {
                       <div
                         className="formatted-text text-xl font-bold"
                         dangerouslySetInnerHTML={{
-                          __html: formatJobPosting(String(msg.message || "")),
+                          __html: formatJobPosting(
+                            String(msg.message.message || "")
+                          ),
                         }}
                       />
 
@@ -654,7 +656,9 @@ const CurrentBubbles = () => {
                       <div
                         className="formatted-text text-xl font-bold"
                         dangerouslySetInnerHTML={{
-                          __html: formatJobPosting(String(msg.message || "")),
+                          __html: formatJobPosting(
+                            String(msg.message.message || "")
+                          ),
                         }}
                       />
 
@@ -720,7 +724,9 @@ const CurrentBubbles = () => {
                       <div
                         className="formatted-text text-xl font-bold"
                         dangerouslySetInnerHTML={{
-                          __html: formatJobPosting(String(msg.message.message || "")),
+                          __html: formatJobPosting(
+                            String(msg.message.message || "")
+                          ),
                         }}
                       />
 

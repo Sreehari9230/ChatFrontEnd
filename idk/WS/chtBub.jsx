@@ -1,32 +1,39 @@
-import React, { useEffect } from "react";
-import { useChatStore } from "../store/useChatStore";
-import useWebSocketStore from "../store/useWebSocketStore";
+{
+  parsedBoxMessage ? (
+    <div className="flex flex-col gap-4">
+      <table className="w-full text-sm">
+        <tbody>
+          {Object.entries(parsedBoxMessage).map(([key, value]) => (
+            <tr key={key}>
+              <td className="px-2 py-1">{key}</td>
+              <td
+                className={`px-2 py-1 font-bold ${
+                  value === "COMPLETED"
+                    ? "text-green-500"
+                    : value === "PENDING"
+                    ? "text-red-500"
+                    : ""
+                }`}
+              >
+                {value}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <p className="text-gray-500">No content</p>
+  );
+}
 
-const ChatBubbles = () => {
-  const { chatId } = useChatStore();
-  const { messages, fetchMessages } = useWebSocketStore(); // ✅ Get fetchMessages
-
-  useEffect(() => {
-    if (chatId) {
-      fetchMessages(chatId); // ✅ Fetch messages when chatId changes
-    }
-  }, [chatId, fetchMessages]);
-
-  return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
-      {messages.length > 0 ? (
-        messages.map((msg, index) => (
-          <div key={index} className="p-2 border rounded-lg bg-gray-100">
-            <p>
-              <strong>{msg.user}:</strong> {msg.message || JSON.stringify(msg.form, null, 2)}
-            </p>
-          </div>
-        ))
-      ) : (
-        <p>No messages yet.</p>
-      )}
+/* Move retry button outside the bubble */
+{
+  msg.retry === "False" && (
+    <div className="flex justify-center mt-2">
+      <button className="btn btn-accent" onClick={handleRetryButton}>
+        Retry
+      </button>
     </div>
   );
-};
-
-export default ChatBubbles;
+}
