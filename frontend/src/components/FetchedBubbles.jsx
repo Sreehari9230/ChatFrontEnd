@@ -436,7 +436,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "competitor analyst" ? (
                     <>
                       <div
-                        className="formatted-text"
+                        className="formatted-text font-bold"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -459,13 +459,16 @@ const FetchedBubbles = () => {
                                         className="mb-2 p-2 border rounded bg-gray-100"
                                       >
                                         <strong>Competitor:</strong>{" "}
+                                        {competitor.competitor_name}
+                                        <br />
+                                        <strong>Website:</strong>{" "}
                                         <a
                                           href={competitor.competitor_link}
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           className="text-blue-600 hover:underline"
                                         >
-                                          {competitor.competitor_name}
+                                          {competitor.competitor_link}
                                         </a>
                                         <br />
                                         <strong>Strategy:</strong>{" "}
