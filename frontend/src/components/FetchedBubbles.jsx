@@ -112,7 +112,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "brochure" ? (
                     <>
                       <div
-                        className="formatted-text font-bold"
+                        className="formatted-text"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -148,7 +148,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "email templates" ? (
                     <>
                       <div
-                        className="formatted-text font-bold"
+                        className="formatted-text"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -177,7 +177,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "discription" ? (
                     <>
                       <div
-                        className="formatted-text font-bold"
+                        className="formatted-text"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -236,7 +236,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "slides" ? (
                     <>
                       <div
-                        className="formatted-text font-bold"
+                        className="formatted-text"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -280,7 +280,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "posts" ? (
                     <>
                       <div
-                        className="formatted-text font-bold"
+                        className="formatted-text"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -319,7 +319,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "Analysis report" ? (
                     <>
                       <div
-                        className="formatted-text font-bold"
+                        className="formatted-text"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -382,7 +382,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "swot analysis" ? (
                     <>
                       <div
-                        className="formatted-text  font-bold"
+                        className="formatted-text"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -436,7 +436,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "competitor analyst" ? (
                     <>
                       <div
-                        className="formatted-text font-bold"
+                        className="formatted-text"
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
@@ -519,7 +519,7 @@ const FetchedBubbles = () => {
                   ) : msg.Type === "price report" ? (
                     <>
                       <div
-                        className="formatted-text  font-bold"
+                        className="formatted-text "
                         dangerouslySetInnerHTML={{
                           __html: formatJobPosting(String(msg.message || "")),
                         }}
