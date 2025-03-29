@@ -90,7 +90,7 @@ const useWebSocketStore = create((set, get) => ({
       };
 
       ws.send(JSON.stringify(messageWithTimestamp));
-      // console.log("📤 Message sent:", messageWithTimestamp);
+      console.log("📤 Message sent:", messageWithTimestamp);
 
       // Push sent message to currentMessages ONLY if it's NOT a "form" action
       if (message.action !== "form") {
@@ -122,7 +122,7 @@ const useWebSocketStore = create((set, get) => ({
       set({ isFetchMessagesLoading: true })
       const message = { action: "fetch_messages" };
       ws.send(JSON.stringify(message));
-      // console.log("📤 Sent request to fetch chat messages:", message);
+      console.log("📤 Sent request to fetch chat messages:", message);
     } else {
       console.error("❌ WebSocket is not open.");
     }
