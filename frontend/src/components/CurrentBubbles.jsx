@@ -397,92 +397,74 @@ const CurrentBubbles = () => {
                       )}
                     </>
                   ) : msg.message.Type === "competitor analyst" ? (
-                    <>
-                      <div
-                        className="formatted-text "
-                        dangerouslySetInnerHTML={{
-                          __html: formatJobPosting(
-                            String(msg.message.message || "")
-                          ),
-                        }}
-                      />
+<>
+  <div
+    className="formatted-text"
+    dangerouslySetInnerHTML={{
+      __html: formatJobPosting(String(msg.message.message || "")),
+    }}
+  />
 
-                      {msg.message.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
-                          {/* Competitors Analysis */}
-                          {Array.isArray(msg.message.content.competitors) &&
-                            msg.message.content.competitors.length > 0 && (
-                              <div className="mt-3">
-                                <h4 className="text-md font-semibold text-gray-800">
-                                  Competitor Analysis:
-                                </h4>
-                                <ul className="list-disc list-inside mt-1 text-gray-600">
-                                  {msg.message.content.competitors.map(
-                                    (competitor, i) => (
-                                      <li
-                                        key={i}
-                                        className="mb-2 p-2 border rounded bg-gray-100"
-                                      >
-                                        <strong>Competitor:</strong>{" "}
-                                        <a
-                                          href={competitor.competitor_link}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-blue-600 hover:underline"
-                                        >
-                                          {competitor.competitor_name}
-                                        </a>
-                                        <br />
-                                        <strong>Strategy:</strong>{" "}
-                                        {competitor.differentiating_strategy}
-                                        <br />
-                                        <strong>
-                                          Market Positioning:
-                                        </strong>{" "}
-                                        {competitor.market_positioning}
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                              </div>
-                            )}
+  {msg.message.content && (
+    <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+      {/* Competitors Analysis */}
+      {Array.isArray(msg.message.content.competitors) &&
+        msg.message.content.competitors.length > 0 && (
+          <div className="mt-3">
+            <h4 className="text-md font-semibold text-gray-800">
+              Competitor Analysis:
+            </h4>
+            <ul className="list-disc list-inside mt-1 text-gray-600">
+              {msg.message.content.competitors.map((competitor, i) => (
+                <li key={i} className="mb-2 p-2 border rounded bg-gray-100">
+                  <strong>Competitor:</strong> {competitor.competitor_name}
+                  <br />
+                  <strong>Website:</strong>{" "}
+                  <a
+                    href={competitor.competitor_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    {competitor.competitor_link}
+                  </a>
+                  <br />
+                  <strong>Strategy:</strong> {competitor.differentiating_strategy}
+                  <br />
+                  <strong>Market Positioning:</strong>{" "}
+                  {competitor.market_positioning}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-                          {/* Recommendations */}
-                          {msg.message.content.recommendations && (
-                            <div className="mt-3 p-4 border rounded-lg bg-gray-50">
-                              <h4 className="text-md font-semibold text-gray-800">
-                                Recommendations:
-                              </h4>
-                              <p className="mt-1 text-gray-700">
-                                {msg.message.content.recommendations}
-                              </p>
-                            </div>
-                          )}
+      {/* Recommendations */}
+      {msg.message.content.recommendations && (
+        <div className="mt-3 p-4 border rounded-lg bg-gray-50">
+          <h4 className="text-md font-semibold text-gray-800">Recommendations:</h4>
+          <p className="mt-1 text-gray-700">{msg.message.content.recommendations}</p>
+        </div>
+      )}
 
-                          {/* Risk Factors */}
-                          {Array.isArray(msg.message.content.risk_factors) &&
-                            msg.message.content.risk_factors.length > 0 && (
-                              <div className="mt-3">
-                                <h4 className="text-md font-semibold text-gray-800">
-                                  Risk Factors:
-                                </h4>
-                                <ul className="list-disc list-inside mt-1 text-gray-600">
-                                  {msg.message.content.risk_factors.map(
-                                    (risk, i) => (
-                                      <li
-                                        key={i}
-                                        className="mb-2 p-2 border rounded bg-red-100"
-                                      >
-                                        {risk}
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                              </div>
-                            )}
-                        </div>
-                      )}
-                    </>
+      {/* Risk Factors */}
+      {Array.isArray(msg.message.content.risk_factors) &&
+        msg.message.content.risk_factors.length > 0 && (
+          <div className="mt-3">
+            <h4 className="text-md font-semibold text-gray-800">Risk Factors:</h4>
+            <ul className="list-disc list-inside mt-1 text-gray-600">
+              {msg.message.content.risk_factors.map((risk, i) => (
+                <li key={i} className="mb-2 p-2 border rounded bg-red-100">
+                  {risk}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+    </div>
+  )}
+</>
+
                   ) : msg.message.Type === "price report" ? (
                     <>
                       <div
