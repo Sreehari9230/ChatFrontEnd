@@ -39,7 +39,7 @@ const useWebSocketStore = create((set, get) => ({
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        // console.log("📩 Message received:", data);
+        console.log("📩 Message received:", data);
 
         if (data.action === 'task_queued') {
           set({ ThinkingMessage: [data] }); // Always replace the previous message

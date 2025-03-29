@@ -41,12 +41,17 @@ export function formatJobPosting(text) {
   let inList = false;
 
   const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const boldRegex = /\*\*(.*?)\*\*/g; // Regex to match bold text
 
   for (let line of lines) {
     line = line.trim();
     if (!line) continue;
 
+    // Convert URLs into links
     line = line.replace(urlRegex, (url) => `<a href="${url}" class="text-blue-500 underline" target="_blank">${url}</a>`);
+
+    // Convert bold text
+    line = line.replace(boldRegex, (match, content) => `<strong>${content}</strong>`);
 
     if (line.startsWith("**") && line.endsWith("**") && !line.includes(":")) {
       const heading = line.replace(/\*\*/g, "");
@@ -56,7 +61,6 @@ export function formatJobPosting(text) {
       formattedText += `<h3 class="text-md font-medium mt-3">${subheading}</h3>`;
     } else if (line.startsWith("-")) {
       line = line.substring(1).trim();
-      line = line.replace(/\*\*/g, "");
 
       if (line.includes(":")) {
         const [key, value] = line.split(":").map((s) => s.trim());
@@ -83,5 +87,6 @@ export function formatJobPosting(text) {
 
   return formattedText;
 }
+
 
 
