@@ -459,9 +459,17 @@ const FetchedBubbles = () => {
                                         className="mb-2 p-2 border rounded bg-gray-100"
                                       >
                                         <strong>Competitor:</strong>{" "}
-                                        {competitor.competitor_name} <br />
+                                        <a
+                                          href={competitor.competitor_link}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-blue-600 hover:underline"
+                                        >
+                                          {competitor.competitor_name}
+                                        </a>
+                                        <br />
                                         <strong>Strategy:</strong>{" "}
-                                        {competitor.differentiating_strategy}{" "}
+                                        {competitor.differentiating_strategy}
                                         <br />
                                         <strong>
                                           Market Positioning:
