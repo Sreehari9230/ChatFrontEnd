@@ -32,9 +32,10 @@ const SettingsPage = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showAccessToken, setShowAccessToken] = useState(false);
   // Local state for form inputs
   const [formData, setFormData] = useState({
-    linkedin_api: { access_token: "" },
+    linkedin_api: { access_token: "", auth_head: "" },
     smtp_config: {
       smtp_host: "",
       smtp_port: "",
@@ -46,7 +47,7 @@ const SettingsPage = () => {
 
   // Validation state
   const [errors, setErrors] = useState({
-    linkedin_api: { access_token: "" },
+    linkedin_api: { access_token: "", auth_head: "" },
     smtp_config: {
       smtp_host: "",
       smtp_port: "",
@@ -76,6 +77,7 @@ const SettingsPage = () => {
       setFormData({
         linkedin_api: {
           access_token: SettingsData.linkedin_api?.access_token || "",
+          auth_head: SettingsData.linkedin_api?.auth_head || "",
         },
         smtp_config: {
           smtp_host: SettingsData.smtp_config?.smtp_host || "",
@@ -108,6 +110,12 @@ const SettingsPage = () => {
         isValid = false;
       } else {
         newErrors.linkedin_api.access_token = "";
+      }
+      if (!formData.linkedin_api.auth_head.trim()) {
+        newErrors.linkedin_api.auth_head = "Header cannot be empty";
+        isValid = false;
+      } else {
+        newErrors.linkedin_api.auth_head = "";
       }
     }
 
@@ -145,8 +153,12 @@ const SettingsPage = () => {
     }
 
     if (section === "eod_config") {
-      if (formData.eod_config.enable && !formData.eod_config.email_address.trim()) {
-        newErrors.eod_config.email_address = "Email address cannot be empty when EOD is enabled";
+      if (
+        formData.eod_config.enable &&
+        !formData.eod_config.email_address.trim()
+      ) {
+        newErrors.eod_config.email_address =
+          "Email address cannot be empty when EOD is enabled";
         isValid = false;
       } else if (
         formData.eod_config.email_address.trim() &&
@@ -354,36 +366,76 @@ const SettingsPage = () => {
           {isSettingsDataLoading ? (
             <span className="loading loading-spinner loading-lg"></span>
           ) : (
-            <div className="form-control w-full mb-4">
-              <label className="label">
-                <span className="label-text font-medium">Access Token</span>
-              </label>
-              <div className="flex gap-2 flex-col">
-                <div className="relative w-full">
+            <div className="form-control w-full space-y-4">
+              {/* Access Token */}
+              <div>
+                <label className="label">
+                  <span className="label-text font-medium">Access Token</span>
+                </label>
+                <div className="flex items-center gap-2">
                   <input
-                    type="text"
+                    type={showAccessToken ? "text" : "password"}
                     className={`input input-bordered w-full ${
                       errors.linkedin_api.access_token ? "input-error" : ""
                     }`}
                     value={formData.linkedin_api.access_token}
                     onChange={(e) =>
-                      handleChange("linkedin_api", "access_token", e.target.value)
+                      handleChange(
+                        "linkedin_api",
+                        "access_token",
+                        e.target.value
+                      )
                     }
                   />
-                  {errors.linkedin_api.access_token && (
+                  <button
+                    type="button"
+                    className="btn btn-ghost p-2"
+                    onClick={() => setShowAccessToken((prev) => !prev)}
+                  >
+                    {showAccessToken ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+                {errors.linkedin_api.access_token && (
+                  <div className="text-error text-xs flex items-center mt-1">
+                    <AlertCircle size={12} className="mr-1" />
+                    {errors.linkedin_api.access_token}
+                  </div>
+                )}
+              </div>
+              {/* Auth Header */}
+              <div>
+                <label className="label">
+                  <span className="label-text font-medium">Header</span>
+                </label>
+                <div className="relative w-full">
+                  <input
+                    type="text"
+                    className={`input input-bordered w-full ${
+                      errors.linkedin_api.auth_head ? "input-error" : ""
+                    }`}
+                    value={formData.linkedin_api.auth_head}
+                    onChange={(e) =>
+                      handleChange(
+                        "linkedin_api",
+                        "auth_head",
+                        e.target.value
+                      )
+                    }
+                  />
+                  {errors.linkedin_api.auth_head && (
                     <div className="text-error text-xs flex items-center mt-1">
                       <AlertCircle size={12} className="mr-1" />
-                      {errors.linkedin_api.access_token}
+                      {errors.linkedin_api.auth_head}
                     </div>
                   )}
                 </div>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handleUpdate("linkedin_api")}
-                >
-                  Update
-                </button>
               </div>
+              <button
+                className="btn btn-primary w-full"
+                onClick={() => handleUpdate("linkedin_api")}
+              >
+                Update
+              </button>
             </div>
           )}
         </div>
