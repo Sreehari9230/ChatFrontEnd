@@ -45,7 +45,7 @@ export const useSettingsStore = create((set) => ({
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
 
-            // console.log("Fetched Settings Data:", res.data);
+            console.log("Fetched Settings Data:", res.data);
             set({ SettingsData: res.data });
 
         } catch (error) {

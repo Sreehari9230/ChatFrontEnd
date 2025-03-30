@@ -63,10 +63,9 @@ const Sidebar = () => {
   };
 
   const handleDepartmentClick = (department) => {
-    // console.log("Department Clicked:", department);
     setDepartmentSelected(department);
     SetComingSoonDepartment();
-    // Add function logic here (e.g., update state, fetch data, etc.)
+    setOpenDepartment(null); // Close any open department dropdown
   };
 
   return (
