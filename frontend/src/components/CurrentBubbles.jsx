@@ -423,26 +423,42 @@ const CurrentBubbles = () => {
                                         key={i}
                                         className="mb-2 p-2 border rounded bg-gray-100"
                                       >
-                                        <strong>Competitor:</strong>{" "}
-                                        {competitor.competitor_name}
-                                        <br />
-                                        <strong>Website:</strong>{" "}
-                                        <a
-                                          href={competitor.competitor_link}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-blue-600 hover:underline"
-                                        >
-                                          {competitor.competitor_link}
-                                        </a>
-                                        <br />
-                                        <strong>Strategy:</strong>{" "}
-                                        {competitor.differentiating_strategy}
-                                        <br />
-                                        <strong>
-                                          Market Positioning:
-                                        </strong>{" "}
-                                        {competitor.market_positioning}
+                                        {competitor?.competitor_name && (
+                                          <>
+                                            <strong>Competitor:</strong>{" "}
+                                            {competitor.competitor_name}
+                                            <br />
+                                          </>
+                                        )}
+                                        {competitor?.competitor_link && (
+                                          <>
+                                            <strong>Website:</strong>{" "}
+                                            <a
+                                              href={competitor.competitor_link}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="text-blue-600 hover:underline"
+                                            >
+                                              {competitor.competitor_link}
+                                            </a>
+                                            <br />
+                                          </>
+                                        )}
+                                        {competitor?.differentiating_strategy && (
+                                          <>
+                                            <strong>Strategy:</strong>{" "}
+                                            {
+                                              competitor.differentiating_strategy
+                                            }
+                                            <br />
+                                          </>
+                                        )}
+                                        {competitor?.market_positioning && (
+                                          <>
+                                            <strong>Market Positioning:</strong>{" "}
+                                            {competitor.market_positioning}
+                                          </>
+                                        )}
                                       </li>
                                     )
                                   )}
