@@ -28,9 +28,9 @@ const CurrentBubbles = () => {
       ) : (
         <>
           {currentMessages.map((msg, index) => {
-            const isUserMessage = msg.message.user == undefined;
+            const isUserMessage = msg?.message?.user == undefined;
             const parsedBoxMessage =
-              msg.message.Type === "box"
+              msg?.message?.Type === "box"
                 ? parseBoxMessage(msg.message.message)
                 : null;
 
@@ -41,7 +41,7 @@ const CurrentBubbles = () => {
               >
                 <div className="chat-header mb-1">
                   <time className="text-xs opacity-50 ml-1">
-                    {msg.message.user
+                    {msg?.message?.user
                       ? formatMessageTime(msg.message.timestamp)
                       : formatMessageTime(msg.timestamp)}
                   </time>
@@ -52,7 +52,7 @@ const CurrentBubbles = () => {
                 </div>
 
                 <div className="chat-bubble chat-bubble-primary flex flex-col max-w-[60%]">
-                  {msg.message.user === "AI" &&
+                  {msg?.message?.user === "AI" &&
                     // msg?.Type !== "box" &&
                     msg.message.task_name && (
                       <div className="bg-white text-xs font-medium text-gray-700 px-2 py-1 rounded-md border border-gray-300 shadow-sm mb-2 self-start">
@@ -63,14 +63,14 @@ const CurrentBubbles = () => {
 
                   {msg.message?.error ? (
                     <p className="text-red-500">{msg.message.error}</p>
-                  ) : msg.message.Type === "text" ? (
+                  ) : msg?.message?.Type === "text" ? (
                     <div
                       className="formatted-text"
                       dangerouslySetInnerHTML={{
                         __html: formatJobPosting(msg.message.message),
                       }}
                     />
-                  ) : msg.message.Type === "brochure" ? (
+                  ) : msg?.message?.Type === "brochure" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -87,7 +87,7 @@ const CurrentBubbles = () => {
                         />
                       )}
                     </>
-                  ) : msg.message.Type === "email templates" ? (
+                  ) : msg?.message?.Type === "email templates" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -119,7 +119,7 @@ const CurrentBubbles = () => {
                           </div>
                         )}
                     </>
-                  ) : msg.message.Type === "discription" ? (
+                  ) : msg?.message?.Type === "discription" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -181,7 +181,7 @@ const CurrentBubbles = () => {
                           </div>
                         )}
                     </>
-                  ) : msg.message.Type === "slides" ? (
+                  ) : msg?.message?.Type === "slides" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -228,7 +228,7 @@ const CurrentBubbles = () => {
                           </div>
                         )}
                     </>
-                  ) : msg.message.Type === "posts" ? (
+                  ) : msg?.message?.Type === "posts" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -270,7 +270,7 @@ const CurrentBubbles = () => {
                           </div>
                         )}
                     </>
-                  ) : msg.message.Type === "Analysis report" ? (
+                  ) : msg?.message?.Type === "Analysis report" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -338,7 +338,7 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </>
-                  ) : msg.message.Type === "swot analysis" ? (
+                  ) : msg?.message?.Type === "swot analysis" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -396,7 +396,7 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </>
-                  ) : msg.message.Type === "competitor analyst" ? (
+                  ) : msg?.message?.Type === "competitor analyst" ? (
                     <>
                       <div
                         className="formatted-text"
@@ -486,7 +486,7 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </>
-                  ) : msg.message.Type === "price report" ? (
+                  ) : msg?.message?.Type === "price report" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -565,7 +565,7 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </>
-                  ) : msg.message.Type === "sales pitch" ? (
+                  ) : msg?.message?.Type === "sales pitch" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -662,7 +662,7 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </>
-                  ) : msg.message.Type === "social media lead" ? (
+                  ) : msg?.message?.Type === "social media lead" ? (
                     <>
                       <div
                         className="formatted-text"
@@ -730,7 +730,7 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </>
-                  ) : msg.message.Type === "survey out" ? (
+                  ) : msg?.message?.Type === "survey out" ? (
                     <>
                       <div
                         className="formatted-text "
@@ -796,7 +796,7 @@ const CurrentBubbles = () => {
                         </div>
                       )}
                     </>
-                  ) : msg.message.Type === "Unknown agent type." ? (
+                  ) : msg?.message?.Type === "Unknown agent type." ? (
                     <>
                       <div className=" text-red-700">
                         I can’t handle this task yet, but we’re working on
