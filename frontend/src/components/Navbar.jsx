@@ -1,5 +1,5 @@
 import React from "react";
-import { ChartColumnBig, Settings, Stamp } from "lucide-react";
+import { ChartColumnBig, Settings, Stamp, HelpingHand } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import SmartTeams from "../assets/SmartTeams.jpg";
@@ -40,6 +40,14 @@ const Navbar = ({ onOpenTicket }) => {
                 >
                   <ChartColumnBig className="w-4 h-4" />
                   <span className="hidden sm:inline">Usage</span>
+                </Link>
+
+                <Link
+                  to="/resources"
+                  className="btn btn-sm gap-2 transition-colors"
+                >
+                  <HelpingHand className="w-4 h-4" />
+                  <span className="hidden sm:inline">Resources</span>
                 </Link>
 
                 <Link

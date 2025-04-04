@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import GraphPage from "./pages/GraphPage";
+import Resources from "./pages/Resources";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "./store/useAuthStore";
 import { useThemeStore } from "./store/useThemeStore";
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/graphs" element={<GraphPage />} />
+            <Route path="/resources" element={<Resources />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/login" element={<Navigate to="/" />} />
           </>
