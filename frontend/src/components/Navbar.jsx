@@ -1,11 +1,23 @@
-import React from "react";
-import { ChartColumnBig, Settings, Stamp, HelpingHand } from "lucide-react";
+import React, { useState } from "react";
+import {
+  ChartColumnBig,
+  Settings,
+  HelpingHand,
+  UserCircle,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import SmartTeams from "../assets/SmartTeams.jpg";
 
 const Navbar = ({ onOpenTicket }) => {
-  const { userAuth } = useAuthStore();
+  const { userAuth, CompanyData } = useAuthStore();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const userInitial = CompanyData?.name ? CompanyData.name.charAt(0).toUpperCase() : "U";
 
   return (
     <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">
@@ -16,14 +28,8 @@ const Navbar = ({ onOpenTicket }) => {
             <Link
               to="/"
               className="flex items-center gap-2.5 hover:opacity-80 transition-all"
+              onClick={closeDropdown}
             >
-              {/* <div className="absolute left-[50%] transform -translate-x-1/2 flex items-center gap-2.5">
-                <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <img src={SmartTeams} alt="Logo" className="w-15 h-15" />
-                </div>
-                <h1 className="text-lg font-bold">Smart Teams</h1>
-              </div> */}
-
               <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
                 <img src={SmartTeams} alt="Logo" className="w-15 h-15" />
               </div>
@@ -31,46 +37,45 @@ const Navbar = ({ onOpenTicket }) => {
             </Link>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="relative dropdown dropdown-end">
             {userAuth && (
-              <>
-                <Link
-                  to="/graphs"
-                  className="btn btn-sm gap-2 transition-colors"
+              <div>
+                <label
+                  tabIndex={0}
+                  className="btn btn-sm btn-ghost flex items-center gap-2 hover:bg-primary/20 rounded-full transition"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  <ChartColumnBig className="w-4 h-4" />
-                  <span className="hidden sm:inline">Usage</span>
-                </Link>
-
-                <Link
-                  to="/resources"
-                  className="btn btn-sm gap-2 transition-colors"
-                >
-                  <HelpingHand className="w-4 h-4" />
-                  <span className="hidden sm:inline">Resources</span>
-                </Link>
-
-                <Link
-                  to="/settings"
-                  className="btn btn-sm gap-2 transition-colors"
-                >
-                  <Settings className="w-4 h-4" />
-                  <span className="hidden sm:inline">Settings</span>
-                </Link>
-
-                <button
-                  className="btn btn-sm gap-2 transition-colors"
-                  onClick={onOpenTicket}
-                >
-                  <span className="hidden sm:inline">Raise A Ticket</span>
-                </button>
-              </>
+                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold shadow-md hover:shadow-lg transition">
+                    {userInitial}
+                  </div>
+                </label>
+                {isDropdownOpen && (
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu p-2 shadow-xl bg-base-100 rounded-box w-52"
+                  >
+                    <li className="rounded-full hover:bg-primary/20 transition">
+                      <Link to="/graphs" onClick={closeDropdown} className="rounded-full flex items-center gap-2 p-2">
+                        <ChartColumnBig className="w-4 h-4" /> Usage
+                      </Link>
+                    </li>
+                    <li className="rounded-full hover:bg-primary/20 transition">
+                      <Link to="/resources" onClick={closeDropdown} className="rounded-full flex items-center gap-2 p-2">
+                        <HelpingHand className="w-4 h-4" /> Resources
+                      </Link>
+                    </li>
+                    <li className="rounded-full hover:bg-primary/20 transition">
+                      <Link to="/settings" onClick={closeDropdown} className="rounded-full flex items-center gap-2 p-2">
+                        <Settings className="w-4 h-4" /> Settings
+                      </Link>
+                    </li>
+                    <li className="rounded-full hover:bg-primary/20 transition">
+                      <button onClick={() => { onOpenTicket(); closeDropdown(); }} className="rounded-full flex items-center gap-2 p-2">Raise A Ticket</button>
+                    </li>
+                  </ul>
+                )}
+              </div>
             )}
-
-            {/* <Link to="/login" className="btn btn-sm gap-2 transition-colors">
-              <LogIn className="w-4 h-4" />
-              <span className="hidden sm:inline">Login Page</span>
-            </Link> */}
           </div>
         </div>
       </div>
