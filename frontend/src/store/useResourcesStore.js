@@ -34,6 +34,9 @@ export const useResourcesStore = create((set) => ({
 
     EditResourcesData: async (data) => {
         try {
+            // for (let pair of data.entries()) {
+            //     console.log(pair[0], pair[1]);
+            //   }
             // console.log(data, "body")
             // console.log('Inside EditResourcesData Function')
             set({ isResourcesDataLoading: true })
