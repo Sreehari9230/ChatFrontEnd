@@ -42,7 +42,7 @@ const Resources = () => {
         instructions: policyInstructions,
       },
     };
-  
+
     try {
       // If a file is selected for policy_setup, use FormData
       if (policyDocument) {
@@ -53,14 +53,13 @@ const Resources = () => {
       } else {
         await EditResourcesData(data);
       }
-  
+
       FetchResourcesData();
       toast.success("Resources updated successfully!");
     } catch (error) {
       console.error("Error updating resources:", error);
     }
   };
-  
 
   return (
     <div className="h-screen container mx-auto px-4 pt-20 max-w-3xl space-y-6">
@@ -133,12 +132,31 @@ const Resources = () => {
               className="file-input file-input-bordered w-full"
               onChange={(e) => setPolicyDocument(e.target.files[0])}
             />
-            {policyDocument && (
+
+            {/* Show selected file name if uploading new */}
+            {policyDocument ? (
               <p className="text-sm text-base-content/60">
                 Selected file:{" "}
                 <span className="font-medium">{policyDocument.name}</span>
               </p>
+            ) : (
+              ResourcesData?.policy_setup?.document && (
+                <div className="flex items-center justify-between bg-base-100 p-3 rounded border">
+                  <span className="text-sm text-base-content/70 truncate max-w-[70%]">
+                    {ResourcesData.policy_setup.document.split("/").pop()}
+                  </span>
+                  <a
+                    href={`https://smartteams.nypus.in/${ResourcesData.policy_setup.document}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline btn-primary"
+                  >
+                    View
+                  </a>
+                </div>
+              )
             )}
+
             <label className="label">
               <span className="label-text font-medium">Instructions</span>
             </label>
