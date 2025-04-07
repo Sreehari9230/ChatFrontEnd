@@ -11,10 +11,10 @@ export const useResourcesStore = create((set) => ({
 
     FetchResourcesData: async () => {
         try {
-            console.log('Inside FetchResourcesData Function')
+            // console.log('Inside FetchResourcesData Function')
             set({ isResourcesDataLoading: true })
             const accessToken = localStorage.getItem("access_token");
-            console.log("Access Token:", accessToken);
+            // console.log("Access Token:", accessToken);
 
             const res = await axiosInstance.get("/organization/org-setup/", {
                 headers: { Authorization: `Bearer ${accessToken}` },
@@ -34,11 +34,11 @@ export const useResourcesStore = create((set) => ({
 
     EditResourcesData: async (data) => {
         try {
-            console.log('body', data, "body")
-            console.log('Inside EditResourcesData Function')
+            console.log(data, "body")
+            // console.log('Inside EditResourcesData Function')
             set({ isResourcesDataLoading: true })
             const accessToken = localStorage.getItem("access_token");
-            console.log("Access Token:", accessToken);
+            // console.log("Access Token:", accessToken);
 
             const res = await axiosInstance.put("/organization/org-setup/", data, {
                 headers: { Authorization: `Bearer ${accessToken}` },
