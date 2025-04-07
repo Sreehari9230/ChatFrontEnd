@@ -49,7 +49,10 @@ const Resources = () => {
         const formData = new FormData();
         formData.append("data", JSON.stringify(data));
         formData.append("file", policyDocument);
-        console.log(formData, "formData")
+        // console.log(formData, "formData")
+        for (let pair of formData.entries()) {
+          console.log(pair[0], pair[1]);
+        }
         await EditResourcesData(formData, true); // Assuming true means FormData mode
       } else {
         await EditResourcesData(data);
