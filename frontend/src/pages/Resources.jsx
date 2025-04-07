@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FileText, Link } from "lucide-react";
 import { useResourcesStore } from "../store/useResourcesStore";
+import toast from "react-hot-toast";
 
 const Resources = () => {
   const {
@@ -54,6 +55,7 @@ const Resources = () => {
       }
   
       FetchResourcesData();
+      toast.success("Resources updated successfully!");
     } catch (error) {
       console.error("Error updating resources:", error);
     }

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSettingsStore } from "../store/useSettingsStore";
+import toast from "react-hot-toast";
 
 const SettingsPage = () => {
   const { theme, setTheme } = useThemeStore();
@@ -187,9 +188,14 @@ const SettingsPage = () => {
   };
 
   // Handle update button click
-  const handleUpdate = (section) => {
+  const handleUpdate = async (section) => {
     if (validateSection(section)) {
-      EditSettingsData({ [section]: formData[section] });
+      try {
+        await EditSettingsData({ [section]: formData[section] });
+        toast.success("Data updated successfully!");
+      } catch (error) {
+        toast.error("Failed to update data.");
+      }
     }
   };
 
