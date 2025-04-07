@@ -34,7 +34,7 @@ export const useResourcesStore = create((set) => ({
 
     EditResourcesData: async (data) => {
         try {
-            console.log(data, "body")
+            // console.log(data, "body")
             // console.log('Inside EditResourcesData Function')
             set({ isResourcesDataLoading: true })
             const accessToken = localStorage.getItem("access_token");
