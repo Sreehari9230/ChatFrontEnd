@@ -5,6 +5,7 @@ import useWebSocketStore from "../store/useWebSocketStore";
 import { SuggestionsMap } from "../lib/suggestions";
 import { teamMap } from "../lib/utils";
 import PrevChatEmptyModal from "./PrevChatEmptyModal";
+import toast from "react-hot-toast";
 
 const MessageInput = () => {
   const {
@@ -22,6 +23,7 @@ const MessageInput = () => {
     responseIsThinking,
     currentMessages,
     fetchedMessages,
+    formResponsethinking,
   } = useWebSocketStore();
 
   const allSuggestions = SuggestionsMap[teamSelected] || [];
@@ -33,13 +35,17 @@ const MessageInput = () => {
   const handleSendMessage = (e) => {
     e.preventDefault();
     // UnSetSendButtonInWelcomeChat();
-
+    if (formResponsethinking) {
+      toast.error("Please wait, generating a form response...");
+      return;
+    }
     if (message.trim()) {
       sendMessage({ action: "chat_manually", message });
       setMessage("");
       setShowSuggestions(false);
     }
   };
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNewChatButton = () => {
