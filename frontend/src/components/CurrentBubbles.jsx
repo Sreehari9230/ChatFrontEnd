@@ -846,7 +846,7 @@ const CurrentBubbles = () => {
                       {msg.message.retry === "False" && (
                         <div className="flex justify-center">
                           <button
-                            className="btn btn-primary"
+                            className="btn btn-accent"
                             onClick={handleRetryButton}
                           >
                             Retry
