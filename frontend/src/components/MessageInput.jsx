@@ -11,7 +11,6 @@ const MessageInput = () => {
   const {
     teamSelected,
     setNewChatButtonClicked,
-    chatId,
     getNewChat,
     UnSetSendButtonInWelcomeChat,
   } = useChatStore();
@@ -76,7 +75,6 @@ const MessageInput = () => {
         </button>
 
         <div className="flex-1 flex gap-2 relative">
-          {/* Show filtered suggestions only when there are matches */}
           {showSuggestions && filteredSuggestions.length > 0 && (
             <ul className="absolute bottom-full left-0 w-full bg-base-100 border border-base-300 rounded-lg shadow-lg z-10 max-h-40 overflow-y-auto">
               {filteredSuggestions.map((suggestion, index) => (
@@ -106,7 +104,17 @@ const MessageInput = () => {
                 inputValue.length > 0 && filteredSuggestions.length > 0
               );
             }}
+            disabled={formResponsethinking}
           />
+
+          {formResponsethinking && (
+            <div className="absolute inset-0 bg-base-100/80 flex items-center justify-center rounded-lg z-20">
+              <span className="loading loading-spinner loading-sm mr-2"></span>
+              <span className="text-sm text-base-content">
+                Generating form response...
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="hidden sm:flex btn btn-circle">

@@ -10,7 +10,7 @@ const useWebSocketStore = create((set, get) => ({
   formResponseIsLoading: false,
   ThinkingMessage: [],
 
-  formResponsethinking: true,
+  formResponsethinking: false,
 
 
   connect: (chatId) => {
