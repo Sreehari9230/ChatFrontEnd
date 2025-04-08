@@ -12,6 +12,8 @@ const useWebSocketStore = create((set, get) => ({
 
   formResponsethinking: false,
 
+  setFormResponsethinking: (value) => set({ formResponsethinking: value }),
+
 
   connect: (chatId) => {
     if (!chatId) {
