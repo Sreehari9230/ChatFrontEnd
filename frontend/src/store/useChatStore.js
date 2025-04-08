@@ -101,8 +101,12 @@ export const useChatStore = create((set, get) => ({
             formButtonClicked: false,
             chatManuallyButtonClicked: false,
             newChatButtonClicked: false,
-            isComingSoonDepartmentSelected: false
+            isComingSoonDepartmentSelected: false,
+
+
         });
+        // Update formRespnseLoding in formStore
+        useWebSocketStore.getState().setFormResponsethinking(false);
         // console.log(`Team selected: ${team}, resetting chat states.`);
     },
 
