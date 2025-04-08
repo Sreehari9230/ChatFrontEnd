@@ -80,7 +80,7 @@ const CurrentBubbles = () => {
                       />
                       {msg.message.content && (
                         <div
-                          className="p-4 border rounded-lg shadow-sm bg-white mt-2"
+                          className="p-4 border rounded-lg shadow-sm text-black bg-white mt-2"
                           dangerouslySetInnerHTML={{
                             __html: formatJobPosting(msg.message.content),
                           }}
@@ -282,7 +282,7 @@ const CurrentBubbles = () => {
                       />
 
                       {msg.message.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Industry Sector */}
                           <h3 className="text-lg font-semibold text-gray-900">
                             Industry Sector:{" "}
@@ -350,7 +350,7 @@ const CurrentBubbles = () => {
                       />
 
                       {msg.message.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* SWOT Analysis Sections */}
                           {[
                             "strengths",
@@ -408,7 +408,7 @@ const CurrentBubbles = () => {
                       />
 
                       {msg.message.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Competitors Analysis */}
                           {Array.isArray(msg.message.content.competitors) &&
                             msg.message.content.competitors.length > 0 && (
@@ -514,7 +514,7 @@ const CurrentBubbles = () => {
                       />
 
                       {msg.message.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Model Description */}
                           {msg.message.content.model_description && (
                             <div className="mt-3 p-4 border rounded-lg bg-gray-50">
@@ -593,7 +593,7 @@ const CurrentBubbles = () => {
                       />
 
                       {msg.message.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Target Demographic */}
                           {msg.message.content.target_demographic && (
                             <div className="mt-3 p-4 border rounded-lg bg-gray-50">
@@ -690,7 +690,7 @@ const CurrentBubbles = () => {
                       />
 
                       {msg.message.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Leads from Social Media */}
                           {Array.isArray(
                             msg.message.content.leads_social_media
@@ -758,7 +758,7 @@ const CurrentBubbles = () => {
                       />
 
                       {msg.message.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Survey Title */}
                           <h3 className="text-lg font-semibold text-gray-900">
                             {msg.message.content.survey_title}
