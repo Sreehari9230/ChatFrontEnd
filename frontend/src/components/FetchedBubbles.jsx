@@ -126,7 +126,7 @@ const FetchedBubbles = () => {
 
                       {msg.content && (
                         <div
-                          className="p-4 border rounded-lg shadow-sm bg-white mt-2"
+                          className="p-4 border rounded-lg shadow-sm text-black bg-white mt-2"
                           dangerouslySetInnerHTML={{
                             __html: formatJobPosting(String(msg.content || "")),
                           }}
@@ -326,7 +326,7 @@ const FetchedBubbles = () => {
                       />
 
                       {msg.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Industry Sector */}
                           <h3 className="text-lg font-semibold text-gray-900">
                             Industry Sector: {msg.content.industry_sector}
@@ -389,7 +389,7 @@ const FetchedBubbles = () => {
                       />
 
                       {msg.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* SWOT Analysis Sections */}
                           {[
                             "strengths",
@@ -443,7 +443,7 @@ const FetchedBubbles = () => {
                       />
 
                       {msg.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Competitors Analysis */}
                           {Array.isArray(msg?.content?.competitors) &&
                             msg.content.competitors.length > 0 && (
@@ -545,7 +545,7 @@ const FetchedBubbles = () => {
                       />
 
                       {msg.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Model Description */}
                           {msg.content.model_description && (
                             <div className="mt-3 p-4 border rounded-lg bg-gray-50">
@@ -619,7 +619,7 @@ const FetchedBubbles = () => {
                       />
 
                       {msg.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Target Demographic */}
                           {msg.content.target_demographic && (
                             <div className="mt-3 p-4 border rounded-lg bg-gray-50">
@@ -710,7 +710,7 @@ const FetchedBubbles = () => {
                       />
 
                       {msg.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Leads from Social Media */}
                           {Array.isArray(msg.content.leads_social_media) &&
                             msg.content.leads_social_media.length > 0 && (
@@ -773,7 +773,7 @@ const FetchedBubbles = () => {
                       />
 
                       {msg.content && (
-                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm bg-white">
+                        <div className="mt-4 space-y-4 p-4 border rounded-lg shadow-sm text-black bg-white">
                           {/* Survey Title */}
                           <h3 className="text-lg font-semibold text-gray-900">
                             {msg.content.survey_title}
