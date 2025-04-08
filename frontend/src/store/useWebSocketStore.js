@@ -76,7 +76,7 @@ const useWebSocketStore = create((set, get) => ({
         if (data.action === "show_messages" && Array.isArray(data.messages)) {
           set({ fetchedMessages: data.messages, isFetchMessagesLoading: false });
         } else if (data.action === "new_message") {
-          const shouldStopFormThinking = data.Type === "box";
+          const shouldStopFormThinking = data.message.Type === "box";
 
           set((state) => ({
             currentMessages: [...state.currentMessages, data],
