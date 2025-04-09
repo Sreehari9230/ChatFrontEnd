@@ -9,7 +9,7 @@ export const useChatStore = create((set, get) => ({
 
     isDeparmentLoading: false,
     deaprtmentSelected: '',
-    isTeamSelected: false,
+    isTeamSelected: false, 
     teamSelected: '',
 
     isComingSoonDepartmentSelected: false,
