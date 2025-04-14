@@ -118,7 +118,7 @@ const Sidebar = () => {
 
         {/* Render additional departments as standalone buttons */}
         {additionalDepartments.map((department) => {
-          const Icon = departmentIcons[department] || Group; 
+          const Icon = departmentIcons[department] || Group;  
           return (
             <button
               key={department} 
