@@ -33,7 +33,7 @@ const GraphPage = () => {
 
   // console.log(GraphData, "insidegraphdata");
   useEffect(() => {
-    SetTeamSelectedToFalse()
+    SetTeamSelectedToFalse() 
     GetGraphData();
   }, []);
 
