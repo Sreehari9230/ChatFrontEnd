@@ -52,6 +52,13 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/help" element={<HelpPage />} />
             <Route path="*" element={<Navigate to="/login" />} />
+
+            <Route path="/" element={<HomePage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/graphs" element={<GraphPage />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/login" element={<Navigate to="/" />} />
           </>
         ) : (
           <>
